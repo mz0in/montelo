@@ -4,7 +4,6 @@ import { Injectable } from "@nestjs/common";
 import { DatabaseService } from "../../database";
 import { ApiKeys } from "../apiKey/apiKey.enum";
 
-
 @Injectable()
 export class LogService {
   constructor(private db: DatabaseService) {}

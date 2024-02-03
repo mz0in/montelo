@@ -7,7 +7,6 @@ import { Request, Response } from "express";
 
 import { QueueInput } from "./chat.types";
 
-
 @ApiTags("Chat")
 @Controller("chat/completions")
 export class ChatController {

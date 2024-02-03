@@ -9,7 +9,7 @@ export const sessionStorage = createCookieSessionStorage({
     sameSite: "lax",
     path: "/",
     httpOnly: true,
-    secrets: ["s3cr3t"], // TODO change
+    secrets: [process.env.SECRET!],
     secure: isProduction,
   },
 });
@@ -20,8 +20,8 @@ const themeStorage = createCookieSessionStorage({
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    secrets: ["s3cr3t"], // TODO change
-    ...(isProduction ? { domain: "your-production-domain.com", secure: true } : {}),
+    secrets: [process.env.SECRET!],
+    ...(isProduction ? { domain: "app.montelo.ai", secure: true } : {}),
   },
 });
 

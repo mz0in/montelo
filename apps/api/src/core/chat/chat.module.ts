@@ -5,7 +5,6 @@ import { DatabaseModule } from "../../database";
 import { ChatController } from "./chat.controller";
 import { ChatProcessor } from "./chat.processor";
 
-
 @Module({
   imports: [
     BullModule.registerQueue({

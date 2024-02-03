@@ -4,7 +4,6 @@ import { Job } from "bull";
 import { DatabaseService } from "../../database";
 import { QueueInput } from "./chat.types";
 
-
 @Processor("track")
 export class ChatProcessor {
   constructor(private db: DatabaseService) {}
