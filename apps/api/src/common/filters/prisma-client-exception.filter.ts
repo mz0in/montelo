@@ -2,7 +2,7 @@
 // with minor modifications
 import { ArgumentsHost, Catch, HttpException, HttpServer, HttpStatus } from "@nestjs/common";
 import { BaseExceptionFilter } from "@nestjs/core";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@montelo/db";
 
 export type ErrorCodesStatusMapping = {
   [key: string]:

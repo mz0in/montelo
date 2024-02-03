@@ -1,14 +1,14 @@
 {
   "name": "@montelo/cli",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
-    "@montelo/config": "1.1.19",
-    "@montelo/fizz": "1.1.19",
-    "@montelo/promptfile": "1.1.19",
+    "@montelo/config": "1.1.20",
+    "@montelo/fizz": "1.1.20",
+    "@montelo/promptfile": "1.1.20",
     "commander": "^11.1.0"
   }
 }

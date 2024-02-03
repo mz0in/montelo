@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@montelo/db";
 
 const createUserInput = Prisma.validator<Prisma.UserDefaultArgs>()({
   select: {
