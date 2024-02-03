@@ -24,7 +24,7 @@ async function bootstrap() {
       .setTitle("Montelo")
       .setDescription("Documentation for the Montelo API.")
       .setVersion("1.0")
-      .addServer(`http://localhost:${env.APP_PORT}/`, "🟢 Local")
+      .addServer(`http://localhost:${env.PORT}/`, "🟢 Local")
       // .addServer("https://production.yourapi.com/", "🔴 Production")
       .addBearerAuth()
       .build();
@@ -38,7 +38,7 @@ async function bootstrap() {
     SwaggerModule.setup("docs", app, document, options);
   }
 
-  await app.listen(env.APP_PORT);
+  await app.listen(env.PORT, "0.0.0.0");
 }
 
 void bootstrap();

@@ -1,5 +1,13 @@
 # @montelo/promptfile
 
+## 1.1.23
+
+### Patch Changes
+
+- g
+- Updated dependencies
+  - @montelo/common@1.1.23
+
 ## 1.1.22
 
 ### Patch Changes
