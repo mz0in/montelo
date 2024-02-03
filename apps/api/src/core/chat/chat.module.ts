@@ -3,7 +3,9 @@ import { Module } from "@nestjs/common";
 
 import { DatabaseModule } from "../../database";
 import { ChatController } from "./chat.controller";
+import { ChatHealthIndicator } from "./chat.health";
 import { ChatProcessor } from "./chat.processor";
+
 
 @Module({
   imports: [
@@ -13,6 +15,7 @@ import { ChatProcessor } from "./chat.processor";
     DatabaseModule,
   ],
   controllers: [ChatController],
-  providers: [ChatProcessor],
+  providers: [ChatProcessor, ChatHealthIndicator],
+  exports: [ChatHealthIndicator],
 })
 export class ChatModule {}
