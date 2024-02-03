@@ -1,5 +1,15 @@
 # @montelo/cli
 
+## 1.1.17
+
+### Patch Changes
+
+- first working one E2E
+- Updated dependencies
+  - @montelo/config@1.1.17
+  - @montelo/fizz@1.1.17
+  - @montelo/promptfile@1.1.17
+
 ## 1.1.16
 
 ### Patch Changes

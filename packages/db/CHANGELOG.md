@@ -1,4 +1,4 @@
-# @montelo/browser-client
+# @montelo/db
 
 ## 1.1.17
 

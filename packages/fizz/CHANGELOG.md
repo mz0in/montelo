@@ -1,5 +1,13 @@
 # @montelo/fizz
 
+## 1.1.17
+
+### Patch Changes
+
+- first working one E2E
+- Updated dependencies
+  - @montelo/common@1.1.17
+
 ## 1.1.16
 
 ### Patch Changes
