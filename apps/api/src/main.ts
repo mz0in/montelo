@@ -38,7 +38,11 @@ async function bootstrap() {
     SwaggerModule.setup("docs", app, document, options);
   }
 
-  await app.listen(env.PORT, "0.0.0.0");
+  if (env.NODE_ENV === "development") {
+    await app.listen(env.PORT);
+  } else {
+    await app.listen(env.PORT, "0.0.0.0");
+  }
 }
 
 void bootstrap();

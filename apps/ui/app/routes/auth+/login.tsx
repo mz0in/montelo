@@ -9,11 +9,13 @@ import { AUTH_STRATEGIES } from "~/services/strategies";
 import { AuthorizationError } from "remix-auth";
 
 export async function action({ request }: ActionFunctionArgs) {
+  console.log("In Login Action");
   const formData = await request.formData();
   const validation = await loginValidator.validate(formData);
   if (validation.error) return validationError(validation.error);
 
   try {
+    console.log("Trying to authenticate: ");
     return await authenticator.authenticate(AUTH_STRATEGIES.local, request, {
       context: { formData },
       successRedirect: Routes.app.root,
@@ -21,6 +23,7 @@ export async function action({ request }: ActionFunctionArgs) {
       throwOnError: true,
     });
   } catch (error) {
+    console.log("Error: ", error);
     if (error instanceof Response) return error;
     if (error instanceof AuthorizationError) {
       return { error: "Invalid credentials" };

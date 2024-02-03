@@ -19,9 +19,9 @@ export const LoginForm = () => {
 
   return (
     <ValidatedForm validator={loginValidator} method="post" className="w-full">
-      <FormInput name="email" label="Email" placeholder="Email" defaultValue="sami.juniorco@gmail.com"
+      <FormInput name="email" label="Email" placeholder="Email"
                  type="email" />
-      <FormInput name="password" label="Password" placeholder="Password" defaultValue="Pass123456"
+      <FormInput name="password" label="Password" placeholder="Password"
                  type="password" />
       <FormSubmitButton content="Login" />
       {actionData?.error && <p className="text-red-500 mt-1">{actionData.error}</p>}

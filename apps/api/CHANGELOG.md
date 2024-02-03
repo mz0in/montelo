@@ -1,5 +1,13 @@
 # api
 
+## 1.1.25
+
+### Patch Changes
+
+- y
+- Updated dependencies
+  - @montelo/db@1.1.25
+
 ## 1.1.24
 
 ### Patch Changes
