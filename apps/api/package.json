@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "description": "",
   "author": "",
   "private": true,
@@ -23,7 +23,7 @@
     "generate:client": "openapi-generator-cli generate -i http://localhost:3001/docs-json -g typescript-fetch -o ../../packages/browser-client/src && npm run build -w @montelo/browser-client"
   },
   "dependencies": {
-    "@montelo/db": "1.1.18",
+    "@montelo/db": "1.1.19",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^10.0.0",

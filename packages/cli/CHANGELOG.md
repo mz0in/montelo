@@ -1,5 +1,15 @@
 # @montelo/cli
 
+## 1.1.19
+
+### Patch Changes
+
+- ummary
+- Updated dependencies
+  - @montelo/config@1.1.19
+  - @montelo/fizz@1.1.19
+  - @montelo/promptfile@1.1.19
+
 ## 1.1.18
 
 ### Patch Changes

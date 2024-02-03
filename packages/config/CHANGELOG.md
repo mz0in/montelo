@@ -1,5 +1,11 @@
 # @montelo/config
 
+## 1.1.19
+
+### Patch Changes
+
+- ummary
+
 ## 1.1.18
 
 ### Patch Changes
