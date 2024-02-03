@@ -1,0 +1,23 @@
+{
+  "name": "@montelo/db",
+  "version": "1.1.16",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "tsx src/seed.ts",
+    "generate": "prisma generate",
+    "prebuild": "npm run generate",
+    "studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.8.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

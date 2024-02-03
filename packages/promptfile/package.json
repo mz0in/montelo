@@ -1,0 +1,15 @@
+{
+  "name": "@montelo/promptfile",
+  "version": "1.1.16",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@montelo/common": "1.1.16",
+    "@types/node": "^20.11.0",
+    "async": "^3.2.5",
+    "fast-glob": "^3.3.2",
+    "typescript": "^5.3.3"
+  }
+}

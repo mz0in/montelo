@@ -1,0 +1,21 @@
+{
+  "name": "@montelo/fizz",
+  "version": "1.1.16",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@montelo/common": "1.1.16",
+    "async": "^3.2.5",
+    "fast-glob": "^3.3.2",
+    "lodash": "^4.17.21",
+    "typescript": "^5.3.3",
+    "zod-to-json-schema": "^3.22.3"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.24",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.11.0"
+  }
+}

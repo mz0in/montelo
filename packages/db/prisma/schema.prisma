@@ -1,0 +1,171 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserPermissionRole {
+  MEMBER
+  ADMIN
+}
+
+model Team {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  name String
+
+  // relations
+  projects Project[]
+  members  Membership[]
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@map("team")
+}
+
+model Project {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  name   String
+  teamId String
+
+  // relations
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  environments Environment[]
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // attributes
+  @@unique([name, teamId])
+  // rename
+  @@map("project")
+}
+
+model Environment {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  name      String
+  projectId String
+
+  // relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  apiKeys ApiKey[]
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@map("environment")
+}
+
+model User {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  firstName String
+  lastName  String
+  email     String @unique
+  password  String
+
+  // relations
+  memberships Membership[]
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@map("user")
+}
+
+model Membership {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  role   UserPermissionRole
+  userId String
+  teamId String
+
+  // relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@map("membership")
+}
+
+model ApiKey {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  type   String
+  key    String  @unique
+  envId  String
+  viewed Boolean @default(false)
+
+  // relations
+  environment Environment @relation(fields: [envId], references: [id], onDelete: Cascade)
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@map("api_key")
+}
+
+model Log {
+  // id
+  id String @id @default(uuid())
+
+  // properties
+  paths            Json
+  isTopLevel       Boolean // to boost performance
+  messages         Json
+  model            String
+  rawInput         Json
+  rawOutput        Json
+  startTime        DateTime
+  endTime          DateTime
+  duration         Float
+  inputTokenCount  Int
+  outputTokenCount Int
+  totalTokenCount  Int
+  inputCost        Float
+  outputCost       Float
+  totalCost        Float
+  apiKey           String
+
+  // dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // rename
+  @@index([isTopLevel])
+  @@map("log")
+}
