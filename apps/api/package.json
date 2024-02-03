@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "",
   "author": "",
   "private": true,
@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "dev": "nest start --watch",
+    "dev": "dotenv -e .env.development -- nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -23,7 +23,7 @@
     "generate:client": "openapi-generator-cli generate -i http://localhost:3001/docs-json -g typescript-fetch -o ../../packages/browser-client/src && npm run build -w @montelo/browser-client"
   },
   "dependencies": {
-    "@montelo/db": "1.1.20",
+    "@montelo/db": "1.1.21",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^10.0.0",
