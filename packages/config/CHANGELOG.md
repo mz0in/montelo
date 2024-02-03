@@ -1,5 +1,11 @@
 # @montelo/config
 
+## 1.1.24
+
+### Patch Changes
+
+- y
+
 ## 1.1.23
 
 ### Patch Changes

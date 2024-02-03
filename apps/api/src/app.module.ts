@@ -21,12 +21,7 @@ import { HealthModule } from "./health/health.module";
       validate: envSchema.parse,
     }),
     BullModule.forRoot({
-      redis: {
-        host: process.env.REDIS_HOST!,
-        port: parseInt(process.env.REDIS_PORT!),
-        password: process.env.REDIS_PASSWORD,
-        username: process.env.REDIS_USERNAME
-      },
+      redis: process.env.REDIS_URL,
     }),
     EnvModule,
     HealthModule,
