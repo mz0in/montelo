@@ -1,7 +1,7 @@
 import { Membership, UserPermissionRole } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class MembershipDto {
   @ApiProperty()
@@ -15,6 +15,6 @@ export class MembershipDto {
   teamId: string;
 
   static fromMembership(membership: Membership): MembershipDto {
-    return _.pick(membership, ["id", "role", "teamId"]);
+    return pick(membership, ["id", "role", "teamId"]);
   }
 }

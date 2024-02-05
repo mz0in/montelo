@@ -1,6 +1,6 @@
 import { ApiKey } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class ApiKeyDto {
   @ApiProperty()
@@ -13,6 +13,6 @@ export class ApiKeyDto {
   envId: string;
 
   static fromApiKey(apiKey: ApiKey): ApiKeyDto {
-    return _.pick(apiKey, ["id", "type", "envId"]);
+    return pick(apiKey, ["id", "type", "envId"]);
   }
 }

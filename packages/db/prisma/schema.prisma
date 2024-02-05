@@ -109,7 +109,6 @@ model Membership {
 
   // relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   // dates

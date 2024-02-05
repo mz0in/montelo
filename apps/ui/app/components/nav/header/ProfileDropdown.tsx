@@ -16,19 +16,19 @@ import { Routes } from "~/routes";
 import { Theme, useTheme } from "remix-themes";
 import { useFetcher } from "@remix-run/react";
 import { MouseEventHandler } from "react";
-import { Check, KeyRound, LogOut, Palette, UserRound } from "lucide-react";
+import { Check, LogOut, Palette, UserRound } from "lucide-react";
 import { AuthUserDto } from "@montelo/browser-client";
 
 type ProfileDropwdownProps = {
   user: AuthUserDto;
 }
 
-export const ProfileDropwdown = ({ user }: ProfileDropwdownProps) => {
+export const ProfileDropdown = ({ user }: ProfileDropwdownProps) => {
   const [theme, setTheme] = useTheme();
   const fetcher = useFetcher();
   const isDarkMode = theme === Theme.DARK;
 
-  const userInitials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`;
+  const userInitials = `${user.firstName.charAt(0).toUpperCase()}${user.lastName.charAt(0).toUpperCase()}`;
   const userFullName = `${user.firstName} ${user.lastName}`;
   const userEmail = user.email;
 
@@ -40,12 +40,10 @@ export const ProfileDropwdown = ({ user }: ProfileDropwdownProps) => {
     });
   };
 
-  // @ts-ignore
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={"focus:outline-none"}>
         <Avatar>
-          {/*<AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />*/}
           <AvatarFallback>{userInitials}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -58,10 +56,6 @@ export const ProfileDropwdown = ({ user }: ProfileDropwdownProps) => {
           <DropdownMenuItem>
             <UserRound size={20} />&nbsp;
             Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <KeyRound size={20} />&nbsp;
-            API Keys
           </DropdownMenuItem>
           <DropdownMenuGroup>
             <DropdownMenuSub>
@@ -79,11 +73,6 @@ export const ProfileDropwdown = ({ user }: ProfileDropwdownProps) => {
                     {!isDarkMode && <><Check size={20} />&nbsp;</>}
                     Light
                   </DropdownMenuItem>
-                  {/*<DropdownMenuItem>Synthwave</DropdownMenuItem>*/}
-                  {/*<DropdownMenuItem>Retro</DropdownMenuItem>*/}
-                  {/*<DropdownMenuItem>Cyberpunk</DropdownMenuItem>*/}
-                  {/*<DropdownMenuItem>Aqua</DropdownMenuItem>*/}
-                  {/*<DropdownMenuItem>Black</DropdownMenuItem>*/}
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>

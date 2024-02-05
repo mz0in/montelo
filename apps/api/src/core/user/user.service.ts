@@ -1,7 +1,7 @@
 import { User, UserPermissionRole } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
-import bcrypt from "bcrypt";
-import _ from "lodash";
+import { genSalt, hash } from "bcrypt";
+import { omit } from "lodash";
 
 import { DatabaseService } from "../../database";
 import { ApiKeys } from "../apiKey/apiKey.enum";
@@ -25,8 +25,9 @@ export class UserService {
   }
 
   async create(params: CreateUserInput): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(params.password, salt);
+    const saltRounds = 10;
+    const salt = await genSalt(saltRounds);
+    const hashPassword = await hash(params.password, salt);
 
     // default names
     const defaultTeamName = "New Team";
@@ -109,7 +110,7 @@ export class UserService {
       ],
     });
 
-    const baseUser = _.omit(user, ["memberships"]);
+    const baseUser = omit(user, ["memberships"]);
     return baseUser;
   }
 }

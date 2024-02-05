@@ -1,7 +1,7 @@
 import { json, LoaderFunction, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { withAuth } from "~/routes/_common/withAuth";
-import { ProfileDropwdown } from "~/components/nav/header/profile_dropdown";
+import { ProfileDropdown } from "~/components/nav/header/ProfileDropdown";
 import { HomePageCard } from "~/components/cards/HomePageCard";
 import { CreateTeamDialog } from "~/components/dialogs/CreateTeamDialog";
 import { AuthUserDto, FullMembershipDto } from "@montelo/browser-client";
@@ -34,11 +34,12 @@ export default function HomePage() {
     <div className="flex flex-col h-screen">
       <header className="mx-32">
         <nav className="mx-auto flex w-full items-center justify-between p-6 lg:px-4" aria-label="Global">
-          <div className="p-4">
+          <div className="flex flex-row items-center p-4 gap-2">
             <img className="h-8 w-auto" src={"/logo.png"} alt="Logo" />
+            <p className={"text-xl"}>MonteloAI</p>
           </div>
           <div className="lg:flex lg:flex-1 lg:justify-end gap-4">
-            <ProfileDropwdown user={user} />
+            <ProfileDropdown user={user} />
           </div>
         </nav>
       </header>

@@ -30,10 +30,8 @@ export const RegisterForm = () => {
     <ValidatedForm validator={registerValidator} method="post" className="w-full">
       <FormInput name="firstName" label="First Name" placeholder="First Name" />
       <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
-      <FormInput name="email" label="Email" placeholder="Email"
-                 type="email" />
-      <FormInput name="password" label="Password" placeholder="Password"
-                 type="password" />
+      <FormInput name="email" label="Email" placeholder="Email" />
+      <FormInput name="password" label="Password" placeholder="Password" />
       <FormSubmitButton content="Register" />
       {actionData?.error && <p className="text-red-500 mt-1">{actionData.error}</p>}
     </ValidatedForm>

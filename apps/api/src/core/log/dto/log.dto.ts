@@ -1,7 +1,7 @@
 import { Log } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class LogDto {
   @ApiProperty()
@@ -40,7 +40,7 @@ export class LogDto {
   totalTokenCount: number;
 
   static fromLog(log: Log): LogDto {
-    const baseLog = _.pick(log, [
+    const baseLog = pick(log, [
       "id",
       "messages",
       "model",

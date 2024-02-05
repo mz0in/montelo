@@ -1,7 +1,7 @@
 import { Team } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class TeamDto {
   @ApiProperty()
@@ -13,6 +13,6 @@ export class TeamDto {
   name: string;
 
   static fromTeam(team: Team): TeamDto {
-    return _.pick(team, ["id", "name"]);
+    return pick(team, ["id", "name"]);
   }
 }

@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserPermissionRole" AS ENUM ('USER', 'ADMIN');
+CREATE TYPE "UserPermissionRole" AS ENUM ('MEMBER', 'ADMIN');
 
 -- CreateTable
 CREATE TABLE "team" (
@@ -64,6 +64,7 @@ CREATE TABLE "api_key" (
     "type" TEXT NOT NULL,
     "key" TEXT NOT NULL,
     "envId" TEXT NOT NULL,
+    "viewed" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -77,10 +78,11 @@ CREATE TABLE "log" (
     "isTopLevel" BOOLEAN NOT NULL,
     "messages" JSONB NOT NULL,
     "model" TEXT NOT NULL,
-    "details" JSONB NOT NULL,
-    "userId" TEXT NOT NULL,
-    "session_id" TEXT NOT NULL,
-    "duration" INTEGER NOT NULL,
+    "rawInput" JSONB NOT NULL,
+    "rawOutput" JSONB NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3) NOT NULL,
+    "duration" DOUBLE PRECISION NOT NULL,
     "inputTokenCount" INTEGER NOT NULL,
     "outputTokenCount" INTEGER NOT NULL,
     "totalTokenCount" INTEGER NOT NULL,
@@ -95,7 +97,13 @@ CREATE TABLE "log" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "project_name_teamId_key" ON "project"("name", "teamId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "api_key_key_key" ON "api_key"("key");
 
 -- CreateIndex
 CREATE INDEX "log_isTopLevel_idx" ON "log"("isTopLevel");
@@ -110,7 +118,7 @@ ALTER TABLE "environment" ADD CONSTRAINT "environment_projectId_fkey" FOREIGN KE
 ALTER TABLE "membership" ADD CONSTRAINT "membership_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "membership" ADD CONSTRAINT "membership_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "membership" ADD CONSTRAINT "membership_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "api_key" ADD CONSTRAINT "api_key_envId_fkey" FOREIGN KEY ("envId") REFERENCES "environment"("id") ON DELETE CASCADE ON UPDATE CASCADE;

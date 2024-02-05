@@ -1,7 +1,7 @@
 import { Project } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class ProjectDto {
   @ApiProperty()
@@ -17,6 +17,6 @@ export class ProjectDto {
   teamId: string;
 
   static fromProject(project: Project): ProjectDto {
-    return _.pick(project, ["id", "name", "teamId"]);
+    return pick(project, ["id", "name", "teamId"]);
   }
 }

@@ -1,7 +1,7 @@
 import { User } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import _ from "lodash";
+import { pick } from "lodash";
 
 export class AuthUserDto {
   @ApiProperty()
@@ -21,6 +21,6 @@ export class AuthUserDto {
   email: string;
 
   static fromUser(user: User): AuthUserDto {
-    return _.pick(user, ["id", "firstName", "lastName", "email"]);
+    return pick(user, ["id", "firstName", "lastName", "email"]);
   }
 }

@@ -1,18 +1,24 @@
+import { Logger } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { SwaggerTheme } from "swagger-themes";
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from "@nestjs/swagger";
+import { SwaggerTheme, SwaggerThemeName } from "swagger-themes";
 
 import { AppModule } from "./app.module";
 import { PrismaClientExceptionFilter } from "./common/filters/prisma-client-exception.filter";
-import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { envSchema } from "./env";
 
 async function bootstrap() {
   const env = envSchema.parse(process.env);
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger("App");
 
-  // middlewares
-  app.use(new LoggerMiddleware().use);
+  // graceful shutdown func
+  const gracefulShutdown = async () => {
+    logger.log("NestJS application is shutting down...");
+    await app.close();
+    logger.log("Application has been shut down.");
+    process.exit(0);
+  };
 
   // filters
   const { httpAdapter } = app.get(HttpAdapterHost);
@@ -30,9 +36,10 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     const theme = new SwaggerTheme("v3");
-    const options = {
+    const themeName: SwaggerThemeName = "dark";
+    const options: SwaggerCustomOptions = {
       explorer: true,
-      customCss: theme.getBuffer("dark"),
+      customCss: theme.getBuffer(themeName),
     };
     // SwaggerUI gets set to /docs
     SwaggerModule.setup("docs", app, document, options);
@@ -43,6 +50,13 @@ async function bootstrap() {
   } else {
     await app.listen(env.PORT, "0.0.0.0");
   }
+
+  // SIGINT is typically sent when the user presses Ctrl+C in the terminal
+  process.on("SIGINT", gracefulShutdown);
+  // SIGTERM is a termination signal typically sent from system shutdown operations
+  process.on("SIGTERM", gracefulShutdown);
+  // Optionally handle other signals, e.g., SIGHUP (hang up)
+  process.on("SIGHUP", gracefulShutdown);
 }
 
 void bootstrap();
