@@ -1,8 +1,8 @@
 // taken from https://github.com/notiz-dev/nestjs-prisma
 // with minor modifications
+import { Prisma } from "@montelo/db";
 import { ArgumentsHost, Catch, HttpException, HttpServer, HttpStatus } from "@nestjs/common";
 import { BaseExceptionFilter } from "@nestjs/core";
-import { Prisma } from "@montelo/db";
 
 export type ErrorCodesStatusMapping = {
   [key: string]:

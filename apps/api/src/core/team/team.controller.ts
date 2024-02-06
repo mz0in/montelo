@@ -15,11 +15,6 @@ import { TeamService } from "./team.service";
 export class TeamController {
   constructor(private teamService: TeamService) {}
 
-  @ApiOkResponse({
-    description: "The created team.",
-    type: TeamDto,
-    status: 200,
-  })
   @ApiBody({
     type: CreateTeamInput,
   })
@@ -33,11 +28,6 @@ export class TeamController {
     return TeamDto.fromTeam(team);
   }
 
-  @ApiOkResponse({
-    description: "Success.",
-    type: DeleteSuccessDto,
-    status: 200,
-  })
   @UseGuards(JwtAuthGuard)
   @Delete(":id")
   async delete(@Param("id") id: string): Promise<DeleteSuccessDto> {

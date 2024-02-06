@@ -13,8 +13,9 @@ import {
   ShouldRevalidateFunction,
   useLoaderData,
 } from "@remix-run/react";
-import { useRevalidateOnFocus, useRevalidateOnReconnect } from "~/hooks";
+import { useRevalidateOnFocus, useRevalidateOnReconnect, useWindowSize } from "~/hooks";
 import { themeSessionResolver } from "~/services/session.server";
+import { Routes } from "~/routes";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -33,15 +34,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>();
   return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
+    <ThemeProvider specifiedTheme={data.theme} themeAction={Routes.actions.setTheme}>
       <App />
     </ThemeProvider>
   );
 }
 
 export function App() {
-  const data = useLoaderData<typeof loader>();
+  const { width } = useWindowSize();
   const [theme] = useTheme();
+  const data = useLoaderData<typeof loader>();
+
+  const isMobile = width <= 640;
+
+  const MobilePage = () => {
+    return (
+      <div className={"w-screen h-screen flex justify-center items-center"}>
+        <p>Montelo is best viewed on a larger screen.</p>
+      </div>
+    );
+  };
 
   // revalidation hooks
   useRevalidateOnReconnect();
@@ -57,7 +69,7 @@ export function App() {
       <Links />
     </head>
     <body>
-    <Outlet />
+    {isMobile ? <MobilePage /> : <Outlet />}
     <ScrollRestoration />
     <Scripts />
     <LiveReload />

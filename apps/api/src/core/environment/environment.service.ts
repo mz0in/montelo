@@ -2,7 +2,6 @@ import { Environment } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
 
 import { DatabaseService } from "../../database";
-import { ApiKeys } from "../apiKey/apiKey.enum";
 import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "./environment.enums";
 import { CreateEnvironmentParams, GetEnvByIdParams } from "./environment.types";
@@ -28,16 +27,16 @@ export class EnvironmentService {
       throw new Error("Restricted environment name.");
     }
 
-    const prefix = name.substring(0, 6);
+    // if changing this also change apiKey service
+    const prefix = name.substring(6);
     const apiKey = this.apiKeyService.generateApiKey(prefix);
 
     return this.db.environment.create({
       data: {
         name,
         projectId,
-        apiKeys: {
+        apiKey: {
           create: {
-            type: ApiKeys.MONTELO,
             key: apiKey,
           },
         },

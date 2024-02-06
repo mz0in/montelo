@@ -151,7 +151,6 @@ exports.Prisma.MembershipScalarFieldEnum = {
 
 exports.Prisma.ApiKeyScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   key: 'key',
   envId: 'envId',
   viewed: 'viewed',

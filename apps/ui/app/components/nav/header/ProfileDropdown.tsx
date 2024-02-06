@@ -36,7 +36,7 @@ export const ProfileDropdown = ({ user }: ProfileDropwdownProps) => {
     e.preventDefault();
     fetcher.submit(null, {
       method: "POST",
-      action: Routes.api.logout,
+      action: Routes.actions.auth.logout,
     });
   };
 

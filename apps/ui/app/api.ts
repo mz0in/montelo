@@ -1,4 +1,5 @@
 import {
+  ApiKeyApi,
   AuthApi,
   Configuration,
   EnvironmentApi,
@@ -13,6 +14,10 @@ export class Api {
 
   constructor(configuration: Configuration) {
     this.configuration = configuration;
+  }
+
+  public apiKey(): ApiKeyApi {
+    return new ApiKeyApi(this.configuration);
   }
 
   public auth(): AuthApi {

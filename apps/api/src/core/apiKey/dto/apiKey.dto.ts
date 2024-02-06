@@ -7,12 +7,20 @@ export class ApiKeyDto {
   id: string;
 
   @ApiProperty()
-  type: string;
-
-  @ApiProperty()
   envId: string;
 
+  @ApiProperty()
+  key: string;
+
+  @ApiProperty()
+  viewed: boolean;
+
+  @ApiProperty()
+  updatedAt: string;
+
   static fromApiKey(apiKey: ApiKey): ApiKeyDto {
-    return pick(apiKey, ["id", "type", "envId"]);
+    const baseDto = pick(apiKey, ["id", "envId", "key", "viewed"]);
+    const stringifiedUpdatedAt = apiKey.updatedAt.toISOString();
+    return { ...baseDto, updatedAt: stringifiedUpdatedAt };
   }
 }

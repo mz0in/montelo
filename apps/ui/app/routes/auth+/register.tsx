@@ -3,11 +3,11 @@ import { validationError } from "remix-validated-form";
 import { AuthApi, Configuration } from "@montelo/browser-client";
 import { authenticator } from "~/services/auth.server";
 import { Routes } from "~/routes";
-import { AuthLink, FormContainer, PageLayout } from "~/routes/auth+/_auth.styles";
-import { RegisterForm, registerValidator } from "~/routes/auth+/_forms/_register.form";
-import { authenticatedLoader } from "~/routes/auth+/_loaders/authenticated.loader";
+import { registerValidator } from "~/pages/auth/forms/RegisterForm";
+import { authenticatedLoader } from "~/common/auth/authenticated.loader";
 import { AUTH_STRATEGIES } from "~/services/strategies";
 import { env } from "~/config/environment.server";
+import { RegisterPage } from "~/pages/auth/RegisterPage";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -38,13 +38,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export const loader = authenticatedLoader;
 
-export default function AuthRegisterPage() {
-  return (
-    <PageLayout title="Register">
-      <FormContainer>
-        <RegisterForm />
-      </FormContainer>
-      <AuthLink to={Routes.auth.login}>Already have an account?</AuthLink>
-    </PageLayout>
-  );
+export default function RegisterRoute() {
+  return <RegisterPage />;
 }

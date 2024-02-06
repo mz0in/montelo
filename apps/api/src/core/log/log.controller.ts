@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { LogDto } from "./dto/log.dto";
@@ -11,11 +11,6 @@ import { LogService } from "./log.service";
 export class LogController {
   constructor(private logService: LogService) {}
 
-  @ApiOkResponse({
-    description: "All logs of a user.",
-    type: [LogDto],
-    status: 200,
-  })
   @UseGuards(JwtAuthGuard)
   @Get()
   async getAll(

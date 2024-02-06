@@ -2,7 +2,6 @@ import { Log } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
 
 import { DatabaseService } from "../../database";
-import { ApiKeys } from "../apiKey/apiKey.enum";
 
 @Injectable()
 export class LogService {
@@ -15,19 +14,13 @@ export class LogService {
         projectId,
       },
       include: {
-        apiKeys: {
-          where: {
-            type: {
-              equals: ApiKeys.MONTELO,
-            },
-          },
-        },
+        apiKey: true
       },
     });
 
     return this.db.log.findMany({
       where: {
-        apiKey: environment.apiKeys[0].key,
+        apiKey: environment.apiKey!.key,
       },
       orderBy: {
         createdAt: "desc",

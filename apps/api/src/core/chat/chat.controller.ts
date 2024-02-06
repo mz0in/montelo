@@ -14,7 +14,7 @@ export class ChatController {
 
   @Post()
   async chat(@Req() req: Request, @Res() res: Response) {
-    const monteloApiKey = req.headers["x-montelo-api-key"] as string | undefined;
+    const monteloApiKey = req.headers["x-montelo-actions-key"] as string | undefined;
     if (!monteloApiKey) {
       throw new UnauthorizedException();
     }

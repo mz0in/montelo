@@ -11,10 +11,8 @@ export const authenticator = new Authenticator<JwtPayload>(sessionStorage);
 
 authenticator.use(
   new FormStrategy(async ({ form }) => {
-    console.log("Inside formstrategy");
     const email = form.get("email");
     const password = form.get("password");
-    console.log("email");
     if (typeof email !== "string" || typeof password !== "string") {
       throw new Error("Invalid form: email and password must be strings.");
     }
@@ -37,3 +35,4 @@ authenticator.use(
   }),
   AUTH_STRATEGIES.local,
 );
+

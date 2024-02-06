@@ -5,7 +5,6 @@ import { Queue } from "bull";
 
 import { QueueInput } from "./chat.types";
 
-
 @Injectable()
 export class ChatHealthIndicator extends HealthIndicator {
   constructor(@InjectQueue("track") protected readonly trackQueue: Queue<QueueInput>) {

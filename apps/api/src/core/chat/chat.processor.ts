@@ -10,7 +10,7 @@ export class ChatProcessor {
 
   @Process()
   async handleTrack(job: Job<QueueInput>) {
-    // make sure the api key exists
+    // make sure the actions key exists
     await this.db.apiKey.findUniqueOrThrow({
       where: {
         key: job.data.monteloApiKey,

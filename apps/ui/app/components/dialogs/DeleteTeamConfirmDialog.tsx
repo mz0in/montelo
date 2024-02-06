@@ -21,7 +21,7 @@ export const DeleteTeamConfirmDialog = ({ teamName, teamId, isDialogOpen, setIsD
   const fetcher = useFetcher();
 
   const handleDelete = () => {
-    fetcher.submit({ id: teamId }, { method: "post", action: Routes.api.deleteTeam });
+    fetcher.submit({ id: teamId }, { method: "post", action: Routes.actions.team.delete });
     setIsDialogOpen(false);
   };
 

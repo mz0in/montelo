@@ -1,6 +1,6 @@
 import { LogTable } from "~/components/tables/LogTable/LogTable";
 import { LogDto } from "@montelo/browser-client";
-import { withAuth } from "~/routes/_common/withAuth";
+import { withAuth } from "~/common/auth/withAuth";
 import { json, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 

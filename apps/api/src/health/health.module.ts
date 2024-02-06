@@ -6,7 +6,6 @@ import { ChatModule } from "../core/chat/chat.module";
 import { DatabaseModule } from "../database";
 import { HealthController } from "./health.controller";
 
-
 @Module({
   imports: [TerminusModule, HttpModule, DatabaseModule, ChatModule],
   controllers: [HealthController],

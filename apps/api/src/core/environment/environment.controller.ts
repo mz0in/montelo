@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { EnvironmentDto } from "./dto/environment.dto";
@@ -11,11 +11,6 @@ import { EnvironmentService } from "./environment.service";
 export class EnvironmentController {
   constructor(private environmentService: EnvironmentService) {}
 
-  @ApiOkResponse({
-    description: "The environment.",
-    type: EnvironmentDto,
-    status: 200,
-  })
   @UseGuards(JwtAuthGuard)
   @Get(":envId")
   async get(

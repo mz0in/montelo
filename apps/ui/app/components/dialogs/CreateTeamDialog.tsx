@@ -45,7 +45,7 @@ export function CreateTeamDialog() {
             Invites coming soon!
           </DialogDescription>
         </DialogHeader>
-        <fetcher.Form method="post" action={Routes.api.createTeam} onSubmit={handleSubmit}>
+        <fetcher.Form method="post" action={Routes.actions.team.create} onSubmit={handleSubmit}>
           <fieldset disabled={isSubmitting} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">

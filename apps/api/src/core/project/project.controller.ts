@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiTags } from "@nestjs/swagger";
 
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { CreateProjectInput } from "./dto/create-project.input";
@@ -13,11 +13,6 @@ import { ProjectService } from "./project.service";
 export class ProjectController {
   constructor(private projectService: ProjectService) {}
 
-  @ApiOkResponse({
-    description: "The full project (team and environments included).",
-    type: FullProjectDto,
-    status: 200,
-  })
   @UseGuards(JwtAuthGuard)
   @Get(":projectId")
   async get(@Param("projectId") projectId: string): Promise<FullProjectDto> {
@@ -25,11 +20,6 @@ export class ProjectController {
     return FullProjectDto.fromFullProject(fullProject);
   }
 
-  @ApiOkResponse({
-    description: "The created project.",
-    type: ProjectDto,
-    status: 200,
-  })
   @ApiBody({
     type: CreateProjectInput,
   })

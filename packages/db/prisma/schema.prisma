@@ -67,7 +67,7 @@ model Environment {
   // relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  apiKeys ApiKey[]
+  apiKey ApiKey?
 
   // dates
   createdAt DateTime @default(now())
@@ -124,9 +124,8 @@ model ApiKey {
   id String @id @default(uuid())
 
   // properties
-  type   String
   key    String  @unique
-  envId  String
+  envId  String  @unique
   viewed Boolean @default(false)
 
   // relations

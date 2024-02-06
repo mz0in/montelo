@@ -44,7 +44,7 @@ export const NewProjectDialog = ({ teamName, teamId }: NewProjectDialogProps) =>
         <Button variant={"secondary"}>Add Project</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <fetcher.Form method="post" action={Routes.api.addProject} onSubmit={handleSubmit}>
+        <fetcher.Form method="post" action={Routes.actions.project.create} onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add Project</DialogTitle>
             <DialogDescription>

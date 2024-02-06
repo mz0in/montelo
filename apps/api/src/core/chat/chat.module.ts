@@ -6,7 +6,6 @@ import { ChatController } from "./chat.controller";
 import { ChatHealthIndicator } from "./chat.health";
 import { ChatProcessor } from "./chat.processor";
 
-
 @Module({
   imports: [
     BullModule.registerQueue({

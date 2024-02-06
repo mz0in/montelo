@@ -4,7 +4,6 @@ import { genSalt, hash } from "bcrypt";
 import { omit } from "lodash";
 
 import { DatabaseService } from "../../database";
-import { ApiKeys } from "../apiKey/apiKey.enum";
 import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "../environment/environment.enums";
 import { CreateUserInput } from "./user.types";
@@ -98,12 +97,10 @@ export class UserService {
     await this.db.apiKey.createMany({
       data: [
         {
-          type: ApiKeys.MONTELO,
           key: devApiKey,
           envId: devEnvId,
         },
         {
-          type: ApiKeys.MONTELO,
           key: prodApiKey,
           envId: prodEnvId,
         },

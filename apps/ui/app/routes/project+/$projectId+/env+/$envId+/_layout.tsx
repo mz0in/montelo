@@ -1,6 +1,6 @@
 import { json, LoaderFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import { withAuth } from "~/routes/_common/withAuth";
+import { withAuth } from "~/common/auth/withAuth";
 import { Header } from "~/components/nav/header/header";
 import { Sidebar } from "~/components/nav/sidebar/sidebar";
 import { EnvLayoutLoader } from "~/types/envLayout.loader.types";

@@ -1,6 +1,7 @@
 import { ActionFunction, json } from "@remix-run/node";
 import _ from "lodash";
-import { withAuth } from "~/routes/_common/withAuth";
+import { withAuth } from "~/common/auth/withAuth";
+import { ProjectDto } from "@montelo/browser-client";
 
 export const action: ActionFunction = withAuth(async ({ api, request }) => {
   const formData = await request.formData();
@@ -9,12 +10,12 @@ export const action: ActionFunction = withAuth(async ({ api, request }) => {
   const teamId = formData.get("teamId")!.toString();
   const environment = formData.get("environment");
 
-  const team = await api.project().projectControllerCreate({
+  const project = await api.project().projectControllerCreate({
     createProjectInput: {
       name,
       teamId,
       envNames: environment ? [_.capitalize(environment.toString())] : [],
     },
   });
-  return json(team);
+  return json<ProjectDto>(project);
 });

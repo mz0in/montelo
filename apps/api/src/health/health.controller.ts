@@ -5,7 +5,6 @@ import { HealthCheck, HealthCheckService, PrismaHealthIndicator } from "@nestjs/
 import { ChatHealthIndicator } from "../core/chat/chat.health";
 import { DatabaseService } from "../database";
 
-
 @ApiTags("Health")
 @Controller("health")
 export class HealthController {

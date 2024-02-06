@@ -1439,40 +1439,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type EnvironmentCountOutputType
-   */
-
-  export type EnvironmentCountOutputType = {
-    apiKeys: number
-  }
-
-  export type EnvironmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    apiKeys?: boolean | EnvironmentCountOutputTypeCountApiKeysArgs
-  }
-
-  // Custom InputTypes
-
-  /**
-   * EnvironmentCountOutputType without action
-   */
-  export type EnvironmentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EnvironmentCountOutputType
-     */
-    select?: EnvironmentCountOutputTypeSelect<ExtArgs> | null
-  }
-
-
-  /**
-   * EnvironmentCountOutputType without action
-   */
-  export type EnvironmentCountOutputTypeCountApiKeysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApiKeyWhereInput
-  }
-
-
-
-  /**
    * Count Type UserCountOutputType
    */
 
@@ -3577,8 +3543,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    apiKeys?: boolean | Environment$apiKeysArgs<ExtArgs>
-    _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
+    apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
   }, ExtArgs["result"]["environment"]>
 
   export type EnvironmentSelectScalar = {
@@ -3591,8 +3556,7 @@ export namespace Prisma {
 
   export type EnvironmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    apiKeys?: boolean | Environment$apiKeysArgs<ExtArgs>
-    _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
+    apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
   }
 
 
@@ -3600,7 +3564,7 @@ export namespace Prisma {
     name: "Environment"
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>
-      apiKeys: Prisma.$ApiKeyPayload<ExtArgs>[]
+      apiKey: Prisma.$ApiKeyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3975,7 +3939,7 @@ export namespace Prisma {
 
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
-    apiKeys<T extends Environment$apiKeysArgs<ExtArgs> = {}>(args?: Subset<T, Environment$apiKeysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApiKeyPayload<ExtArgs>, T, 'findMany'> | Null>;
+    apiKey<T extends Environment$apiKeyArgs<ExtArgs> = {}>(args?: Subset<T, Environment$apiKeyArgs<ExtArgs>>): Prisma__ApiKeyClient<$Result.GetResult<Prisma.$ApiKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4322,9 +4286,9 @@ export namespace Prisma {
 
 
   /**
-   * Environment.apiKeys
+   * Environment.apiKey
    */
-  export type Environment$apiKeysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Environment$apiKeyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ApiKey
      */
@@ -4334,11 +4298,6 @@ export namespace Prisma {
      */
     include?: ApiKeyInclude<ExtArgs> | null
     where?: ApiKeyWhereInput
-    orderBy?: ApiKeyOrderByWithRelationInput | ApiKeyOrderByWithRelationInput[]
-    cursor?: ApiKeyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ApiKeyScalarFieldEnum | ApiKeyScalarFieldEnum[]
   }
 
 
@@ -6267,7 +6226,6 @@ export namespace Prisma {
 
   export type ApiKeyMinAggregateOutputType = {
     id: string | null
-    type: string | null
     key: string | null
     envId: string | null
     viewed: boolean | null
@@ -6277,7 +6235,6 @@ export namespace Prisma {
 
   export type ApiKeyMaxAggregateOutputType = {
     id: string | null
-    type: string | null
     key: string | null
     envId: string | null
     viewed: boolean | null
@@ -6287,7 +6244,6 @@ export namespace Prisma {
 
   export type ApiKeyCountAggregateOutputType = {
     id: number
-    type: number
     key: number
     envId: number
     viewed: number
@@ -6299,7 +6255,6 @@ export namespace Prisma {
 
   export type ApiKeyMinAggregateInputType = {
     id?: true
-    type?: true
     key?: true
     envId?: true
     viewed?: true
@@ -6309,7 +6264,6 @@ export namespace Prisma {
 
   export type ApiKeyMaxAggregateInputType = {
     id?: true
-    type?: true
     key?: true
     envId?: true
     viewed?: true
@@ -6319,7 +6273,6 @@ export namespace Prisma {
 
   export type ApiKeyCountAggregateInputType = {
     id?: true
-    type?: true
     key?: true
     envId?: true
     viewed?: true
@@ -6402,7 +6355,6 @@ export namespace Prisma {
 
   export type ApiKeyGroupByOutputType = {
     id: string
-    type: string
     key: string
     envId: string
     viewed: boolean
@@ -6429,7 +6381,6 @@ export namespace Prisma {
 
   export type ApiKeySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    type?: boolean
     key?: boolean
     envId?: boolean
     viewed?: boolean
@@ -6440,7 +6391,6 @@ export namespace Prisma {
 
   export type ApiKeySelectScalar = {
     id?: boolean
-    type?: boolean
     key?: boolean
     envId?: boolean
     viewed?: boolean
@@ -6460,7 +6410,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      type: string
       key: string
       envId: string
       viewed: boolean
@@ -6862,7 +6811,6 @@ export namespace Prisma {
    */ 
   interface ApiKeyFieldRefs {
     readonly id: FieldRef<"ApiKey", 'String'>
-    readonly type: FieldRef<"ApiKey", 'String'>
     readonly key: FieldRef<"ApiKey", 'String'>
     readonly envId: FieldRef<"ApiKey", 'String'>
     readonly viewed: FieldRef<"ApiKey", 'Boolean'>
@@ -8334,7 +8282,6 @@ export namespace Prisma {
 
   export const ApiKeyScalarFieldEnum: {
     id: 'id',
-    type: 'type',
     key: 'key',
     envId: 'envId',
     viewed: 'viewed',
@@ -8616,7 +8563,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
-    apiKeys?: ApiKeyListRelationFilter
+    apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }
 
   export type EnvironmentOrderByWithRelationInput = {
@@ -8626,7 +8573,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
-    apiKeys?: ApiKeyOrderByRelationAggregateInput
+    apiKey?: ApiKeyOrderByWithRelationInput
   }
 
   export type EnvironmentWhereUniqueInput = Prisma.AtLeast<{
@@ -8639,7 +8586,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
-    apiKeys?: ApiKeyListRelationFilter
+    apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }, "id">
 
   export type EnvironmentOrderByWithAggregationInput = {
@@ -8797,7 +8744,6 @@ export namespace Prisma {
     OR?: ApiKeyWhereInput[]
     NOT?: ApiKeyWhereInput | ApiKeyWhereInput[]
     id?: StringFilter<"ApiKey"> | string
-    type?: StringFilter<"ApiKey"> | string
     key?: StringFilter<"ApiKey"> | string
     envId?: StringFilter<"ApiKey"> | string
     viewed?: BoolFilter<"ApiKey"> | boolean
@@ -8808,7 +8754,6 @@ export namespace Prisma {
 
   export type ApiKeyOrderByWithRelationInput = {
     id?: SortOrder
-    type?: SortOrder
     key?: SortOrder
     envId?: SortOrder
     viewed?: SortOrder
@@ -8820,20 +8765,18 @@ export namespace Prisma {
   export type ApiKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     key?: string
+    envId?: string
     AND?: ApiKeyWhereInput | ApiKeyWhereInput[]
     OR?: ApiKeyWhereInput[]
     NOT?: ApiKeyWhereInput | ApiKeyWhereInput[]
-    type?: StringFilter<"ApiKey"> | string
-    envId?: StringFilter<"ApiKey"> | string
     viewed?: BoolFilter<"ApiKey"> | boolean
     createdAt?: DateTimeFilter<"ApiKey"> | Date | string
     updatedAt?: DateTimeFilter<"ApiKey"> | Date | string
     environment?: XOR<EnvironmentRelationFilter, EnvironmentWhereInput>
-  }, "id" | "key">
+  }, "id" | "key" | "envId">
 
   export type ApiKeyOrderByWithAggregationInput = {
     id?: SortOrder
-    type?: SortOrder
     key?: SortOrder
     envId?: SortOrder
     viewed?: SortOrder
@@ -8849,7 +8792,6 @@ export namespace Prisma {
     OR?: ApiKeyScalarWhereWithAggregatesInput[]
     NOT?: ApiKeyScalarWhereWithAggregatesInput | ApiKeyScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ApiKey"> | string
-    type?: StringWithAggregatesFilter<"ApiKey"> | string
     key?: StringWithAggregatesFilter<"ApiKey"> | string
     envId?: StringWithAggregatesFilter<"ApiKey"> | string
     viewed?: BoolWithAggregatesFilter<"ApiKey"> | boolean
@@ -9103,7 +9045,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
-    apiKeys?: ApiKeyCreateNestedManyWithoutEnvironmentInput
+    apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
   export type EnvironmentUncheckedCreateInput = {
@@ -9112,7 +9054,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    apiKeys?: ApiKeyUncheckedCreateNestedManyWithoutEnvironmentInput
+    apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
   export type EnvironmentUpdateInput = {
@@ -9121,7 +9063,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
-    apiKeys?: ApiKeyUpdateManyWithoutEnvironmentNestedInput
+    apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateInput = {
@@ -9130,7 +9072,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    apiKeys?: ApiKeyUncheckedUpdateManyWithoutEnvironmentNestedInput
+    apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentCreateManyInput = {
@@ -9293,17 +9235,15 @@ export namespace Prisma {
 
   export type ApiKeyCreateInput = {
     id?: string
-    type: string
     key: string
     viewed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    environment: EnvironmentCreateNestedOneWithoutApiKeysInput
+    environment: EnvironmentCreateNestedOneWithoutApiKeyInput
   }
 
   export type ApiKeyUncheckedCreateInput = {
     id?: string
-    type: string
     key: string
     envId: string
     viewed?: boolean
@@ -9313,17 +9253,15 @@ export namespace Prisma {
 
   export type ApiKeyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    environment?: EnvironmentUpdateOneRequiredWithoutApiKeysNestedInput
+    environment?: EnvironmentUpdateOneRequiredWithoutApiKeyNestedInput
   }
 
   export type ApiKeyUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
@@ -9333,7 +9271,6 @@ export namespace Prisma {
 
   export type ApiKeyCreateManyInput = {
     id?: string
-    type: string
     key: string
     envId: string
     viewed?: boolean
@@ -9343,7 +9280,6 @@ export namespace Prisma {
 
   export type ApiKeyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9352,7 +9288,6 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
@@ -9662,14 +9597,9 @@ export namespace Prisma {
     isNot?: ProjectWhereInput
   }
 
-  export type ApiKeyListRelationFilter = {
-    every?: ApiKeyWhereInput
-    some?: ApiKeyWhereInput
-    none?: ApiKeyWhereInput
-  }
-
-  export type ApiKeyOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type ApiKeyNullableRelationFilter = {
+    is?: ApiKeyWhereInput | null
+    isNot?: ApiKeyWhereInput | null
   }
 
   export type EnvironmentCountOrderByAggregateInput = {
@@ -9787,7 +9717,6 @@ export namespace Prisma {
 
   export type ApiKeyCountOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
     key?: SortOrder
     envId?: SortOrder
     viewed?: SortOrder
@@ -9797,7 +9726,6 @@ export namespace Prisma {
 
   export type ApiKeyMaxOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
     key?: SortOrder
     envId?: SortOrder
     viewed?: SortOrder
@@ -9807,7 +9735,6 @@ export namespace Prisma {
 
   export type ApiKeyMinOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
     key?: SortOrder
     envId?: SortOrder
     viewed?: SortOrder
@@ -10156,18 +10083,16 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
-  export type ApiKeyCreateNestedManyWithoutEnvironmentInput = {
-    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput> | ApiKeyCreateWithoutEnvironmentInput[] | ApiKeyUncheckedCreateWithoutEnvironmentInput[]
-    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput | ApiKeyCreateOrConnectWithoutEnvironmentInput[]
-    createMany?: ApiKeyCreateManyEnvironmentInputEnvelope
-    connect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
+  export type ApiKeyCreateNestedOneWithoutEnvironmentInput = {
+    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
+    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
+    connect?: ApiKeyWhereUniqueInput
   }
 
-  export type ApiKeyUncheckedCreateNestedManyWithoutEnvironmentInput = {
-    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput> | ApiKeyCreateWithoutEnvironmentInput[] | ApiKeyUncheckedCreateWithoutEnvironmentInput[]
-    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput | ApiKeyCreateOrConnectWithoutEnvironmentInput[]
-    createMany?: ApiKeyCreateManyEnvironmentInputEnvelope
-    connect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
+  export type ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput = {
+    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
+    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
+    connect?: ApiKeyWhereUniqueInput
   }
 
   export type ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput = {
@@ -10178,32 +10103,24 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutEnvironmentsInput, ProjectUpdateWithoutEnvironmentsInput>, ProjectUncheckedUpdateWithoutEnvironmentsInput>
   }
 
-  export type ApiKeyUpdateManyWithoutEnvironmentNestedInput = {
-    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput> | ApiKeyCreateWithoutEnvironmentInput[] | ApiKeyUncheckedCreateWithoutEnvironmentInput[]
-    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput | ApiKeyCreateOrConnectWithoutEnvironmentInput[]
-    upsert?: ApiKeyUpsertWithWhereUniqueWithoutEnvironmentInput | ApiKeyUpsertWithWhereUniqueWithoutEnvironmentInput[]
-    createMany?: ApiKeyCreateManyEnvironmentInputEnvelope
-    set?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    disconnect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    delete?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    connect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    update?: ApiKeyUpdateWithWhereUniqueWithoutEnvironmentInput | ApiKeyUpdateWithWhereUniqueWithoutEnvironmentInput[]
-    updateMany?: ApiKeyUpdateManyWithWhereWithoutEnvironmentInput | ApiKeyUpdateManyWithWhereWithoutEnvironmentInput[]
-    deleteMany?: ApiKeyScalarWhereInput | ApiKeyScalarWhereInput[]
+  export type ApiKeyUpdateOneWithoutEnvironmentNestedInput = {
+    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
+    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
+    upsert?: ApiKeyUpsertWithoutEnvironmentInput
+    disconnect?: ApiKeyWhereInput | boolean
+    delete?: ApiKeyWhereInput | boolean
+    connect?: ApiKeyWhereUniqueInput
+    update?: XOR<XOR<ApiKeyUpdateToOneWithWhereWithoutEnvironmentInput, ApiKeyUpdateWithoutEnvironmentInput>, ApiKeyUncheckedUpdateWithoutEnvironmentInput>
   }
 
-  export type ApiKeyUncheckedUpdateManyWithoutEnvironmentNestedInput = {
-    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput> | ApiKeyCreateWithoutEnvironmentInput[] | ApiKeyUncheckedCreateWithoutEnvironmentInput[]
-    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput | ApiKeyCreateOrConnectWithoutEnvironmentInput[]
-    upsert?: ApiKeyUpsertWithWhereUniqueWithoutEnvironmentInput | ApiKeyUpsertWithWhereUniqueWithoutEnvironmentInput[]
-    createMany?: ApiKeyCreateManyEnvironmentInputEnvelope
-    set?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    disconnect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    delete?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    connect?: ApiKeyWhereUniqueInput | ApiKeyWhereUniqueInput[]
-    update?: ApiKeyUpdateWithWhereUniqueWithoutEnvironmentInput | ApiKeyUpdateWithWhereUniqueWithoutEnvironmentInput[]
-    updateMany?: ApiKeyUpdateManyWithWhereWithoutEnvironmentInput | ApiKeyUpdateManyWithWhereWithoutEnvironmentInput[]
-    deleteMany?: ApiKeyScalarWhereInput | ApiKeyScalarWhereInput[]
+  export type ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput = {
+    create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
+    connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
+    upsert?: ApiKeyUpsertWithoutEnvironmentInput
+    disconnect?: ApiKeyWhereInput | boolean
+    delete?: ApiKeyWhereInput | boolean
+    connect?: ApiKeyWhereUniqueInput
+    update?: XOR<XOR<ApiKeyUpdateToOneWithWhereWithoutEnvironmentInput, ApiKeyUpdateWithoutEnvironmentInput>, ApiKeyUncheckedUpdateWithoutEnvironmentInput>
   }
 
   export type MembershipCreateNestedManyWithoutUserInput = {
@@ -10280,9 +10197,9 @@ export namespace Prisma {
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutMembersInput, TeamUpdateWithoutMembersInput>, TeamUncheckedUpdateWithoutMembersInput>
   }
 
-  export type EnvironmentCreateNestedOneWithoutApiKeysInput = {
-    create?: XOR<EnvironmentCreateWithoutApiKeysInput, EnvironmentUncheckedCreateWithoutApiKeysInput>
-    connectOrCreate?: EnvironmentCreateOrConnectWithoutApiKeysInput
+  export type EnvironmentCreateNestedOneWithoutApiKeyInput = {
+    create?: XOR<EnvironmentCreateWithoutApiKeyInput, EnvironmentUncheckedCreateWithoutApiKeyInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutApiKeyInput
     connect?: EnvironmentWhereUniqueInput
   }
 
@@ -10290,12 +10207,12 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type EnvironmentUpdateOneRequiredWithoutApiKeysNestedInput = {
-    create?: XOR<EnvironmentCreateWithoutApiKeysInput, EnvironmentUncheckedCreateWithoutApiKeysInput>
-    connectOrCreate?: EnvironmentCreateOrConnectWithoutApiKeysInput
-    upsert?: EnvironmentUpsertWithoutApiKeysInput
+  export type EnvironmentUpdateOneRequiredWithoutApiKeyNestedInput = {
+    create?: XOR<EnvironmentCreateWithoutApiKeyInput, EnvironmentUncheckedCreateWithoutApiKeyInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutApiKeyInput
+    upsert?: EnvironmentUpsertWithoutApiKeyInput
     connect?: EnvironmentWhereUniqueInput
-    update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutApiKeysInput, EnvironmentUpdateWithoutApiKeysInput>, EnvironmentUncheckedUpdateWithoutApiKeysInput>
+    update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutApiKeyInput, EnvironmentUpdateWithoutApiKeyInput>, EnvironmentUncheckedUpdateWithoutApiKeyInput>
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -10609,7 +10526,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    apiKeys?: ApiKeyCreateNestedManyWithoutEnvironmentInput
+    apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
   export type EnvironmentUncheckedCreateWithoutProjectInput = {
@@ -10617,7 +10534,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    apiKeys?: ApiKeyUncheckedCreateNestedManyWithoutEnvironmentInput
+    apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
   export type EnvironmentCreateOrConnectWithoutProjectInput = {
@@ -10707,7 +10624,6 @@ export namespace Prisma {
 
   export type ApiKeyCreateWithoutEnvironmentInput = {
     id?: string
-    type: string
     key: string
     viewed?: boolean
     createdAt?: Date | string
@@ -10716,7 +10632,6 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedCreateWithoutEnvironmentInput = {
     id?: string
-    type: string
     key: string
     viewed?: boolean
     createdAt?: Date | string
@@ -10726,11 +10641,6 @@ export namespace Prisma {
   export type ApiKeyCreateOrConnectWithoutEnvironmentInput = {
     where: ApiKeyWhereUniqueInput
     create: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
-  }
-
-  export type ApiKeyCreateManyEnvironmentInputEnvelope = {
-    data: ApiKeyCreateManyEnvironmentInput | ApiKeyCreateManyEnvironmentInput[]
-    skipDuplicates?: boolean
   }
 
   export type ProjectUpsertWithoutEnvironmentsInput = {
@@ -10760,33 +10670,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ApiKeyUpsertWithWhereUniqueWithoutEnvironmentInput = {
-    where: ApiKeyWhereUniqueInput
+  export type ApiKeyUpsertWithoutEnvironmentInput = {
     update: XOR<ApiKeyUpdateWithoutEnvironmentInput, ApiKeyUncheckedUpdateWithoutEnvironmentInput>
     create: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
+    where?: ApiKeyWhereInput
   }
 
-  export type ApiKeyUpdateWithWhereUniqueWithoutEnvironmentInput = {
-    where: ApiKeyWhereUniqueInput
+  export type ApiKeyUpdateToOneWithWhereWithoutEnvironmentInput = {
+    where?: ApiKeyWhereInput
     data: XOR<ApiKeyUpdateWithoutEnvironmentInput, ApiKeyUncheckedUpdateWithoutEnvironmentInput>
   }
 
-  export type ApiKeyUpdateManyWithWhereWithoutEnvironmentInput = {
-    where: ApiKeyScalarWhereInput
-    data: XOR<ApiKeyUpdateManyMutationInput, ApiKeyUncheckedUpdateManyWithoutEnvironmentInput>
+  export type ApiKeyUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    viewed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ApiKeyScalarWhereInput = {
-    AND?: ApiKeyScalarWhereInput | ApiKeyScalarWhereInput[]
-    OR?: ApiKeyScalarWhereInput[]
-    NOT?: ApiKeyScalarWhereInput | ApiKeyScalarWhereInput[]
-    id?: StringFilter<"ApiKey"> | string
-    type?: StringFilter<"ApiKey"> | string
-    key?: StringFilter<"ApiKey"> | string
-    envId?: StringFilter<"ApiKey"> | string
-    viewed?: BoolFilter<"ApiKey"> | boolean
-    createdAt?: DateTimeFilter<"ApiKey"> | Date | string
-    updatedAt?: DateTimeFilter<"ApiKey"> | Date | string
+  export type ApiKeyUncheckedUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    viewed?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MembershipCreateWithoutUserInput = {
@@ -10935,7 +10843,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutTeamNestedInput
   }
 
-  export type EnvironmentCreateWithoutApiKeysInput = {
+  export type EnvironmentCreateWithoutApiKeyInput = {
     id?: string
     name: string
     createdAt?: Date | string
@@ -10943,7 +10851,7 @@ export namespace Prisma {
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
   }
 
-  export type EnvironmentUncheckedCreateWithoutApiKeysInput = {
+  export type EnvironmentUncheckedCreateWithoutApiKeyInput = {
     id?: string
     name: string
     projectId: string
@@ -10951,23 +10859,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type EnvironmentCreateOrConnectWithoutApiKeysInput = {
+  export type EnvironmentCreateOrConnectWithoutApiKeyInput = {
     where: EnvironmentWhereUniqueInput
-    create: XOR<EnvironmentCreateWithoutApiKeysInput, EnvironmentUncheckedCreateWithoutApiKeysInput>
+    create: XOR<EnvironmentCreateWithoutApiKeyInput, EnvironmentUncheckedCreateWithoutApiKeyInput>
   }
 
-  export type EnvironmentUpsertWithoutApiKeysInput = {
-    update: XOR<EnvironmentUpdateWithoutApiKeysInput, EnvironmentUncheckedUpdateWithoutApiKeysInput>
-    create: XOR<EnvironmentCreateWithoutApiKeysInput, EnvironmentUncheckedCreateWithoutApiKeysInput>
+  export type EnvironmentUpsertWithoutApiKeyInput = {
+    update: XOR<EnvironmentUpdateWithoutApiKeyInput, EnvironmentUncheckedUpdateWithoutApiKeyInput>
+    create: XOR<EnvironmentCreateWithoutApiKeyInput, EnvironmentUncheckedCreateWithoutApiKeyInput>
     where?: EnvironmentWhereInput
   }
 
-  export type EnvironmentUpdateToOneWithWhereWithoutApiKeysInput = {
+  export type EnvironmentUpdateToOneWithWhereWithoutApiKeyInput = {
     where?: EnvironmentWhereInput
-    data: XOR<EnvironmentUpdateWithoutApiKeysInput, EnvironmentUncheckedUpdateWithoutApiKeysInput>
+    data: XOR<EnvironmentUpdateWithoutApiKeyInput, EnvironmentUncheckedUpdateWithoutApiKeyInput>
   }
 
-  export type EnvironmentUpdateWithoutApiKeysInput = {
+  export type EnvironmentUpdateWithoutApiKeyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10975,7 +10883,7 @@ export namespace Prisma {
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
   }
 
-  export type EnvironmentUncheckedUpdateWithoutApiKeysInput = {
+  export type EnvironmentUncheckedUpdateWithoutApiKeyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
@@ -11057,7 +10965,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    apiKeys?: ApiKeyUpdateManyWithoutEnvironmentNestedInput
+    apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateWithoutProjectInput = {
@@ -11065,48 +10973,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    apiKeys?: ApiKeyUncheckedUpdateManyWithoutEnvironmentNestedInput
+    apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateManyWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApiKeyCreateManyEnvironmentInput = {
-    id?: string
-    type: string
-    key: string
-    viewed?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ApiKeyUpdateWithoutEnvironmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    viewed?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApiKeyUncheckedUpdateWithoutEnvironmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    viewed?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApiKeyUncheckedUpdateManyWithoutEnvironmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11156,10 +11028,6 @@ export namespace Prisma {
      * @deprecated Use ProjectCountOutputTypeDefaultArgs instead
      */
     export type ProjectCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProjectCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use EnvironmentCountOutputTypeDefaultArgs instead
-     */
-    export type EnvironmentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserCountOutputTypeDefaultArgs instead
      */
