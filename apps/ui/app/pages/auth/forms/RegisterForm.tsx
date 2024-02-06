@@ -31,7 +31,7 @@ export const RegisterForm = () => {
       <FormInput name="firstName" label="First Name" placeholder="First Name" />
       <FormInput name="lastName" label="Last Name" placeholder="Last Name" />
       <FormInput name="email" label="Email" placeholder="Email" />
-      <FormInput name="password" label="Password" placeholder="Password" />
+      <FormInput name="password" label="Password" placeholder="Password" type={"password"} />
       <FormSubmitButton content="Register" />
       {actionData?.error && <p className="text-red-500 mt-1">{actionData.error}</p>}
     </ValidatedForm>
