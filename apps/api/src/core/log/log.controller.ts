@@ -7,20 +7,14 @@ import { LogService } from "./log.service";
 
 @ApiTags("Log")
 @ApiBearerAuth()
-@Controller("project/:projectId/env/:envId/log")
+@Controller("env/:envId/log")
 export class LogController {
   constructor(private logService: LogService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getAll(
-    @Param("projectId") projectId: string,
-    @Param("envId") envId: string,
-  ): Promise<LogDto[]> {
-    const logs = await this.logService.findAllForEnv({
-      envId,
-      projectId,
-    });
+  async getAll(@Param("envId") envId: string): Promise<LogDto[]> {
+    const logs = await this.logService.findAllTopLevel(envId);
     return logs.map(LogDto.fromLog);
   }
 }

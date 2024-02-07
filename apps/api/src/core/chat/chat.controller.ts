@@ -5,21 +5,31 @@ import axios, { AxiosRequestConfig } from "axios";
 import { Queue } from "bull";
 import { Request, Response } from "express";
 
+import { DatabaseService } from "../../database";
+import { ApiKeyService } from "../apiKey/apiKey.service";
 import { QueueInput } from "./chat.types";
 
 @ApiTags("Chat")
 @Controller("chat/completions")
 export class ChatController {
-  constructor(@InjectQueue("track") private readonly trackQueue: Queue<QueueInput>) {}
+  constructor(
+    @InjectQueue("track") private readonly trackQueue: Queue<QueueInput>,
+    private db: DatabaseService,
+    private apiKeyService: ApiKeyService,
+  ) {}
 
   @Post()
   async chat(@Req() req: Request, @Res() res: Response) {
-    const monteloApiKey = req.headers["x-montelo-actions-key"] as string | undefined;
+    const monteloApiKey = req.headers["x-montelo-api-key"] as string | undefined;
     if (!monteloApiKey) {
       throw new UnauthorizedException();
     }
 
-    const openAIChatUrl = "https://api.openai.com/v1/chat/completions";
+    // verify the montelo API key
+    const verified = await this.apiKeyService.verifyApiKey(monteloApiKey);
+    if (!verified) {
+      throw new UnauthorizedException();
+    }
 
     const config: AxiosRequestConfig = {
       headers: {
@@ -29,7 +39,11 @@ export class ChatController {
 
     try {
       const start = new Date();
-      const response = await axios.post(openAIChatUrl, req.body, config);
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        req.body,
+        config,
+      );
       const end = new Date();
 
       const duration = (end.getTime() - start.getTime()) / 1000;

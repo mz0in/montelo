@@ -10,16 +10,15 @@ type LoaderType = {
 
 export const loader: LoaderFunction = withAuth(async ({ api, user, params }) => {
   const envId = params.envId!;
-  const projectId = params.projectId!;
 
   const logs = await api.log().logControllerGetAll({
     envId,
-    projectId,
   });
+
   return json<LoaderType>({ logs });
 });
 
 export default function LogsPage() {
   const { logs } = useLoaderData<LoaderType>();
-  return <LogTable logs={logs}/>;
+  return <LogTable logs={logs} />;
 };

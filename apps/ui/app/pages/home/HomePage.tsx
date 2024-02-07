@@ -10,7 +10,7 @@ export const HomePage = () => {
   return (
     <div className="flex flex-col h-screen">
       <header className="mx-32">
-        <nav className="mx-auto flex w-full items-center justify-between p-6 lg:px-4" aria-label="Global">
+        <nav className="mx-auto flex w-full items-center justify-between py-6 pl-4 pr-8" aria-label="Global">
           <div className="flex flex-row items-center p-4 gap-2">
             <img className="h-8 w-auto" src={"/logo.png"} alt="Logo" />
             <p className={"text-xl"}>MonteloAI</p>

@@ -5,7 +5,6 @@ import type { AppData } from "@remix-run/react/dist/data";
 import type { SerializeFrom } from "@remix-run/server-runtime";
 import { useEffect, useState } from "react";
 
-
 /**
  * A higher-order function that creates a new FetcherWithComponentsReset instance, which extends the FetcherWithComponents interface.
  * The new instance includes an additional method `reset` that can be used to reset the state of the fetcher.

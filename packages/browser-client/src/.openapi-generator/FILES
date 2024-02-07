@@ -1,4 +1,4 @@
-.openapi-generator-ignore
+apis/AnalyticsApi.ts
 apis/ApiKeyApi.ts
 apis/AuthApi.ts
 apis/ChatApi.ts
@@ -14,6 +14,7 @@ models/ApiKeyWithEnvDto.ts
 models/AuthUserDto.ts
 models/CreateProjectInput.ts
 models/CreateTeamInput.ts
+models/DashboardAnalyticsDto.ts
 models/DeleteSuccessDto.ts
 models/EnvironmentDto.ts
 models/FullMembershipDto.ts

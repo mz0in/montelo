@@ -1,10 +1,35 @@
-import { Link, useLoaderData, useLocation, useNavigate, useParams } from "@remix-run/react";
-import { BookOpenText, GanttChart, Home, LayoutDashboard } from "lucide-react";
+import { Link, useLoaderData, useLocation, useParams } from "@remix-run/react";
+import {
+  BookOpenText,
+  Database,
+  FlaskConical,
+  GanttChart,
+  HeartHandshake,
+  Home,
+  LayoutDashboard,
+  Rocket,
+  TerminalSquare,
+} from "lucide-react";
 import { Routes } from "~/routes";
 import { EnvLayoutLoader } from "~/types/envLayout.loader.types";
-import { MouseEventHandler } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
-const SidebarItems = [
+type BaseSidebarItem = {
+  name: string;
+  icon: JSX.Element;
+}
+
+type DisabledItem = BaseSidebarItem & {
+  disabled: true
+}
+
+type LinkItem = BaseSidebarItem & {
+  href: (params: any) => string;
+}
+
+type SidebarItem = DisabledItem | LinkItem;
+
+const SidebarItems: SidebarItem[] = [
   {
     name: "Dashboard",
     href: Routes.app.project.env.dashboard,
@@ -15,9 +40,35 @@ const SidebarItems = [
     href: Routes.app.project.env.logs,
     icon: <GanttChart size={20} />,
   },
+  {
+    name: "Playground",
+    disabled: true,
+    icon: <TerminalSquare size={20} />,
+  },
+  {
+    name: "Datasets",
+    disabled: true,
+    icon: <Database size={20} />,
+  },
+  {
+    name: "Experiments",
+    disabled: true,
+    icon: <FlaskConical size={20} />,
+  },
+  {
+    name: "Deployments",
+    disabled: true,
+    icon: <Rocket size={20} />,
+  },
 ];
 
 const BottomSidebarItems = [
+  {
+    name: "Support",
+    // TODO: change to Discord link
+    href: "mailto:founders@montelo.ai",
+    icon: <HeartHandshake size={20} />,
+  },
   {
     name: "Documentation",
     href: Routes.external.documentation,
@@ -28,20 +79,36 @@ const BottomSidebarItems = [
 export const Sidebar = () => {
   const { project } = useLoaderData<EnvLayoutLoader>();
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const params = useParams();
   const envId = params.envId!;
-
-  const navigateToRoot: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    navigate(Routes.app.root);
-  };
 
   const SidebarItemsComponent = () => SidebarItems.map((item) => {
     const params = {
       envId,
       projectId: project.id,
     };
+
+    if ("disabled" in item) {
+      return (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <li key={item.name}
+                  className="flex items-center py-2 px-4 rounded-lg text-muted-foreground cursor-not-allowed">
+                <div className="flex justify-center w-8">
+                  {item.icon}
+                </div>
+                <span className="ml-2 whitespace-nowrap">{item.name}</span>
+              </li>
+            </TooltipTrigger>
+            <TooltipContent side={"right"} sideOffset={-40} align={"start"}>
+              <p>Coming Soon</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+
     return (
       <li key={item.name}>
         <Link

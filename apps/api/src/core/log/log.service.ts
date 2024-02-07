@@ -7,25 +7,15 @@ import { DatabaseService } from "../../database";
 export class LogService {
   constructor(private db: DatabaseService) {}
 
-  async findAllForEnv({ envId, projectId }: { envId: string; projectId: string }): Promise<Log[]> {
-    const environment = await this.db.environment.findUniqueOrThrow({
-      where: {
-        id: envId,
-        projectId,
-      },
-      include: {
-        apiKey: true
-      },
-    });
-
+  async findAllTopLevel(envId: string, options?: { take?: number }): Promise<Log[]> {
     return this.db.log.findMany({
       where: {
-        apiKey: environment.apiKey!.key,
+        envId,
       },
       orderBy: {
-        createdAt: "desc",
+        startTime: "desc",
       },
-      take: 5000,
+      take: options?.take || 5000,
     });
   }
 }

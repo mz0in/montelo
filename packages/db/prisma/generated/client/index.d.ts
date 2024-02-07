@@ -7188,7 +7188,7 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    apiKey: string | null
+    envId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7206,7 +7206,7 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    apiKey: string | null
+    envId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7228,7 +7228,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    apiKey: number
+    envId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7268,7 +7268,7 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    apiKey?: true
+    envId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7286,7 +7286,7 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    apiKey?: true
+    envId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -7308,7 +7308,7 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    apiKey?: true
+    envId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -7417,7 +7417,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    apiKey: string
+    envId: string
     createdAt: Date
     updatedAt: Date
     _count: LogCountAggregateOutputType | null
@@ -7458,7 +7458,7 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
-    apiKey?: boolean
+    envId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["log"]>
@@ -7480,7 +7480,7 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
-    apiKey?: boolean
+    envId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -7506,7 +7506,7 @@ export namespace Prisma {
       inputCost: number
       outputCost: number
       totalCost: number
-      apiKey: string
+      envId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["log"]>
@@ -7919,7 +7919,7 @@ export namespace Prisma {
     readonly inputCost: FieldRef<"Log", 'Float'>
     readonly outputCost: FieldRef<"Log", 'Float'>
     readonly totalCost: FieldRef<"Log", 'Float'>
-    readonly apiKey: FieldRef<"Log", 'String'>
+    readonly envId: FieldRef<"Log", 'String'>
     readonly createdAt: FieldRef<"Log", 'DateTime'>
     readonly updatedAt: FieldRef<"Log", 'DateTime'>
   }
@@ -8309,7 +8309,7 @@ export namespace Prisma {
     inputCost: 'inputCost',
     outputCost: 'outputCost',
     totalCost: 'totalCost',
-    apiKey: 'apiKey',
+    envId: 'envId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8819,7 +8819,7 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
-    apiKey?: StringFilter<"Log"> | string
+    envId?: StringFilter<"Log"> | string
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
   }
@@ -8841,7 +8841,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    apiKey?: SortOrder
+    envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8866,7 +8866,7 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
-    apiKey?: StringFilter<"Log"> | string
+    envId?: StringFilter<"Log"> | string
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
   }, "id">
@@ -8888,7 +8888,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    apiKey?: SortOrder
+    envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: LogCountOrderByAggregateInput
@@ -8918,7 +8918,7 @@ export namespace Prisma {
     inputCost?: FloatWithAggregatesFilter<"Log"> | number
     outputCost?: FloatWithAggregatesFilter<"Log"> | number
     totalCost?: FloatWithAggregatesFilter<"Log"> | number
-    apiKey?: StringWithAggregatesFilter<"Log"> | string
+    envId?: StringWithAggregatesFilter<"Log"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
   }
@@ -9312,7 +9312,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    apiKey: string
+    envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9334,7 +9334,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    apiKey: string
+    envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9356,7 +9356,7 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    apiKey?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9378,7 +9378,7 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    apiKey?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9400,7 +9400,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    apiKey: string
+    envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9422,7 +9422,7 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    apiKey?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9444,7 +9444,7 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    apiKey?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9811,7 +9811,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    apiKey?: SortOrder
+    envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9839,7 +9839,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    apiKey?: SortOrder
+    envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9857,7 +9857,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    apiKey?: SortOrder
+    envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

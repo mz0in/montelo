@@ -13,9 +13,11 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.1"
+    "@prisma/client": "^5.7.1",
+    "async": "^3.2.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.0",
     "prisma": "^5.8.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"

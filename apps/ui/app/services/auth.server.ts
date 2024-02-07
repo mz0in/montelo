@@ -35,4 +35,3 @@ authenticator.use(
   }),
   AUTH_STRATEGIES.local,
 );
-

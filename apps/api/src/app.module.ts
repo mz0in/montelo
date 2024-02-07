@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { AuthModule } from "./auth/auth.module";
+import { AnalyticsModule } from "./core/analytics/analytics.module";
 import { ChatModule } from "./core/chat/chat.module";
 import { EnvironmentModule } from "./core/environment/environment.module";
 import { LogModule } from "./core/log/log.module";
@@ -33,6 +34,7 @@ import { HealthModule } from "./health/health.module";
     MembershipModule,
     ChatModule,
     LogModule,
+    AnalyticsModule,
   ],
 })
 export class AppModule {}

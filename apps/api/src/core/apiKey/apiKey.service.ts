@@ -1,8 +1,8 @@
 import { Environment } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
-import { genSalt, hash } from "bcrypt";
 import { randomBytes } from "crypto";
 
+import { HashingService } from "../../common/services/hashing/hashing.service";
 import { DatabaseService } from "../../database";
 import { Environments } from "../environment/environment.enums";
 import {
@@ -13,10 +13,12 @@ import {
   RotateKeyParams,
 } from "./apiKey.types";
 
-
 @Injectable()
 export class ApiKeyService {
-  constructor(private db: DatabaseService) {}
+  constructor(
+    private db: DatabaseService,
+    private hashingService: HashingService,
+  ) {}
 
   async findAllForProject(projectId: string): Promise<ApiKeyWithEnvironment[]> {
     const envs = await this.db.environment.findMany({
@@ -93,10 +95,25 @@ export class ApiKeyService {
     return this.obfuscateApiKey(updatedKey);
   }
 
-  generateApiKey(prefix: Prefix): GeneratedKey {
+  async verifyApiKey(apiKey: string): Promise<boolean> {
+    const hashedInputKey = await this.hashingService.hash(apiKey);
+
+    const dbApiKey = await this.db.apiKey.findUniqueOrThrow({
+      where: {
+        key: hashedInputKey,
+      },
+      select: {
+        key: true,
+      },
+    });
+
+    return hashedInputKey === dbApiKey.key;
+  }
+
+  public generateApiKey(prefix: Prefix): GeneratedKey {
     const random = randomBytes(32).toString("base64url");
-    const removedDashed = random.replace("-", "");
-    return `sk-${prefix}-${removedDashed}`;
+    const cleaned = random.replace("-", "").replace("_", "");
+    return `sk-${prefix}-${cleaned}`;
   }
 
   private async findAllForEnv(env: Environment): Promise<ApiKeyWithEnvironment[]> {
@@ -116,9 +133,7 @@ export class ApiKeyService {
   }
 
   private async markKeyAsViewed(apiKeyId: string, key: string): Promise<ApiKeyWithEnvironment> {
-    const saltRounds = 10;
-    const salt = await genSalt(saltRounds);
-    const hashKey = await hash(key, salt);
+    const hashKey = await this.hashingService.hash(key);
 
     return this.db.apiKey.update({
       where: {

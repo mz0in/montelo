@@ -175,7 +175,7 @@ exports.Prisma.LogScalarFieldEnum = {
   inputCost: 'inputCost',
   outputCost: 'outputCost',
   totalCost: 'totalCost',
-  apiKey: 'apiKey',
+  envId: 'envId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -10,17 +10,18 @@ export class ChatProcessor {
 
   @Process()
   async handleTrack(job: Job<QueueInput>) {
-    // make sure the actions key exists
-    await this.db.apiKey.findUniqueOrThrow({
+    const environment = await this.db.environment.findFirstOrThrow({
       where: {
-        key: job.data.monteloApiKey,
+        apiKey: {
+          id: job.data.monteloApiKey,
+        },
       },
     });
 
     await this.db.log.create({
       data: {
         paths: "Coming Soon",
-        apiKey: job.data.monteloApiKey,
+        envId: environment.id,
         startTime: job.data.startTime,
         endTime: job.data.endTime,
         duration: job.data.duration,

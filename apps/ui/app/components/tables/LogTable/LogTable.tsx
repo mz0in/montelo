@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -18,16 +18,14 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Checkbox } from "~/components/ui/checkbox";
 import { LogDto } from "@montelo/browser-client";
 import { darkStyles, JsonView } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
+import { Input } from "~/components/ui/input";
 
 export const columns: ColumnDef<LogDto>[] = [
   {
@@ -54,6 +52,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "startTime",
+    id: "Timestamp",
     header: "Timestamp",
     cell: ({ row }) => (
       <div>{dayjs(row.getValue("startTime")).format("H:m:s:ss / D MMM YYYY")}</div>
@@ -61,6 +60,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "id",
+    id: "Log ID",
     header: "Log ID",
     cell: ({ row }) => (
       <div>{row.getValue("id")}</div>
@@ -68,6 +68,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "model",
+    id: "Model",
     header: "Model",
     cell: ({ row }) => (
       <div>{row.getValue("model")}</div>
@@ -75,6 +76,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "duration",
+    id: "Duration",
     header: "Duration",
     cell: ({ row }) => (
       <div>{row.getValue("duration")}s</div>
@@ -82,6 +84,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "inputTokenCount",
+    id: "Input Tokens",
     header: "Input Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("inputTokenCount")}</div>
@@ -89,6 +92,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "outputTokenCount",
+    id: "Output Tokens",
     header: "Output Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("outputTokenCount")}</div>
@@ -96,6 +100,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "totalTokenCount",
+    id: "Total Tokens",
     header: "Total Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("totalTokenCount")}</div>
@@ -103,6 +108,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "rawInput",
+    id: "Input",
     header: "Input",
     cell: ({ row }) => (
       <div>
@@ -116,6 +122,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "rawOutput",
+    id: "Output",
     header: "Output",
     cell: ({ row }) => (
       <div>
@@ -167,8 +174,10 @@ export function LogTable({ logs }: LogTableProps) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+    "Output Tokens": false,
+    "Input Tokens": false,
+  });
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -192,15 +201,15 @@ export function LogTable({ logs }: LogTableProps) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center pb-4">
-        {/*<Input*/}
-        {/*  placeholder="Filter emails..."*/}
-        {/*  value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}*/}
-        {/*  onChange={(event) =>*/}
-        {/*    table.getColumn("email")?.setFilterValue(event.target.value)*/}
-        {/*  }*/}
-        {/*  className="max-w-sm"*/}
-        {/*/>*/}
+      <div className="flex items-center pb-4 pt-0.5">
+        <Input
+          placeholder="Filter"
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-xs"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

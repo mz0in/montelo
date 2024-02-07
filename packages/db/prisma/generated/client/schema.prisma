@@ -159,7 +159,7 @@ model Log {
   inputCost        Float
   outputCost       Float
   totalCost        Float
-  apiKey           String
+  envId            String
 
   // dates
   createdAt DateTime @default(now())

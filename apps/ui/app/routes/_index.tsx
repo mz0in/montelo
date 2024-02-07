@@ -1,6 +1,6 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
-import { Routes } from "~/routes";
 import { withAuth } from "~/common/auth/withAuth";
+import { Routes } from "~/routes";
 
 export const loader: LoaderFunction = withAuth(async () => {
   return redirect(Routes.app.root);
