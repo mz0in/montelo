@@ -4,7 +4,7 @@ import { eachLimit } from "async";
 import { prisma } from "./client";
 
 const seedSingleBatch = async () => {
-  const envId = "ffb37205-18fe-4615-868a-ffb7ac6a944a";
+  const envId = "9b8bae7f-dde0-427f-9a83-3bab6446ee34";
   const now = new Date();
   const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
 
