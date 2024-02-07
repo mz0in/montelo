@@ -1,5 +1,11 @@
 # @montelo/types
 
+## 1.1.28
+
+### Patch Changes
+
+- y
+
 ## 1.1.27
 
 ### Patch Changes
