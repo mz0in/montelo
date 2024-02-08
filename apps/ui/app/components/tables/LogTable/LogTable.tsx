@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,7 +17,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
-  DropdownMenuContent,
+  DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -52,15 +52,13 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "startTime",
-    id: "Timestamp",
     header: "Timestamp",
     cell: ({ row }) => (
-      <div>{dayjs(row.getValue("startTime")).format("H:m:s:ss / D MMM YYYY")}</div>
+      <div>{dayjs(row.getValue("startTime")).format("MMM D YYYY HH:mm:ss")}</div>
     ),
   },
   {
     accessorKey: "id",
-    id: "Log ID",
     header: "Log ID",
     cell: ({ row }) => (
       <div>{row.getValue("id")}</div>
@@ -68,7 +66,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "model",
-    id: "Model",
     header: "Model",
     cell: ({ row }) => (
       <div>{row.getValue("model")}</div>
@@ -76,7 +73,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "duration",
-    id: "Duration",
     header: "Duration",
     cell: ({ row }) => (
       <div>{row.getValue("duration")}s</div>
@@ -84,7 +80,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "inputTokenCount",
-    id: "Input Tokens",
     header: "Input Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("inputTokenCount")}</div>
@@ -92,7 +87,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "outputTokenCount",
-    id: "Output Tokens",
     header: "Output Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("outputTokenCount")}</div>
@@ -100,7 +94,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "totalTokenCount",
-    id: "Total Tokens",
     header: "Total Tokens",
     cell: ({ row }) => (
       <div>{row.getValue("totalTokenCount")}</div>
@@ -108,7 +101,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "rawInput",
-    id: "Input",
     header: "Input",
     cell: ({ row }) => (
       <div>
@@ -122,7 +114,6 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "rawOutput",
-    id: "Output",
     header: "Output",
     cell: ({ row }) => (
       <div>
@@ -134,35 +125,35 @@ export const columns: ColumnDef<LogDto>[] = [
       </div>
     ),
   },
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ({ row }) => {
-  //     const payment = row.original;
-  //
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0">
-  //             <span className="sr-only">Open menu</span>
-  //             <DotsHorizontalIcon className="h-4 w-4" />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end">
-  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-  //           <DropdownMenuItem
-  //             onClick={() => navigator.clipboard.writeText(payment.id)}
-  //           >
-  //             Copy payment ID
-  //           </DropdownMenuItem>
-  //           <DropdownMenuSeparator />
-  //           <DropdownMenuItem>View customer</DropdownMenuItem>
-  //           <DropdownMenuItem>View payment details</DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     );
-  //   },
-  // },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <DotsHorizontalIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
 
 type LogTableProps = {
@@ -175,8 +166,8 @@ export function LogTable({ logs }: LogTableProps) {
     [],
   );
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
-    "Output Tokens": false,
-    "Input Tokens": false,
+    inputTokenCount: false,
+    outputTokenCount: false,
   });
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -203,7 +194,7 @@ export function LogTable({ logs }: LogTableProps) {
     <div className="w-full">
       <div className="flex items-center pb-4 pt-0.5">
         <Input
-          placeholder="Filter"
+          placeholder="Search output..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)

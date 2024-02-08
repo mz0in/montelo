@@ -27,6 +27,8 @@ const PATH_APP = {
     env: {
       dashboard: (params: EnvParams) => buildEnvPath(params)("dashboard"),
       logs: (params: EnvParams) => buildEnvPath(params)("logs"),
+      logId: (params: EnvParams & { logId: string }) =>
+        buildEnvPath(params)(`logs/${params.logId}`),
     },
   },
 };

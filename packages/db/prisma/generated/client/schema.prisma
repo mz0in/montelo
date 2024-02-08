@@ -150,6 +150,7 @@ model Log {
   model            String
   rawInput         Json
   rawOutput        Json
+  outputContent    String
   startTime        DateTime
   endTime          DateTime
   duration         Float
@@ -159,13 +160,21 @@ model Log {
   inputCost        Float
   outputCost       Float
   totalCost        Float
-  envId            String
+  score            Int?
+  feedback         String?
+  sessionId        String?
+  tags             Json
+  name             String?
+  userId           String? // the user can pass in a user ID to a log
+  metadata         Json // extra properties users can specify
+  envId            String // not a foreign key
 
   // dates
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // rename
-  @@index([isTopLevel])
+  @@index([envId, startTime])
+  @@index([envId, isTopLevel])
   @@map("log")
 }

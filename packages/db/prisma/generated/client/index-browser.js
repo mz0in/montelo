@@ -166,6 +166,7 @@ exports.Prisma.LogScalarFieldEnum = {
   model: 'model',
   rawInput: 'rawInput',
   rawOutput: 'rawOutput',
+  outputContent: 'outputContent',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
@@ -175,6 +176,13 @@ exports.Prisma.LogScalarFieldEnum = {
   inputCost: 'inputCost',
   outputCost: 'outputCost',
   totalCost: 'totalCost',
+  score: 'score',
+  feedback: 'feedback',
+  sessionId: 'sessionId',
+  tags: 'tags',
+  name: 'name',
+  userId: 'userId',
+  metadata: 'metadata',
   envId: 'envId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -198,6 +206,11 @@ exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.UserPermissionRole = exports.$Enums.UserPermissionRole = {
   MEMBER: 'MEMBER',

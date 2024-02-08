@@ -29,8 +29,8 @@ export class UserService {
     const hashPassword = await hash(params.password, salt);
 
     // default names
-    const defaultTeamName = "New Team";
-    const defaultProjectName = "New Project";
+    const defaultTeamName = "Personal";
+    const defaultProjectName = "Project X";
 
     // create the user
     const user = await this.db.user.create({

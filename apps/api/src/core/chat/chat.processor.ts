@@ -4,6 +4,7 @@ import { Job } from "bull";
 import { DatabaseService } from "../../database";
 import { QueueInput } from "./chat.types";
 
+
 @Processor("track")
 export class ChatProcessor {
   constructor(private db: DatabaseService) {}
@@ -20,13 +21,14 @@ export class ChatProcessor {
 
     await this.db.log.create({
       data: {
-        paths: "Coming Soon",
+        paths: [],
         envId: environment.id,
         startTime: job.data.startTime,
         endTime: job.data.endTime,
         duration: job.data.duration,
         rawInput: job.data.input,
         rawOutput: job.data.output,
+        outputContent: "Figure this out",
         model: job.data.input.model,
         isTopLevel: true,
         messages: job.data.input.messages,
@@ -36,6 +38,8 @@ export class ChatProcessor {
         outputCost: 0,
         totalCost: 0,
         totalTokenCount: job.data.output?.usage?.total_tokens || null,
+        tags: [],
+        metadata: {},
       },
     });
   }

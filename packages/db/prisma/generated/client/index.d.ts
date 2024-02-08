@@ -7163,6 +7163,7 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
+    score: number | null
   }
 
   export type LogSumAggregateOutputType = {
@@ -7173,12 +7174,14 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
+    score: number | null
   }
 
   export type LogMinAggregateOutputType = {
     id: string | null
     isTopLevel: boolean | null
     model: string | null
+    outputContent: string | null
     startTime: Date | null
     endTime: Date | null
     duration: number | null
@@ -7188,6 +7191,11 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
+    score: number | null
+    feedback: string | null
+    sessionId: string | null
+    name: string | null
+    userId: string | null
     envId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7197,6 +7205,7 @@ export namespace Prisma {
     id: string | null
     isTopLevel: boolean | null
     model: string | null
+    outputContent: string | null
     startTime: Date | null
     endTime: Date | null
     duration: number | null
@@ -7206,6 +7215,11 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
+    score: number | null
+    feedback: string | null
+    sessionId: string | null
+    name: string | null
+    userId: string | null
     envId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7219,6 +7233,7 @@ export namespace Prisma {
     model: number
     rawInput: number
     rawOutput: number
+    outputContent: number
     startTime: number
     endTime: number
     duration: number
@@ -7228,6 +7243,13 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
+    score: number
+    feedback: number
+    sessionId: number
+    tags: number
+    name: number
+    userId: number
+    metadata: number
     envId: number
     createdAt: number
     updatedAt: number
@@ -7243,6 +7265,7 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
+    score?: true
   }
 
   export type LogSumAggregateInputType = {
@@ -7253,12 +7276,14 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
+    score?: true
   }
 
   export type LogMinAggregateInputType = {
     id?: true
     isTopLevel?: true
     model?: true
+    outputContent?: true
     startTime?: true
     endTime?: true
     duration?: true
@@ -7268,6 +7293,11 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
+    score?: true
+    feedback?: true
+    sessionId?: true
+    name?: true
+    userId?: true
     envId?: true
     createdAt?: true
     updatedAt?: true
@@ -7277,6 +7307,7 @@ export namespace Prisma {
     id?: true
     isTopLevel?: true
     model?: true
+    outputContent?: true
     startTime?: true
     endTime?: true
     duration?: true
@@ -7286,6 +7317,11 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
+    score?: true
+    feedback?: true
+    sessionId?: true
+    name?: true
+    userId?: true
     envId?: true
     createdAt?: true
     updatedAt?: true
@@ -7299,6 +7335,7 @@ export namespace Prisma {
     model?: true
     rawInput?: true
     rawOutput?: true
+    outputContent?: true
     startTime?: true
     endTime?: true
     duration?: true
@@ -7308,6 +7345,13 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
+    score?: true
+    feedback?: true
+    sessionId?: true
+    tags?: true
+    name?: true
+    userId?: true
+    metadata?: true
     envId?: true
     createdAt?: true
     updatedAt?: true
@@ -7408,6 +7452,7 @@ export namespace Prisma {
     model: string
     rawInput: JsonValue
     rawOutput: JsonValue
+    outputContent: string
     startTime: Date
     endTime: Date
     duration: number
@@ -7417,6 +7462,13 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
+    score: number | null
+    feedback: string | null
+    sessionId: string | null
+    tags: JsonValue
+    name: string | null
+    userId: string | null
+    metadata: JsonValue
     envId: string
     createdAt: Date
     updatedAt: Date
@@ -7449,6 +7501,7 @@ export namespace Prisma {
     model?: boolean
     rawInput?: boolean
     rawOutput?: boolean
+    outputContent?: boolean
     startTime?: boolean
     endTime?: boolean
     duration?: boolean
@@ -7458,6 +7511,13 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
+    score?: boolean
+    feedback?: boolean
+    sessionId?: boolean
+    tags?: boolean
+    name?: boolean
+    userId?: boolean
+    metadata?: boolean
     envId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7471,6 +7531,7 @@ export namespace Prisma {
     model?: boolean
     rawInput?: boolean
     rawOutput?: boolean
+    outputContent?: boolean
     startTime?: boolean
     endTime?: boolean
     duration?: boolean
@@ -7480,6 +7541,13 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
+    score?: boolean
+    feedback?: boolean
+    sessionId?: boolean
+    tags?: boolean
+    name?: boolean
+    userId?: boolean
+    metadata?: boolean
     envId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7497,6 +7565,7 @@ export namespace Prisma {
       model: string
       rawInput: Prisma.JsonValue
       rawOutput: Prisma.JsonValue
+      outputContent: string
       startTime: Date
       endTime: Date
       duration: number
@@ -7506,6 +7575,13 @@ export namespace Prisma {
       inputCost: number
       outputCost: number
       totalCost: number
+      score: number | null
+      feedback: string | null
+      sessionId: string | null
+      tags: Prisma.JsonValue
+      name: string | null
+      userId: string | null
+      metadata: Prisma.JsonValue
       envId: string
       createdAt: Date
       updatedAt: Date
@@ -7910,6 +7986,7 @@ export namespace Prisma {
     readonly model: FieldRef<"Log", 'String'>
     readonly rawInput: FieldRef<"Log", 'Json'>
     readonly rawOutput: FieldRef<"Log", 'Json'>
+    readonly outputContent: FieldRef<"Log", 'String'>
     readonly startTime: FieldRef<"Log", 'DateTime'>
     readonly endTime: FieldRef<"Log", 'DateTime'>
     readonly duration: FieldRef<"Log", 'Float'>
@@ -7919,6 +7996,13 @@ export namespace Prisma {
     readonly inputCost: FieldRef<"Log", 'Float'>
     readonly outputCost: FieldRef<"Log", 'Float'>
     readonly totalCost: FieldRef<"Log", 'Float'>
+    readonly score: FieldRef<"Log", 'Int'>
+    readonly feedback: FieldRef<"Log", 'String'>
+    readonly sessionId: FieldRef<"Log", 'String'>
+    readonly tags: FieldRef<"Log", 'Json'>
+    readonly name: FieldRef<"Log", 'String'>
+    readonly userId: FieldRef<"Log", 'String'>
+    readonly metadata: FieldRef<"Log", 'Json'>
     readonly envId: FieldRef<"Log", 'String'>
     readonly createdAt: FieldRef<"Log", 'DateTime'>
     readonly updatedAt: FieldRef<"Log", 'DateTime'>
@@ -8300,6 +8384,7 @@ export namespace Prisma {
     model: 'model',
     rawInput: 'rawInput',
     rawOutput: 'rawOutput',
+    outputContent: 'outputContent',
     startTime: 'startTime',
     endTime: 'endTime',
     duration: 'duration',
@@ -8309,6 +8394,13 @@ export namespace Prisma {
     inputCost: 'inputCost',
     outputCost: 'outputCost',
     totalCost: 'totalCost',
+    score: 'score',
+    feedback: 'feedback',
+    sessionId: 'sessionId',
+    tags: 'tags',
+    name: 'name',
+    userId: 'userId',
+    metadata: 'metadata',
     envId: 'envId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -8347,6 +8439,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -8810,6 +8910,7 @@ export namespace Prisma {
     model?: StringFilter<"Log"> | string
     rawInput?: JsonFilter<"Log">
     rawOutput?: JsonFilter<"Log">
+    outputContent?: StringFilter<"Log"> | string
     startTime?: DateTimeFilter<"Log"> | Date | string
     endTime?: DateTimeFilter<"Log"> | Date | string
     duration?: FloatFilter<"Log"> | number
@@ -8819,6 +8920,13 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
+    score?: IntNullableFilter<"Log"> | number | null
+    feedback?: StringNullableFilter<"Log"> | string | null
+    sessionId?: StringNullableFilter<"Log"> | string | null
+    tags?: JsonFilter<"Log">
+    name?: StringNullableFilter<"Log"> | string | null
+    userId?: StringNullableFilter<"Log"> | string | null
+    metadata?: JsonFilter<"Log">
     envId?: StringFilter<"Log"> | string
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
@@ -8832,6 +8940,7 @@ export namespace Prisma {
     model?: SortOrder
     rawInput?: SortOrder
     rawOutput?: SortOrder
+    outputContent?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
     duration?: SortOrder
@@ -8841,6 +8950,13 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrderInput | SortOrder
+    feedback?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    name?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    metadata?: SortOrder
     envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8857,6 +8973,7 @@ export namespace Prisma {
     model?: StringFilter<"Log"> | string
     rawInput?: JsonFilter<"Log">
     rawOutput?: JsonFilter<"Log">
+    outputContent?: StringFilter<"Log"> | string
     startTime?: DateTimeFilter<"Log"> | Date | string
     endTime?: DateTimeFilter<"Log"> | Date | string
     duration?: FloatFilter<"Log"> | number
@@ -8866,6 +8983,13 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
+    score?: IntNullableFilter<"Log"> | number | null
+    feedback?: StringNullableFilter<"Log"> | string | null
+    sessionId?: StringNullableFilter<"Log"> | string | null
+    tags?: JsonFilter<"Log">
+    name?: StringNullableFilter<"Log"> | string | null
+    userId?: StringNullableFilter<"Log"> | string | null
+    metadata?: JsonFilter<"Log">
     envId?: StringFilter<"Log"> | string
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
@@ -8879,6 +9003,7 @@ export namespace Prisma {
     model?: SortOrder
     rawInput?: SortOrder
     rawOutput?: SortOrder
+    outputContent?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
     duration?: SortOrder
@@ -8888,6 +9013,13 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrderInput | SortOrder
+    feedback?: SortOrderInput | SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    name?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    metadata?: SortOrder
     envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8909,6 +9041,7 @@ export namespace Prisma {
     model?: StringWithAggregatesFilter<"Log"> | string
     rawInput?: JsonWithAggregatesFilter<"Log">
     rawOutput?: JsonWithAggregatesFilter<"Log">
+    outputContent?: StringWithAggregatesFilter<"Log"> | string
     startTime?: DateTimeWithAggregatesFilter<"Log"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"Log"> | Date | string
     duration?: FloatWithAggregatesFilter<"Log"> | number
@@ -8918,6 +9051,13 @@ export namespace Prisma {
     inputCost?: FloatWithAggregatesFilter<"Log"> | number
     outputCost?: FloatWithAggregatesFilter<"Log"> | number
     totalCost?: FloatWithAggregatesFilter<"Log"> | number
+    score?: IntNullableWithAggregatesFilter<"Log"> | number | null
+    feedback?: StringNullableWithAggregatesFilter<"Log"> | string | null
+    sessionId?: StringNullableWithAggregatesFilter<"Log"> | string | null
+    tags?: JsonWithAggregatesFilter<"Log">
+    name?: StringNullableWithAggregatesFilter<"Log"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Log"> | string | null
+    metadata?: JsonWithAggregatesFilter<"Log">
     envId?: StringWithAggregatesFilter<"Log"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
@@ -9303,6 +9443,7 @@ export namespace Prisma {
     model: string
     rawInput: JsonNullValueInput | InputJsonValue
     rawOutput: JsonNullValueInput | InputJsonValue
+    outputContent: string
     startTime: Date | string
     endTime: Date | string
     duration: number
@@ -9312,6 +9453,13 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
+    score?: number | null
+    feedback?: string | null
+    sessionId?: string | null
+    tags: JsonNullValueInput | InputJsonValue
+    name?: string | null
+    userId?: string | null
+    metadata: JsonNullValueInput | InputJsonValue
     envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9325,6 +9473,7 @@ export namespace Prisma {
     model: string
     rawInput: JsonNullValueInput | InputJsonValue
     rawOutput: JsonNullValueInput | InputJsonValue
+    outputContent: string
     startTime: Date | string
     endTime: Date | string
     duration: number
@@ -9334,6 +9483,13 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
+    score?: number | null
+    feedback?: string | null
+    sessionId?: string | null
+    tags: JsonNullValueInput | InputJsonValue
+    name?: string | null
+    userId?: string | null
+    metadata: JsonNullValueInput | InputJsonValue
     envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9347,6 +9503,7 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     rawInput?: JsonNullValueInput | InputJsonValue
     rawOutput?: JsonNullValueInput | InputJsonValue
+    outputContent?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: FloatFieldUpdateOperationsInput | number
@@ -9356,6 +9513,13 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: JsonNullValueInput | InputJsonValue
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9369,6 +9533,7 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     rawInput?: JsonNullValueInput | InputJsonValue
     rawOutput?: JsonNullValueInput | InputJsonValue
+    outputContent?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: FloatFieldUpdateOperationsInput | number
@@ -9378,6 +9543,13 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: JsonNullValueInput | InputJsonValue
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9391,6 +9563,7 @@ export namespace Prisma {
     model: string
     rawInput: JsonNullValueInput | InputJsonValue
     rawOutput: JsonNullValueInput | InputJsonValue
+    outputContent: string
     startTime: Date | string
     endTime: Date | string
     duration: number
@@ -9400,6 +9573,13 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
+    score?: number | null
+    feedback?: string | null
+    sessionId?: string | null
+    tags: JsonNullValueInput | InputJsonValue
+    name?: string | null
+    userId?: string | null
+    metadata: JsonNullValueInput | InputJsonValue
     envId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9413,6 +9593,7 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     rawInput?: JsonNullValueInput | InputJsonValue
     rawOutput?: JsonNullValueInput | InputJsonValue
+    outputContent?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: FloatFieldUpdateOperationsInput | number
@@ -9422,6 +9603,13 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: JsonNullValueInput | InputJsonValue
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9435,6 +9623,7 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     rawInput?: JsonNullValueInput | InputJsonValue
     rawOutput?: JsonNullValueInput | InputJsonValue
+    outputContent?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     duration?: FloatFieldUpdateOperationsInput | number
@@ -9444,6 +9633,13 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    feedback?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: JsonNullValueInput | InputJsonValue
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     envId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9794,6 +9990,37 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type LogCountOrderByAggregateInput = {
     id?: SortOrder
     paths?: SortOrder
@@ -9802,6 +10029,7 @@ export namespace Prisma {
     model?: SortOrder
     rawInput?: SortOrder
     rawOutput?: SortOrder
+    outputContent?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
     duration?: SortOrder
@@ -9811,6 +10039,13 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrder
+    feedback?: SortOrder
+    sessionId?: SortOrder
+    tags?: SortOrder
+    name?: SortOrder
+    userId?: SortOrder
+    metadata?: SortOrder
     envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9824,12 +10059,14 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrder
   }
 
   export type LogMaxOrderByAggregateInput = {
     id?: SortOrder
     isTopLevel?: SortOrder
     model?: SortOrder
+    outputContent?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
     duration?: SortOrder
@@ -9839,6 +10076,11 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrder
+    feedback?: SortOrder
+    sessionId?: SortOrder
+    name?: SortOrder
+    userId?: SortOrder
     envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9848,6 +10090,7 @@ export namespace Prisma {
     id?: SortOrder
     isTopLevel?: SortOrder
     model?: SortOrder
+    outputContent?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
     duration?: SortOrder
@@ -9857,6 +10100,11 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrder
+    feedback?: SortOrder
+    sessionId?: SortOrder
+    name?: SortOrder
+    userId?: SortOrder
     envId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9870,6 +10118,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
+    score?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -9927,6 +10176,40 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type ProjectCreateNestedManyWithoutTeamInput = {
@@ -10231,6 +10514,18 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -10338,6 +10633,31 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
   }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -10391,6 +10711,50 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type ProjectCreateWithoutTeamInput = {

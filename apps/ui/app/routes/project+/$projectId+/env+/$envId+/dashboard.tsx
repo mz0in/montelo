@@ -21,7 +21,7 @@ export const loader = withAuth(async ({ request, api, params }) => {
 
   const logs = await api.log().logControllerGetAll({
     envId,
-    take: "50",
+    take: "25",
   });
 
   return defer<DeferredDashboardLoader>({

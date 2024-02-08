@@ -2,9 +2,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { ArrowUpRightFromSquare, CircleSlash, DollarSign, GanttChart, Target, Timer } from "lucide-react";
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { AnalyticsControllerGetForDashboardDateSelectionEnum, LogDto } from "@montelo/browser-client";
-import { Await, Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { Await, Link, useLoaderData, useParams, useSearchParams } from "@remix-run/react";
 import dayjs from "dayjs";
 import { DashboardLoader } from "~/types/DashboardLoader.types";
 import { Suspense } from "react";
@@ -12,6 +12,7 @@ import { AnalyticsCard } from "~/pages/dashboard/cards/AnalyticsCard";
 import { BaseContent, BaseContentSkeleton } from "~/pages/dashboard/cards/BaseContent";
 import numbro from "numbro";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { Routes } from "~/routes";
 
 const data = [
   {
@@ -63,6 +64,7 @@ function RocketIcon(props: { className: string }) {
 }
 
 export const DashboardPage = () => {
+  const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { analytics, logs, costHistory } = useLoaderData<DashboardLoader>();
   const selectedValue = searchParams.get("dateSelection") || AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins;
@@ -70,12 +72,16 @@ export const DashboardPage = () => {
   const RecentLog = ({ log }: { log: LogDto }) => {
     return (
       <TableRow>
-        <TableCell className={"cursor-pointer hover:text-blue-500 hover:scale-110 hover:shadow-md"}>
-          <Link to={`/logs/${log.id}`} prefetch={"intent"}>
+        <TableCell className={"cursor-pointer"}>
+          <Link to={Routes.app.project.env.logId({
+            projectId: params.projectId!,
+            envId: params.envId!,
+            logId: log.id
+          })} prefetch={"intent"}>
             <ArrowUpRightFromSquare size={16} />
           </Link>
         </TableCell>
-        <TableCell>{dayjs(log.startTime).format("D MMM H:m:ss")}</TableCell>
+        <TableCell>{dayjs(log.startTime).format("D MMM H:mm:ss")}</TableCell>
         <TableCell>{log.model}</TableCell>
         <TableCell>{log.duration}s</TableCell>
         {/*TODO once we have totalCost, add that here*/}
@@ -87,9 +93,9 @@ export const DashboardPage = () => {
   const formatXDates = (tickItem: string): string => {
     const date = dayjs(tickItem);
     const formatMap: Record<AnalyticsControllerGetForDashboardDateSelectionEnum, string> = {
-      [AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins]: date.format("h:m:s a"),
-      [AnalyticsControllerGetForDashboardDateSelectionEnum._1Hr]: date.format("h:m:s a"),
-      [AnalyticsControllerGetForDashboardDateSelectionEnum._24Hrs]: date.format("h:m a"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins]: date.format("H:mm"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._1Hr]: date.format("H:mm"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._24Hrs]: date.format("H:mm"),
       [AnalyticsControllerGetForDashboardDateSelectionEnum._7Days]: date.format("MMM D"),
       [AnalyticsControllerGetForDashboardDateSelectionEnum._1Month]: date.format("MMM D"),
       [AnalyticsControllerGetForDashboardDateSelectionEnum._3Months]: date.format("MMM D"),
@@ -213,7 +219,13 @@ export const DashboardPage = () => {
 
                 return (
                   <ResponsiveContainer>
-                    <LineChart data={costHistory.costHistory}>
+                    <AreaChart data={costHistory.costHistory}>
+                      <defs>
+                        <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.5} />
+                          <stop offset="90%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
                       <XAxis
                         dataKey="intervalStart"
                         type={"category"}
@@ -238,16 +250,17 @@ export const DashboardPage = () => {
                         labelFormatter={(date) => dayjs(date).format("MMM D YYYY H:mm:ss")}
                         cursor={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 2 }}
                       />
-                      <Line
+                      <Area
                         isAnimationActive={false}
                         type="monotone"
                         dataKey="totalCost"
                         dot={false}
                         legendType={"none"}
-                        strokeWidth={2}
+                        strokeWidth={3}
                         stroke={"hsl(var(--primary))"}
+                        fill={"url(#area-gradient)"}
                       />
-                    </LineChart>
+                    </AreaChart>
                   </ResponsiveContainer>
                 );
               }}

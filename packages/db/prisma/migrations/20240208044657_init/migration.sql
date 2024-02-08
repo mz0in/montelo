@@ -61,7 +61,6 @@ CREATE TABLE "membership" (
 -- CreateTable
 CREATE TABLE "api_key" (
     "id" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
     "key" TEXT NOT NULL,
     "envId" TEXT NOT NULL,
     "viewed" BOOLEAN NOT NULL DEFAULT false,
@@ -80,6 +79,7 @@ CREATE TABLE "log" (
     "model" TEXT NOT NULL,
     "rawInput" JSONB NOT NULL,
     "rawOutput" JSONB NOT NULL,
+    "outputContent" TEXT NOT NULL,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
     "duration" DOUBLE PRECISION NOT NULL,
@@ -89,7 +89,14 @@ CREATE TABLE "log" (
     "inputCost" DOUBLE PRECISION NOT NULL,
     "outputCost" DOUBLE PRECISION NOT NULL,
     "totalCost" DOUBLE PRECISION NOT NULL,
-    "apiKey" TEXT NOT NULL,
+    "score" INTEGER,
+    "feedback" TEXT,
+    "sessionId" TEXT,
+    "tags" JSONB NOT NULL,
+    "name" TEXT,
+    "userId" TEXT,
+    "metadata" JSONB NOT NULL,
+    "envId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -106,7 +113,13 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 CREATE UNIQUE INDEX "api_key_key_key" ON "api_key"("key");
 
 -- CreateIndex
-CREATE INDEX "log_isTopLevel_idx" ON "log"("isTopLevel");
+CREATE UNIQUE INDEX "api_key_envId_key" ON "api_key"("envId");
+
+-- CreateIndex
+CREATE INDEX "log_envId_startTime_idx" ON "log"("envId", "startTime");
+
+-- CreateIndex
+CREATE INDEX "log_envId_isTopLevel_idx" ON "log"("envId", "isTopLevel");
 
 -- AddForeignKey
 ALTER TABLE "project" ADD CONSTRAINT "project_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
