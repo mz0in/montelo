@@ -1,16 +1,15 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
-import { AnalyticsCard } from "~/components/cards/AnalyticsCard";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { AlertCircle, ArrowUpRightFromSquare, DollarSign, GanttChart, Timer } from "lucide-react";
+import { ArrowUpRightFromSquare, DollarSign, Timer } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import {
-  AnalyticsControllerGetForDashboardDateSelectionEnum,
-  DashboardAnalyticsDto,
-  LogDto,
-} from "@montelo/browser-client";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { AnalyticsControllerGetForDashboardDateSelectionEnum, LogDto } from "@montelo/browser-client";
+import { Await, Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import dayjs from "dayjs";
+import { DashboardLoader } from "~/types/DashboardLoader.types";
+import { Suspense } from "react";
+import { AnalyticsCard } from "~/pages/dashboard/cards/AnalyticsCard";
+import { BaseContent, BaseContentSkeleton } from "~/pages/dashboard/cards/BaseContent";
 
 const data = [
   {
@@ -59,32 +58,14 @@ const data = [
 
 export const DashboardPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const analytics = useLoaderData<DashboardAnalyticsDto>();
+  const { analytics, logs, costHistory } = useLoaderData<DashboardLoader>();
   const selectedValue = searchParams.get("dateSelection") || AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins;
 
-  const BaseContent = ({ main, sub }: { main: string; sub: string }) => (
-    <div className={"flex flex-col"}>
-      <h1 className={"text-2xl font-bold"}>
-        {main}
-      </h1>
-      <p className={"text-md text-muted-foreground"}>
-        {sub}
-      </p>
-    </div>
-  );
-
-  const CostContent = () => <BaseContent main={analytics.cost} sub={analytics.costChange} />;
-  const LatencyContent = () => <BaseContent main={`${analytics.averageLatency}s avg.`}
-                                            sub={analytics.averageLatencyChange} />;
-  const LogsContent = () => <BaseContent main={analytics.logCount} sub={analytics.logCountChange} />;
-  const AlertsContent = () => <BaseContent main={"1 hallucination"} sub={"See here"} />;
-
   const RecentLog = ({ log }: { log: LogDto }) => {
-
     return (
-      <TableRow key={log.id}>
+      <TableRow>
         <TableCell className={"cursor-pointer hover:text-blue-500 hover:scale-110 hover:shadow-md"}>
-          <Link to={`/logs/${log.id}`} >
+          <Link to={`/logs/${log.id}`}>
             <ArrowUpRightFromSquare size={16} />
           </Link>
         </TableCell>
@@ -95,6 +76,20 @@ export const DashboardPage = () => {
         <TableCell>0</TableCell>
       </TableRow>
     );
+  };
+
+  const formatXDates = (tickItem: string): string => {
+    const date = dayjs(tickItem);
+    const formatMap: Record<AnalyticsControllerGetForDashboardDateSelectionEnum, string> = {
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins]: date.format("h:m:s a"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._1Hr]: date.format("h:m:s a"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._24Hrs]: date.format("h:m a"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._7Days]: date.format("MMM D"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._1Month]: date.format("MMM D"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum._3Months]: date.format("MMM D"),
+      [AnalyticsControllerGetForDashboardDateSelectionEnum.AllTime]: date.format("MMM YYYY"),
+    };
+    return formatMap[selectedValue as AnalyticsControllerGetForDashboardDateSelectionEnum];
   };
 
   return (
@@ -123,13 +118,42 @@ export const DashboardPage = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex flex-row justify-between space-x-4">
-        <AnalyticsCard title={"Cost"} icon={DollarSign} content={CostContent} />
-        <AnalyticsCard title={"Latency"} icon={Timer} content={LatencyContent} />
-        <AnalyticsCard title={"Logs"} icon={GanttChart} content={LogsContent} />
-        <AnalyticsCard title={"Alerts"} icon={AlertCircle} content={AlertsContent} />
+
+      {/*Analytics Section*/}
+      <div className={"flex flex-row flex-grow gap-8"}>
+        <AnalyticsCard title={"Cost"} icon={DollarSign}>
+          <Suspense fallback={<BaseContentSkeleton />}>
+            <Await resolve={analytics}>
+              {(analytics) => <BaseContent title={analytics?.cost} sub={analytics?.costChange} />}
+            </Await>
+          </Suspense>
+        </AnalyticsCard>
+        <AnalyticsCard title={"Latency"} icon={Timer}>
+          <Suspense fallback={<BaseContentSkeleton />}>
+            <Await resolve={analytics}>
+              {(analytics) => <BaseContent title={`${analytics?.averageLatency}s avg`}
+                                           sub={analytics?.averageLatencyChange} />}
+            </Await>
+          </Suspense>
+        </AnalyticsCard>
+        <AnalyticsCard title={"Latency"} icon={Timer}>
+          <Suspense fallback={<BaseContentSkeleton />}>
+            <Await resolve={analytics}>
+              {(analytics) => <BaseContent title={analytics?.logCount} sub={analytics?.logCountChange} />}
+            </Await>
+          </Suspense>
+        </AnalyticsCard>
+        <AnalyticsCard title={"Latency"} icon={Timer}>
+          <Suspense fallback={<BaseContentSkeleton />}>
+            <Await resolve={analytics}>
+              {(analytics) => <BaseContent title={"1 hallucination"} sub={"See here"} />}
+            </Await>
+          </Suspense>
+        </AnalyticsCard>
       </div>
+
       <div className={"grid grid-cols-5 gap-8 mt-8"}>
+        {/*Recent Logs Section*/}
         <div className="col-span-2">
           <h1 className={"text-2xl font-medium mb-4"}>Recent Logs</h1>
           <ScrollArea className="h-[32rem] rounded-lg border" type={"scroll"}>
@@ -144,23 +168,36 @@ export const DashboardPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {analytics.logs.map((log) => <RecentLog log={log} />)}
+                {logs.map((log) => <RecentLog key={log.id} log={log} />)}
               </TableBody>
             </Table>
           </ScrollArea>
 
         </div>
+
+        {/*Cost History Section*/}
         <div className="h-[32rem] col-span-3">
           <h1 className={"text-2xl font-medium mb-4"}>Cost History</h1>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-              <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
+
+          <Suspense fallback={
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={[]}></LineChart>
+            </ResponsiveContainer>
+          }>
+            <Await resolve={costHistory}>
+              {(costHistory) =>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={costHistory.costHistory}>
+                    <XAxis dataKey="intervalStart" type={"category"} tickFormatter={formatXDates}
+                           stroke={"hsl(var(--border))"} tick={{ fill: "hsl(var(--muted-foreground))" }} />
+                    <YAxis stroke={"hsl(var(--border))"} tick={{ fill: "hsl(var(--muted-foreground))" }} />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="totalCost" dot={false} legendType={"none"} strokeWidth={3} stroke={"hsl(var(--primary))"}/>
+                  </LineChart>
+                </ResponsiveContainer>
+              }
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { withAuth } from "~/common/auth/withAuth";
 
 export const action: ActionFunction = withAuth(async ({ api, request }) => {
   const formData = await request.formData();
-  console.log("formData; ", formData);
   const name = formData.get("name")!.toString();
   const teamId = formData.get("teamId")!.toString();
   const environment = formData.get("environment");

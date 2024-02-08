@@ -4,11 +4,63 @@ import * as dayjs from "dayjs";
 
 import { DatabaseService } from "../../database";
 import { DateSelection } from "./analytics.enum";
-import { DashboardAnalytics, GetDashboardAnalyticsParams } from "./analytics.types";
+import {
+  CostHistory,
+  DashboardAnalytics,
+  GetCostHistoryParams,
+  GetDashboardAnalyticsParams,
+} from "./analytics.types";
+
 
 @Injectable()
 export class AnalyticsService {
   constructor(private db: DatabaseService) {}
+
+  async getCostHistory({ envId, dateSelection }: GetCostHistoryParams): Promise<CostHistory[]> {
+    const now = dayjs();
+
+    const startTimeMap = new Map<DateSelection, dayjs.Dayjs>([
+      [DateSelection.ThirtyMinutes, now.subtract(30, "minute")],
+      [DateSelection.OneHour, now.subtract(1, "hour")],
+      [DateSelection.OneDay, now.subtract(1, "day")],
+      [DateSelection.OneWeek, now.subtract(1, "week")],
+      [DateSelection.OneMonth, now.subtract(1, "month")],
+      [DateSelection.ThreeMonths, now.subtract(3, "month")],
+      [DateSelection.AllTime, now.subtract(5, "year")],
+    ]);
+
+    const intervalMap = new Map<DateSelection, string>([
+      [DateSelection.ThirtyMinutes, "minute"],
+      [DateSelection.OneHour, "minute"],
+      [DateSelection.OneDay, "hour"],
+      [DateSelection.OneWeek, "day"],
+      [DateSelection.OneMonth, "day"],
+      [DateSelection.ThreeMonths, "week"],
+      [DateSelection.AllTime, "month"],
+    ]);
+
+    // Get the start time and interval based on the dateSelection
+    const startTime = startTimeMap.get(dateSelection)?.toISOString();
+    const interval = intervalMap.get(dateSelection);
+
+    if (!startTime || !interval) {
+      throw new Error("Invalid date selection");
+    }
+
+    // Construct the query using string concatenation for the interval
+    const queryString = `
+        SELECT DATE_TRUNC('${interval}', "startTime") AS "intervalStart",
+               ROUND(SUM("totalCost")::numeric, 2) ::float    AS "totalCost"
+        FROM "log"
+        WHERE "envId" = $1
+          AND "startTime" >= $2::timestamp
+        GROUP BY "intervalStart"
+        ORDER BY "intervalStart";
+    `;
+
+    // Execute the query
+    return this.db.$queryRawUnsafe<CostHistory[]>(queryString, envId, startTime);
+  }
 
   async getDashboardAnalytics({
     envId,
@@ -35,10 +87,7 @@ export class AnalyticsService {
       [DateSelection.ThreeMonths]: {
         gte: now.subtract(3, "month").toISOString(),
       },
-      [DateSelection.AllTime]: {
-        // always true, so just get everything
-        // not: "",
-      },
+      [DateSelection.AllTime]: {},
     };
 
     const prevDateSelectionMap: Record<DateSelection, Prisma.DateTimeFilter<"Log">> = {
@@ -66,10 +115,7 @@ export class AnalyticsService {
         gte: now.subtract(6, "month").toISOString(),
         lt: now.subtract(3, "month").toISOString(),
       },
-      [DateSelection.AllTime]: {
-        // always true, so just get everything
-        // not: "",
-      },
+      [DateSelection.AllTime]: {},
     };
 
     const baseAggregation: Prisma.LogAggregateArgs = {

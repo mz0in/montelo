@@ -4,7 +4,7 @@ import { eachLimit } from "async";
 import { prisma } from "./client";
 
 const seedSingleBatch = async () => {
-  const envId = "9b8bae7f-dde0-427f-9a83-3bab6446ee34";
+  const envId = "ffb37205-18fe-4615-868a-ffb7ac6a944a";
   const now = new Date();
   const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
 
@@ -40,7 +40,7 @@ const seedSingleBatch = async () => {
 
 const seed = async () => {
   try {
-    const arraySize = 1000;
+    const arraySize = 100;
     const array = Array(arraySize);
     const batches = 10;
     await eachLimit(array, batches, seedSingleBatch);

@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
-import { LogDto } from "../../log/dto/log.dto";
-
 export class DashboardAnalyticsDto {
   @ApiProperty()
   @IsString()
@@ -27,7 +25,4 @@ export class DashboardAnalyticsDto {
   @ApiProperty()
   @IsString()
   logCountChange: string;
-
-  @ApiProperty({ type: [LogDto] })
-  logs: LogDto[];
 }

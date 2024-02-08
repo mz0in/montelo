@@ -90,7 +90,7 @@ export const Sidebar = () => {
 
     if ("disabled" in item) {
       return (
-        <TooltipProvider delayDuration={0}>
+        <TooltipProvider delayDuration={0} key={item.name}>
           <Tooltip>
             <TooltipTrigger asChild>
               <li key={item.name}

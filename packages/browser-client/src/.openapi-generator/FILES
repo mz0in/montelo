@@ -12,6 +12,8 @@ apis/index.ts
 index.ts
 models/ApiKeyWithEnvDto.ts
 models/AuthUserDto.ts
+models/CostHistory.ts
+models/CostHistoryDto.ts
 models/CreateProjectInput.ts
 models/CreateTeamInput.ts
 models/DashboardAnalyticsDto.ts

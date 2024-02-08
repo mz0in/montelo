@@ -1,21 +1,34 @@
 import { DashboardPage } from "~/pages/dashboard/DashboardPage";
 import { withAuth } from "~/common/auth/withAuth";
-import { json } from "@remix-run/react";
-import { AnalyticsControllerGetForDashboardDateSelectionEnum, DashboardAnalyticsDto } from "@montelo/browser-client";
+import { AnalyticsControllerGetForDashboardDateSelectionEnum } from "@montelo/browser-client";
+import { defer } from "@remix-run/node";
+import { DeferredDashboardLoader } from "~/types/DashboardLoader.types";
 
 export const loader = withAuth(async ({ request, api, params }) => {
   const envId = params.envId!;
-  let { searchParams } = new URL(request.url);
-  let dateSelectionQuery = (searchParams.get("dateSelection") || "30 mins") as AnalyticsControllerGetForDashboardDateSelectionEnum;
+  const { searchParams } = new URL(request.url);
+  const dateSelectionQuery = (searchParams.get("dateSelection") || AnalyticsControllerGetForDashboardDateSelectionEnum._30Mins) as AnalyticsControllerGetForDashboardDateSelectionEnum;
 
-  const analytics = await api.analytics().analyticsControllerGetForDashboard({
+  const analyticsPromise = api.analytics().analyticsControllerGetForDashboard({
     envId,
     dateSelection: dateSelectionQuery,
   });
 
-  console.log(analytics)
+  const costHistoryPromise = api.analytics().analyticsControllerCostHistory({
+    envId,
+    dateSelection: dateSelectionQuery,
+  });
 
-  return json<DashboardAnalyticsDto>(analytics);
+  const logs = await api.log().logControllerGetAll({
+    envId,
+    take: "50",
+  });
+
+  return defer<DeferredDashboardLoader>({
+    analytics: analyticsPromise,
+    logs,
+    costHistory: costHistoryPromise
+  });
 });
 
 export default function DashboardRoute() {

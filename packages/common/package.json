@@ -1,6 +1,6 @@
 {
   "name": "@montelo/common",
-  "version": "1.1.29",
+  "version": "1.1.30",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
