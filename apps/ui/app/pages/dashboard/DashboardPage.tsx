@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { ArrowUpRightFromSquare, DollarSign, Timer } from "lucide-react";
+import { ArrowUpRightFromSquare, CircleSlash, DollarSign, GanttChart, Target, Timer } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { AnalyticsControllerGetForDashboardDateSelectionEnum, LogDto } from "@montelo/browser-client";
 import { Await, Link, useLoaderData, useSearchParams } from "@remix-run/react";
@@ -10,6 +10,8 @@ import { DashboardLoader } from "~/types/DashboardLoader.types";
 import { Suspense } from "react";
 import { AnalyticsCard } from "~/pages/dashboard/cards/AnalyticsCard";
 import { BaseContent, BaseContentSkeleton } from "~/pages/dashboard/cards/BaseContent";
+import numbro from "numbro";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 
 const data = [
   {
@@ -56,6 +58,10 @@ const data = [
   },
 ];
 
+function RocketIcon(props: { className: string }) {
+  return null;
+}
+
 export const DashboardPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { analytics, logs, costHistory } = useLoaderData<DashboardLoader>();
@@ -65,7 +71,7 @@ export const DashboardPage = () => {
     return (
       <TableRow>
         <TableCell className={"cursor-pointer hover:text-blue-500 hover:scale-110 hover:shadow-md"}>
-          <Link to={`/logs/${log.id}`}>
+          <Link to={`/logs/${log.id}`} prefetch={"intent"}>
             <ArrowUpRightFromSquare size={16} />
           </Link>
         </TableCell>
@@ -124,26 +130,32 @@ export const DashboardPage = () => {
         <AnalyticsCard title={"Cost"} icon={DollarSign}>
           <Suspense fallback={<BaseContentSkeleton />}>
             <Await resolve={analytics}>
-              {(analytics) => <BaseContent title={analytics?.cost} sub={analytics?.costChange} />}
+              {(analytics) =>
+                <BaseContent title={numbro(analytics.cost).formatCurrency({
+                  mantissa: 2,
+                  thousandSeparated: true,
+                })} sub={analytics.costChange} />}
             </Await>
           </Suspense>
         </AnalyticsCard>
         <AnalyticsCard title={"Latency"} icon={Timer}>
           <Suspense fallback={<BaseContentSkeleton />}>
             <Await resolve={analytics}>
-              {(analytics) => <BaseContent title={`${analytics?.averageLatency}s avg`}
-                                           sub={analytics?.averageLatencyChange} />}
+              {(analytics) => <BaseContent title={`${analytics.averageLatency}s avg`}
+                                           sub={analytics.averageLatencyChange} />}
             </Await>
           </Suspense>
         </AnalyticsCard>
-        <AnalyticsCard title={"Latency"} icon={Timer}>
+        <AnalyticsCard title={"Logs"} icon={GanttChart}>
           <Suspense fallback={<BaseContentSkeleton />}>
             <Await resolve={analytics}>
-              {(analytics) => <BaseContent title={analytics?.logCount} sub={analytics?.logCountChange} />}
+              {(analytics) => <BaseContent title={numbro(analytics.logCount).format({
+                thousandSeparated: true,
+              })} sub={analytics.logCountChange} />}
             </Await>
           </Suspense>
         </AnalyticsCard>
-        <AnalyticsCard title={"Latency"} icon={Timer}>
+        <AnalyticsCard title={"Scores"} icon={Target}>
           <Suspense fallback={<BaseContentSkeleton />}>
             <Await resolve={analytics}>
               {(analytics) => <BaseContent title={"1 hallucination"} sub={"See here"} />}
@@ -172,7 +184,6 @@ export const DashboardPage = () => {
               </TableBody>
             </Table>
           </ScrollArea>
-
         </div>
 
         {/*Cost History Section*/}
@@ -185,17 +196,61 @@ export const DashboardPage = () => {
             </ResponsiveContainer>
           }>
             <Await resolve={costHistory}>
-              {(costHistory) =>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={costHistory.costHistory}>
-                    <XAxis dataKey="intervalStart" type={"category"} tickFormatter={formatXDates}
-                           stroke={"hsl(var(--border))"} tick={{ fill: "hsl(var(--muted-foreground))" }} />
-                    <YAxis stroke={"hsl(var(--border))"} tick={{ fill: "hsl(var(--muted-foreground))" }} />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="totalCost" dot={false} legendType={"none"} strokeWidth={3} stroke={"hsl(var(--primary))"}/>
-                  </LineChart>
-                </ResponsiveContainer>
-              }
+              {(costHistory) => {
+                if (!costHistory.costHistory.length) {
+                  return (<div className={"flex h-full justify-center items-center border rounded-lg"}>
+                    <Alert className={"flex flex-row w-1/3 p-4 justify-start items-center gap-4"}>
+                      <div>
+                        <CircleSlash size={20} />
+                      </div>
+                      <div className={"flex flex-col"}>
+                        <AlertTitle>No Data</AlertTitle>
+                        <AlertDescription>Try another date filter.</AlertDescription>
+                      </div>
+                    </Alert>
+                  </div>);
+                }
+
+                return (
+                  <ResponsiveContainer>
+                    <LineChart data={costHistory.costHistory}>
+                      <XAxis
+                        dataKey="intervalStart"
+                        type={"category"}
+                        tickFormatter={formatXDates}
+                        stroke={"hsl(var(--border))"}
+                        tick={{ fill: "hsl(var(--muted-foreground))" }}
+                      />
+                      <YAxis
+                        stroke={"hsl(var(--border))"}
+                        tick={{ fill: "hsl(var(--muted-foreground))" }}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "hsl(var(--popover))",
+                          borderRadius: "8px",
+                          borderColor: "hsl(var(--border))",
+                        }}
+                        formatter={(value) => [numbro(value).formatCurrency({
+                          mantissa: 2,
+                          thousandSeparated: true,
+                        }), "Total Cost"]}
+                        labelFormatter={(date) => dayjs(date).format("MMM D YYYY H:mm:ss")}
+                        cursor={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 2 }}
+                      />
+                      <Line
+                        isAnimationActive={false}
+                        type="monotone"
+                        dataKey="totalCost"
+                        dot={false}
+                        legendType={"none"}
+                        strokeWidth={2}
+                        stroke={"hsl(var(--primary))"}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                );
+              }}
             </Await>
           </Suspense>
         </div>
