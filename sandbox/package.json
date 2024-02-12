@@ -1,0 +1,14 @@
+{
+  "name": "@montelo/sandbox",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@wandb/sdk": "^0.5.1",
+    "montelo": "file:../apps/montelo",
+    "openai": "^4.26.0"
+  }
+}

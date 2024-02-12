@@ -1,12 +1,12 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
-import { authenticator } from "~/services/auth.server";
-import { Routes } from "~/routes";
-import { loginValidator } from "~/pages/auth/forms/LoginForm";
-import { authenticatedLoader } from "~/common/auth/authenticated.loader";
-import { AUTH_STRATEGIES } from "~/services/strategies";
 import { AuthorizationError } from "remix-auth";
-import { LoginPage } from "~/pages/auth/LoginPage";
+import { loginValidator } from "../../pages/auth/forms/LoginForm";
+import { authenticator } from "../../services/auth.server";
+import { AUTH_STRATEGIES } from "../../services/strategies";
+import { Routes } from "../../routes";
+import { authenticatedLoader } from "../../common/auth/authenticated.loader";
+import { LoginPage } from "../../pages/auth/LoginPage";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();

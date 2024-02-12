@@ -1,28 +1,30 @@
+import styles from "./tailwind.css";
 import clsx from "clsx";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
-import styles from "./tailwind.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
-  ShouldRevalidateFunction,
   useLoaderData,
 } from "@remix-run/react";
-import { useRevalidateOnFocus, useRevalidateOnReconnect, useWindowSize } from "~/hooks";
-import { themeSessionResolver } from "~/services/session.server";
-import { Routes } from "~/routes";
+import { themeSessionResolver } from "./services/session.server";
+import { Routes } from "./routes";
+import { useRevalidateOnFocus, useRevalidateOnReconnect, useWindowSize } from "./hooks";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
-export const shouldRevalidate: ShouldRevalidateFunction = () => false;
+export const meta: MetaFunction = () => {
+  return [{ title: "Montelo" }, { name: "description", content: "Montelo" }];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request);
@@ -47,13 +49,11 @@ export function App() {
 
   const isMobile = width <= 640;
 
-  const MobilePage = () => {
-    return (
-      <div className={"w-screen h-screen flex justify-center items-center"}>
-        <p>Montelo is best viewed on a larger screen.</p>
-      </div>
-    );
-  };
+  const MobilePage = () => (
+    <div className={"w-screen h-screen flex justify-center items-center"}>
+      <p>MonteloAI is best viewed on a larger screen.</p>
+    </div>
+  );
 
   // revalidation hooks
   useRevalidateOnReconnect();

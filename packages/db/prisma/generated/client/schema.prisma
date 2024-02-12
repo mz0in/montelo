@@ -144,30 +144,31 @@ model Log {
   id String @id @default(uuid())
 
   // properties
-  paths            Json
-  isTopLevel       Boolean // to boost performance
-  messages         Json
-  model            String
-  rawInput         Json
-  rawOutput        Json
-  outputContent    String
-  startTime        DateTime
-  endTime          DateTime
-  duration         Float
-  inputTokenCount  Int
-  outputTokenCount Int
-  totalTokenCount  Int
-  inputCost        Float
-  outputCost       Float
-  totalCost        Float
-  score            Int?
-  feedback         String?
-  sessionId        String?
-  tags             Json
-  name             String?
-  userId           String? // the user can pass in a user ID to a log
-  metadata         Json // extra properties users can specify
-  envId            String // not a foreign key
+  envId String // not a foreign key
+
+  // required
+  name         String
+  model        String
+  input        Json
+  output       Json
+  startTime    DateTime
+  endTime      DateTime
+  duration     Float
+  inputTokens  Int
+  outputTokens Int
+  totalTokens  Int
+  inputCost    Float
+  outputCost   Float
+  totalCost    Float
+  tags         Json
+  extra        Json
+
+  // all fields must be optional
+  parentId  String?
+  score     Float?
+  feedback  String?
+  sessionId String?
+  userId    String? // the user can pass in a user ID to a log
 
   // dates
   createdAt DateTime @default(now())
@@ -175,6 +176,5 @@ model Log {
 
   // rename
   @@index([envId, startTime])
-  @@index([envId, isTopLevel])
   @@map("log")
 }

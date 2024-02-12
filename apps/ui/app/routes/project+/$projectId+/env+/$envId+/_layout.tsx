@@ -1,9 +1,9 @@
 import { json, LoaderFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import { withAuth } from "~/common/auth/withAuth";
-import { Header } from "~/components/nav/header/header";
-import { Sidebar } from "~/components/nav/sidebar/sidebar";
-import { EnvLayoutLoader } from "~/types/envLayout.loader.types";
+import { withAuth } from "../../../../../common/auth/withAuth";
+import { EnvLayoutLoader } from "../../../../../types/envLayout.loader.types";
+import { Header } from "../../../../../components/nav/header/header";
+import { Sidebar } from "../../../../../components/nav/sidebar/sidebar";
 
 export const loader: LoaderFunction = withAuth(async ({ params, api, user }) => {
   const envId = params.envId!;
@@ -11,7 +11,6 @@ export const loader: LoaderFunction = withAuth(async ({ params, api, user }) => 
 
   const environmentPromise = api.environment().environmentControllerGet({
     envId,
-    projectId,
   });
 
   const projectPromise = api.project().projectControllerGet({

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "log" ALTER COLUMN "tags" DROP DEFAULT,
+ALTER COLUMN "extra" DROP DEFAULT;

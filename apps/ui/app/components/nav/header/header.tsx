@@ -1,7 +1,7 @@
-import { EnvSelector } from "~/components/nav/header/EnvSelector";
-import { ProfileDropdown } from "~/components/nav/header/ProfileDropdown";
 import { useLoaderData } from "@remix-run/react";
-import { EnvLayoutLoader } from "~/types/envLayout.loader.types";
+import { EnvSelector } from "./EnvSelector";
+import { ProfileDropdown } from "./ProfileDropdown";
+import { EnvLayoutLoader } from "../../../types/envLayout.loader.types";
 
 export const Header = () => {
   const { user, project, environment } = useLoaderData<EnvLayoutLoader>();

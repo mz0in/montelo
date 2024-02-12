@@ -22,18 +22,16 @@ import {
     ApiKeyWithEnvDtoToJSON,
 } from '../models/index';
 
-export interface ApiKeyControllerGetAllForProjectRequest {
-    projectId: string;
+export interface ApiKeyControllerGetAllForEnvRequest {
+    envId: string;
 }
 
 export interface ApiKeyControllerRevealRequest {
-    projectId: string;
     envId: string;
     apiKeyId: string;
 }
 
 export interface ApiKeyControllerRotateRequest {
-    projectId: string;
     envId: string;
     apiKeyId: string;
 }
@@ -45,9 +43,9 @@ export class ApiKeyApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiKeyControllerGetAllForProjectRaw(requestParameters: ApiKeyControllerGetAllForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiKeyWithEnvDto>>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling apiKeyControllerGetAllForProject.');
+    async apiKeyControllerGetAllForEnvRaw(requestParameters: ApiKeyControllerGetAllForEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiKeyWithEnvDto>>> {
+        if (requestParameters.envId === null || requestParameters.envId === undefined) {
+            throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling apiKeyControllerGetAllForEnv.');
         }
 
         const queryParameters: any = {};
@@ -63,7 +61,7 @@ export class ApiKeyApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/project/{projectId}/env/api-keys`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))),
+            path: `/env/{envId}/api-keys`.replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -74,18 +72,14 @@ export class ApiKeyApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiKeyControllerGetAllForProject(requestParameters: ApiKeyControllerGetAllForProjectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ApiKeyWithEnvDto>> {
-        const response = await this.apiKeyControllerGetAllForProjectRaw(requestParameters, initOverrides);
+    async apiKeyControllerGetAllForEnv(requestParameters: ApiKeyControllerGetAllForEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ApiKeyWithEnvDto>> {
+        const response = await this.apiKeyControllerGetAllForEnvRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
     async apiKeyControllerRevealRaw(requestParameters: ApiKeyControllerRevealRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiKeyWithEnvDto>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling apiKeyControllerReveal.');
-        }
-
         if (requestParameters.envId === null || requestParameters.envId === undefined) {
             throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling apiKeyControllerReveal.');
         }
@@ -107,7 +101,7 @@ export class ApiKeyApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/project/{projectId}/env/{envId}/api-keys/{apiKeyId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))).replace(`{${"apiKeyId"}}`, encodeURIComponent(String(requestParameters.apiKeyId))),
+            path: `/env/{envId}/{envId}/api-keys/{apiKeyId}`.replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))).replace(`{${"apiKeyId"}}`, encodeURIComponent(String(requestParameters.apiKeyId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -126,10 +120,6 @@ export class ApiKeyApi extends runtime.BaseAPI {
     /**
      */
     async apiKeyControllerRotateRaw(requestParameters: ApiKeyControllerRotateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiKeyWithEnvDto>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling apiKeyControllerRotate.');
-        }
-
         if (requestParameters.envId === null || requestParameters.envId === undefined) {
             throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling apiKeyControllerRotate.');
         }
@@ -151,7 +141,7 @@ export class ApiKeyApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/project/{projectId}/env/{envId}/api-keys/{apiKeyId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))).replace(`{${"apiKeyId"}}`, encodeURIComponent(String(requestParameters.apiKeyId))),
+            path: `/env/{envId}/{envId}/api-keys/{apiKeyId}`.replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))).replace(`{${"apiKeyId"}}`, encodeURIComponent(String(requestParameters.apiKeyId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

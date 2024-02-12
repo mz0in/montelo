@@ -1,10 +1,10 @@
-import { TableCell, TableRow } from "~/components/ui/table";
-import { RevealApiKey } from "~/components/dialogs/ApiKeys/RevealApiKey";
-import { RotateApiKey } from "~/components/dialogs/ApiKeys/RotateApiKey";
+import { TableCell, TableRow } from "../../ui/table";
 import { ApiKeyWithEnvDto } from "@montelo/browser-client";
-import { Routes } from "~/routes";
-import { Revealed } from "~/components/dialogs/ApiKeys/Revealed";
-import { useFetcherWithReset } from "~/hooks";
+import { useFetcherWithReset } from "../../../hooks";
+import { Routes } from "../../../routes";
+import { Revealed } from "./Revealed";
+import { RevealApiKey } from "./RevealApiKey";
+import { RotateApiKey } from "./RotateApiKey";
 
 type InputFetcherParams = {
   projectId: string;

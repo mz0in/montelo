@@ -1,3 +1,9 @@
+import { Theme, useTheme } from "remix-themes";
+import { useFetcher } from "@remix-run/react";
+import { MouseEventHandler } from "react";
+import { Check, LogOut, Palette, UserRound } from "lucide-react";
+import { AuthUserDto } from "@montelo/browser-client";
+import { Routes } from "../../../routes";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,14 +16,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
-import { Routes } from "~/routes";
-import { Theme, useTheme } from "remix-themes";
-import { useFetcher } from "@remix-run/react";
-import { MouseEventHandler } from "react";
-import { Check, LogOut, Palette, UserRound } from "lucide-react";
-import { AuthUserDto } from "@montelo/browser-client";
+} from "../../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../../ui/avatar";
 
 type ProfileDropwdownProps = {
   user: AuthUserDto;

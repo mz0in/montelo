@@ -30,7 +30,7 @@ export class AnalyticsController {
   @ApiQuery({ name: "dateSelection", enum: DateSelection })
   @UseGuards(JwtAuthGuard)
   @Get("cost-history")
-  async costHistory(
+  async getCostHistory(
     @Param("envId") envId: string,
     @Query("dateSelection") dateSelection: DateSelection,
   ): Promise<CostHistoryDto> {

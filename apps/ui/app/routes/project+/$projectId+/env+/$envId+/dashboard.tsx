@@ -1,8 +1,8 @@
-import { DashboardPage } from "~/pages/dashboard/DashboardPage";
-import { withAuth } from "~/common/auth/withAuth";
 import { AnalyticsControllerGetForDashboardDateSelectionEnum } from "@montelo/browser-client";
 import { defer } from "@remix-run/node";
-import { DeferredDashboardLoader } from "~/types/DashboardLoader.types";
+import { withAuth } from "../../../../../common/auth/withAuth";
+import { DeferredDashboardLoader } from "../../../../../types/DashboardLoader.types";
+import { DashboardPage } from "../../../../../pages/dashboard/DashboardPage";
 
 export const loader = withAuth(async ({ request, api, params }) => {
   const envId = params.envId!;
@@ -14,7 +14,7 @@ export const loader = withAuth(async ({ request, api, params }) => {
     dateSelection: dateSelectionQuery,
   });
 
-  const costHistoryPromise = api.analytics().analyticsControllerCostHistory({
+  const costHistoryPromise = api.analytics().analyticsControllerGetCostHistory({
     envId,
     dateSelection: dateSelectionQuery,
   });
@@ -27,7 +27,7 @@ export const loader = withAuth(async ({ request, api, params }) => {
   return defer<DeferredDashboardLoader>({
     analytics: analyticsPromise,
     logs,
-    costHistory: costHistoryPromise
+    costHistory: costHistoryPromise,
   });
 });
 

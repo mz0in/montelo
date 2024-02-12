@@ -146,27 +146,29 @@ model Log {
   // properties
   envId String // not a foreign key
 
+  // required
+  name         String
+  model        String
+  input        Json
+  output       Json
+  startTime    DateTime
+  endTime      DateTime
+  duration     Float
+  inputTokens  Int
+  outputTokens Int
+  totalTokens  Int
+  inputCost    Float
+  outputCost   Float
+  totalCost    Float
+  tags         Json
+  extra        Json
+
   // all fields must be optional
-  parentId     String?
-  model        String?
-  input        Json?
-  output       Json?
-  startTime    DateTime?
-  endTime      DateTime?
-  duration     Float?
-  inputTokens  Int?
-  outputTokens Int?
-  totalTokens  Int?
-  inputCost    Float?
-  outputCost   Float?
-  totalCost    Float?
-  score        Int?
-  feedback     String?
-  tags         Json?
-  name         String?
-  sessionId    String?
-  userId       String? // the user can pass in a user ID to a log
-  extra        Json? // extra properties users can specify
+  parentId  String?
+  score     Float?
+  feedback  String?
+  sessionId String?
+  userId    String? // the user can pass in a user ID to a log
 
   // dates
   createdAt DateTime @default(now())

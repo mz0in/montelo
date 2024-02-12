@@ -12,14 +12,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger("App");
 
-  // graceful shutdown func
-  const gracefulShutdown = async () => {
-    logger.log("NestJS application is shutting down...");
-    await app.close();
-    logger.log("Application has been shut down.");
-    process.exit(0);
-  };
-
   // filters
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
@@ -50,6 +42,14 @@ async function bootstrap() {
   } else {
     await app.listen(env.PORT, "0.0.0.0");
   }
+
+  // graceful shutdown func
+  const gracefulShutdown = async () => {
+    logger.log("NestJS application is shutting down...");
+    await app.close();
+    logger.log("Application has been shut down.");
+    process.exit(0);
+  };
 
   // SIGINT is typically sent when the user presses Ctrl+C in the terminal
   process.on("SIGINT", gracefulShutdown);

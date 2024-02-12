@@ -1,13 +1,13 @@
 import { ActionFunctionArgs, json } from "@remix-run/node";
 import { validationError } from "remix-validated-form";
 import { AuthApi, Configuration } from "@montelo/browser-client";
-import { authenticator } from "~/services/auth.server";
-import { Routes } from "~/routes";
-import { registerValidator } from "~/pages/auth/forms/RegisterForm";
-import { authenticatedLoader } from "~/common/auth/authenticated.loader";
-import { AUTH_STRATEGIES } from "~/services/strategies";
-import { env } from "~/config/environment.server";
-import { RegisterPage } from "~/pages/auth/RegisterPage";
+import { registerValidator } from "../../pages/auth/forms/RegisterForm";
+import { env } from "../../config/environment.server";
+import { authenticator } from "../../services/auth.server";
+import { AUTH_STRATEGIES } from "../../services/strategies";
+import { Routes } from "../../routes";
+import { authenticatedLoader } from "../../common/auth/authenticated.loader";
+import { RegisterPage } from "../../pages/auth/RegisterPage";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();

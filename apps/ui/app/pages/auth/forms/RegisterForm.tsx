@@ -1,8 +1,8 @@
 import { withZod } from "@remix-validated-form/with-zod";
 import { ValidatedForm } from "remix-validated-form";
-import { FormInput, FormSubmitButton } from "~/forms/register/form";
 import { z } from "zod";
 import { useActionData } from "@remix-run/react";
+import { FormInput, FormSubmitButton } from "../../../forms/register/form";
 
 const registerSchema = z.object({
   firstName: z

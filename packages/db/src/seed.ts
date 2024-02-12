@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { eachLimit } from "async";
 
-import { prisma } from "./client";
+import { Prisma, prisma } from "./client";
 
 const seedSingleBatch = async () => {
   const envId = "380a5884-6cc9-4997-9a25-905b24fe78ae";
@@ -13,25 +13,26 @@ const seedSingleBatch = async () => {
     const randomDate = faker.date.between({ from: oneHourAgo, to: now });
     return {
       paths: null,
+      name: "some name",
       isTopLevel: true,
       messages: null,
       model: "gpt-4",
-      rawInput: null,
-      rawOutput: null,
+      input: null,
+      output: null,
       outputContent: "Some output",
       startTime: randomDate,
       endTime: faker.date.recent(),
       duration: faker.number.float({ fractionDigits: 2, min: 0, max: 30 }),
-      inputTokenCount: 0,
-      outputTokenCount: 0,
-      totalTokenCount: faker.number.int({ min: 100, max: 50000 }),
+      inputTokens: 0,
+      outputTokens: 0,
+      totalTokens: faker.number.int({ min: 100, max: 50000 }),
       inputCost: 0,
       outputCost: 0,
       totalCost: faker.number.float({ fractionDigits: 2, min: 0, max: 3 }),
       tags: [],
       metadata: {},
       envId: envId,
-    };
+    } as Prisma.LogCreateManyInput;
   };
 
   const arraySize = 100;

@@ -2,10 +2,11 @@ import { AuthApi, Configuration } from "@montelo/browser-client";
 import { jwtDecode } from "jwt-decode";
 import { Authenticator } from "remix-auth";
 import { FormStrategy } from "remix-auth-form";
-import { env } from "~/config/environment.server";
-import { sessionStorage } from "~/services/session.server";
-import { AUTH_STRATEGIES } from "~/services/strategies";
-import { JwtPayload } from "~/services/types";
+
+import { env } from "../config/environment.server";
+import { sessionStorage } from "./session.server";
+import { AUTH_STRATEGIES } from "./strategies";
+import { JwtPayload } from "./types";
 
 export const authenticator = new Authenticator<JwtPayload>(sessionStorage);
 

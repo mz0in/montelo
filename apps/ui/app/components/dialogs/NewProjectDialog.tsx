@@ -1,3 +1,6 @@
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import { FormEventHandler, useState } from "react";
+import { useFetcher } from "@remix-run/react";
 import {
   Dialog,
   DialogContent,
@@ -6,15 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { Button } from "~/components/ui/button";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/components/ui/collapsible";
-import { CaretSortIcon } from "@radix-ui/react-icons";
-import { FormEventHandler, useState } from "react";
-import { useFetcher } from "@remix-run/react";
-import { Routes } from "~/routes";
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Routes } from "../../routes";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 
 type NewProjectDialogProps = {
   teamId: string;

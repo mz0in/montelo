@@ -18,7 +18,7 @@ export class LogController {
     description: "How many logs to get. If undefined returns all.",
     required: false,
   })
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAll(@Param("envId") envId: string, @Query("take") take?: string): Promise<LogDto[]> {
     const options = take ? { take: parseInt(take) } : undefined;

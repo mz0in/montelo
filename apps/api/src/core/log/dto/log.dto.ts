@@ -1,7 +1,7 @@
 import { Log } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
-import { pick } from "lodash";
+import { omit } from "lodash";
 
 export class LogDto {
   @ApiProperty()
@@ -9,17 +9,22 @@ export class LogDto {
   id: string;
 
   @ApiProperty()
-  messages: any;
+  @IsString()
+  envId: string;
+
+  @ApiProperty()
+  @IsString()
+  name: string;
 
   @ApiProperty()
   @IsString()
   model: string;
 
   @ApiProperty()
-  rawInput: any;
+  input: any;
 
   @ApiProperty()
-  rawOutput: any;
+  output: any;
 
   @ApiProperty()
   startTime: string;
@@ -31,31 +36,56 @@ export class LogDto {
   duration: number;
 
   @ApiProperty()
-  inputTokenCount: number;
+  inputTokens: number;
 
   @ApiProperty()
-  outputTokenCount: number;
+  outputTokens: number;
 
   @ApiProperty()
-  totalTokenCount: number;
+  totalTokens: number;
+
+  @ApiProperty()
+  inputCost: number;
+
+  @ApiProperty()
+  outputCost: number;
+
+  @ApiProperty()
+  totalCost: number;
+
+  @ApiProperty()
+  tags: any;
+
+  @ApiProperty()
+  extra: any;
+
+  @ApiProperty()
+  parentId: string | null;
+
+  @ApiProperty()
+  score: number | null;
+
+  @ApiProperty()
+  feedback: string | null;
+
+  @ApiProperty()
+  sessionId: string | null;
+
+  @ApiProperty()
+  userId: string | null;
 
   static fromLog(log: Log): LogDto {
-    const baseLog = pick(log, [
-      "id",
-      "messages",
-      "model",
-      "rawInput",
-      "rawOutput",
-      "duration",
-      "inputTokenCount",
-      "outputTokenCount",
-      "totalTokenCount",
-    ]);
+    const baseLog = omit(log, ["startTime", "endTime", "createdAt", "updatedAt"]);
 
     return {
       ...baseLog,
-      startTime: log.startTime.toISOString(),
-      endTime: log.endTime.toISOString(),
+      startTime: log.startTime?.toISOString(),
+      endTime: log.endTime?.toISOString(),
+      parentId: baseLog.parentId || null,
+      score: baseLog.score || null,
+      feedback: baseLog.feedback || null,
+      sessionId: baseLog.sessionId || null,
+      userId: baseLog.userId || null,
     };
   }
 }

@@ -1,10 +1,8 @@
-import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { AuthModule } from "./auth/auth.module";
 import { AnalyticsModule } from "./core/analytics/analytics.module";
-import { ChatModule } from "./core/chat/chat.module";
 import { EnvironmentModule } from "./core/environment/environment.module";
 import { LogModule } from "./core/log/log.module";
 import { MembershipModule } from "./core/membership/membership.module";
@@ -14,15 +12,13 @@ import { UserModule } from "./core/user/user.module";
 import { EnvModule, envSchema } from "./env";
 import { HealthModule } from "./health/health.module";
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: process.env.NODE_ENV === "production" ? undefined : ".env.development",
       isGlobal: true,
       validate: envSchema.parse,
-    }),
-    BullModule.forRoot({
-      redis: process.env.REDIS_URL,
     }),
     EnvModule,
     HealthModule,
@@ -32,7 +28,6 @@ import { HealthModule } from "./health/health.module";
     ProjectModule,
     EnvironmentModule,
     MembershipModule,
-    ChatModule,
     LogModule,
     AnalyticsModule,
   ],

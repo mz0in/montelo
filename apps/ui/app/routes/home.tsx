@@ -1,14 +1,7 @@
-import { json, LoaderFunction, type MetaFunction } from "@remix-run/node";
-import { withAuth } from "~/common/auth/withAuth";
-import { HomePageLoaderData } from "~/pages/home/HomePage.types";
-import { HomePage } from "~/pages/home/HomePage";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Montelo" },
-    { name: "description", content: "Montelo" },
-  ];
-};
+import { json, LoaderFunction } from "@remix-run/node";
+import { withAuth } from "../common/auth/withAuth";
+import { HomePage } from "../pages/home/HomePage";
+import { HomePageLoaderData } from "../pages/home/HomePage.types";
 
 export const loader: LoaderFunction = withAuth(async ({ api, user }) => {
   const memberships = await api.membership().membershipControllerGetAll();

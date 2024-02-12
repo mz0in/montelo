@@ -1,8 +1,8 @@
-import { ProfileDropdown } from "~/components/nav/header/ProfileDropdown";
-import { CreateTeamDialog } from "~/components/dialogs/CreateTeamDialog";
-import { HomePageCard } from "~/components/cards/HomePageCard";
 import { useLoaderData } from "@remix-run/react";
-import { HomePageLoaderData } from "~/pages/home/HomePage.types";
+import { HomePageLoaderData } from "./HomePage.types";
+import { ProfileDropdown } from "../../components/nav/header/ProfileDropdown";
+import { CreateTeamDialog } from "../../components/dialogs/CreateTeamDialog";
+import { HomePageCard } from "../../components/cards/HomePageCard";
 
 export const HomePage = () => {
   const { user, memberships } = useLoaderData<HomePageLoaderData>();

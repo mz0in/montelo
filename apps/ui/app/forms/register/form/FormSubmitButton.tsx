@@ -1,5 +1,5 @@
 import { useFormContext, useIsSubmitting } from "remix-validated-form";
-import { Button } from "~/components/ui/button";
+import { Button } from "../../../components/ui/button";
 
 interface FormSubmitButtonProps {
   content: string;

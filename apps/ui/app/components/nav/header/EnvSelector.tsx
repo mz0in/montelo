@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { ApiKeyWithEnvDto, EnvironmentDto } from "@montelo/browser-client";
-import { sortEnvironmentsByName } from "~/utils/sortEnvironmentsByName";
+import { Check, ChevronsUpDown, KeyRound } from "lucide-react";
+import { sortEnvironmentsByName } from "../../../utils/sortEnvironmentsByName";
+import { Routes } from "../../../routes";
+import { Dialog, DialogTrigger } from "../../ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,12 +13,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { Button } from "~/components/ui/button";
-import { Check, ChevronsUpDown, KeyRound } from "lucide-react";
-import { Dialog, DialogTrigger } from "~/components/ui/dialog";
-import { ApiKeysDialog } from "~/components/dialogs/ApiKeys/ApiKeysDialog";
-import { Routes } from "~/routes";
+} from "../../ui/dropdown-menu";
+import { Button } from "../../ui/button";
+import { ApiKeysDialog } from "../../dialogs/ApiKeys/ApiKeysDialog";
 
 type EnvSelectorProps = {
   environments: EnvironmentDto[];
@@ -39,7 +39,7 @@ export const EnvSelector = ({ environments, pathEnv }: EnvSelectorProps) => {
   };
 
   const prefetchApiKeys = () => {
-    fetcher.load(Routes.actions.apiKeys.getAll(pathEnv.projectId));
+    fetcher.load(Routes.actions.apiKeys.getAll(pathEnv.id));
   };
 
   return (

@@ -1,9 +1,10 @@
 import { AuthUserDto, Configuration } from "@montelo/browser-client";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { Api } from "~/api";
-import { env } from "~/config/environment.server";
-import { Routes } from "~/routes";
-import { authenticator } from "~/services/auth.server";
+
+import { Api } from "../../api";
+import { env } from "../../config/environment.server";
+import { Routes } from "../../routes";
+import { authenticator } from "../../services/auth.server";
 
 export type AuthenticatedFunctionParams = Parameters<LoaderFunction | ActionFunction>[0] & {
   api: Api;

@@ -25,9 +25,9 @@ import {
     DashboardAnalyticsDtoToJSON,
 } from '../models/index';
 
-export interface AnalyticsControllerCostHistoryRequest {
+export interface AnalyticsControllerGetCostHistoryRequest {
     envId: string;
-    dateSelection: AnalyticsControllerCostHistoryDateSelectionEnum;
+    dateSelection: AnalyticsControllerGetCostHistoryDateSelectionEnum;
 }
 
 export interface AnalyticsControllerGetForDashboardRequest {
@@ -42,13 +42,13 @@ export class AnalyticsApi extends runtime.BaseAPI {
 
     /**
      */
-    async analyticsControllerCostHistoryRaw(requestParameters: AnalyticsControllerCostHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CostHistoryDto>> {
+    async analyticsControllerGetCostHistoryRaw(requestParameters: AnalyticsControllerGetCostHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CostHistoryDto>> {
         if (requestParameters.envId === null || requestParameters.envId === undefined) {
-            throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling analyticsControllerCostHistory.');
+            throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling analyticsControllerGetCostHistory.');
         }
 
         if (requestParameters.dateSelection === null || requestParameters.dateSelection === undefined) {
-            throw new runtime.RequiredError('dateSelection','Required parameter requestParameters.dateSelection was null or undefined when calling analyticsControllerCostHistory.');
+            throw new runtime.RequiredError('dateSelection','Required parameter requestParameters.dateSelection was null or undefined when calling analyticsControllerGetCostHistory.');
         }
 
         const queryParameters: any = {};
@@ -79,8 +79,8 @@ export class AnalyticsApi extends runtime.BaseAPI {
 
     /**
      */
-    async analyticsControllerCostHistory(requestParameters: AnalyticsControllerCostHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CostHistoryDto> {
-        const response = await this.analyticsControllerCostHistoryRaw(requestParameters, initOverrides);
+    async analyticsControllerGetCostHistory(requestParameters: AnalyticsControllerGetCostHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CostHistoryDto> {
+        const response = await this.analyticsControllerGetCostHistoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -133,7 +133,7 @@ export class AnalyticsApi extends runtime.BaseAPI {
 /**
  * @export
  */
-export const AnalyticsControllerCostHistoryDateSelectionEnum = {
+export const AnalyticsControllerGetCostHistoryDateSelectionEnum = {
     _30Mins: '30 mins',
     _1Hr: '1 hr',
     _24Hrs: '24 hrs',
@@ -142,7 +142,7 @@ export const AnalyticsControllerCostHistoryDateSelectionEnum = {
     _3Months: '3 months',
     AllTime: 'All Time'
 } as const;
-export type AnalyticsControllerCostHistoryDateSelectionEnum = typeof AnalyticsControllerCostHistoryDateSelectionEnum[keyof typeof AnalyticsControllerCostHistoryDateSelectionEnum];
+export type AnalyticsControllerGetCostHistoryDateSelectionEnum = typeof AnalyticsControllerGetCostHistoryDateSelectionEnum[keyof typeof AnalyticsControllerGetCostHistoryDateSelectionEnum];
 /**
  * @export
  */

@@ -23,7 +23,6 @@ import {
 } from '../models/index';
 
 export interface EnvironmentControllerGetRequest {
-    projectId: string;
     envId: string;
 }
 
@@ -35,10 +34,6 @@ export class EnvironmentApi extends runtime.BaseAPI {
     /**
      */
     async environmentControllerGetRaw(requestParameters: EnvironmentControllerGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EnvironmentDto>> {
-        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
-            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling environmentControllerGet.');
-        }
-
         if (requestParameters.envId === null || requestParameters.envId === undefined) {
             throw new runtime.RequiredError('envId','Required parameter requestParameters.envId was null or undefined when calling environmentControllerGet.');
         }
@@ -56,7 +51,7 @@ export class EnvironmentApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/project/{projectId}/env/{envId}`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))),
+            path: `/env/{envId}`.replace(`{${"envId"}}`, encodeURIComponent(String(requestParameters.envId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

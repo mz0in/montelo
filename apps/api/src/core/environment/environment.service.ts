@@ -4,7 +4,8 @@ import { Injectable } from "@nestjs/common";
 import { DatabaseService } from "../../database";
 import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "./environment.enums";
-import { CreateEnvironmentParams, GetEnvByIdParams } from "./environment.types";
+import { CreateEnvironmentParams } from "./environment.types";
+
 
 @Injectable()
 export class EnvironmentService {
@@ -13,11 +14,10 @@ export class EnvironmentService {
     private apiKeyService: ApiKeyService,
   ) {}
 
-  async getEnvById({ projectId, envId }: GetEnvByIdParams): Promise<Environment> {
+  async getEnvById(envId: string): Promise<Environment> {
     return this.db.environment.findUniqueOrThrow({
       where: {
         id: envId,
-        projectId: projectId,
       },
     });
   }

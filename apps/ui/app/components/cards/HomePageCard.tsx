@@ -1,21 +1,16 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { Label } from "~/components/ui/label";
-import { Button } from "~/components/ui/button";
 import { EnvironmentDto, FullMembershipDto, ProjectWithEnvironmentsDto } from "@montelo/browser-client";
 import { Delete, MoreHorizontal } from "lucide-react";
 import _ from "lodash";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
 import { Link, useNavigate } from "@remix-run/react";
-import { Routes } from "~/routes";
-import { NewProjectDialog } from "~/components/dialogs/NewProjectDialog";
 import { useState } from "react";
-import { DeleteTeamConfirmDialog } from "~/components/dialogs/DeleteTeamConfirmDialog";
-import { sortEnvironmentsByName } from "~/utils/sortEnvironmentsByName";
+import { Routes } from "../../routes";
+import { sortEnvironmentsByName } from "../../utils/sortEnvironmentsByName";
+import { Label } from "../ui/label";
+import { NewProjectDialog } from "../dialogs/NewProjectDialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { DeleteTeamConfirmDialog } from "../dialogs/DeleteTeamConfirmDialog";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 
 type HomePageCardProps = {
   membership: FullMembershipDto;

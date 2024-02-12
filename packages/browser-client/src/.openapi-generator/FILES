@@ -1,7 +1,6 @@
 apis/AnalyticsApi.ts
 apis/ApiKeyApi.ts
 apis/AuthApi.ts
-apis/ChatApi.ts
 apis/EnvironmentApi.ts
 apis/HealthApi.ts
 apis/LogApi.ts

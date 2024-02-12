@@ -5,22 +5,17 @@ import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { EnvironmentDto } from "./dto/environment.dto";
 import { EnvironmentService } from "./environment.service";
 
+
 @ApiTags("Environment")
 @ApiBearerAuth()
-@Controller("project/:projectId/env")
+@Controller("env")
 export class EnvironmentController {
   constructor(private environmentService: EnvironmentService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get(":envId")
-  async get(
-    @Param("projectId") projectId: string,
-    @Param("envId") envId: string,
-  ): Promise<EnvironmentDto> {
-    const environment = await this.environmentService.getEnvById({
-      projectId,
-      envId,
-    });
+  async get(@Param("envId") envId: string): Promise<EnvironmentDto> {
+    const environment = await this.environmentService.getEnvById(envId);
     return EnvironmentDto.fromEnvironment(environment);
   }
 }

@@ -1,9 +1,9 @@
-import { DialogContent, DialogHeader, DialogTitle } from "~/components/ui/dialog";
-import { Alert, AlertDescription } from "~/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { ApiKeyWithEnvDto } from "@montelo/browser-client";
-import { ApiKeyRow } from "~/components/dialogs/ApiKeys/ApiKeyRow";
+import { DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
+import { Alert, AlertDescription } from "../../ui/alert";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "../../ui/table";
+import { ApiKeyRow } from "./ApiKeyRow";
 
 type ApiKeysDialogProps = {
   apiKeys: ApiKeyWithEnvDto[] | undefined;

@@ -10,9 +10,9 @@ import {
   Rocket,
   TerminalSquare,
 } from "lucide-react";
-import { Routes } from "~/routes";
-import { EnvLayoutLoader } from "~/types/envLayout.loader.types";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { Routes } from "../../../routes";
+import { EnvLayoutLoader } from "../../../types/envLayout.loader.types";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 type BaseSidebarItem = {
   name: string;
@@ -65,8 +65,7 @@ const SidebarItems: SidebarItem[] = [
 const BottomSidebarItems = [
   {
     name: "Support",
-    // TODO: change to Discord link
-    href: "mailto:founders@montelo.ai",
+    href: Routes.external.support,
     icon: <HeartHandshake size={20} />,
   },
   {

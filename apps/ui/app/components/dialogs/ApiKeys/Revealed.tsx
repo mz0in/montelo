@@ -1,5 +1,5 @@
 import { Copy } from "lucide-react";
-import { useCopyToClipboard } from "~/hooks";
+import { useCopyToClipboard } from "../../../hooks";
 
 type RevealedProps = {
   apiKey: string;

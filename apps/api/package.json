@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "npm run generate -w @montelo/db",
+    "db:migrate:reset": "dotenv -e .env.development -- npm run db:migrate:reset -w @montelo/db",
     "db:migrate:dev": "dotenv -e .env.development -- npm run db:migrate:dev -w @montelo/db",
     "db:seed": "dotenv -e .env.development -- npm run db:seed -w @montelo/db",
     "generate:client": "openapi-generator-cli generate -i http://localhost:3001/docs-json -g typescript-fetch -o ../../packages/browser-client/src && npm run build -w @montelo/browser-client"

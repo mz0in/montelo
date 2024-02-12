@@ -1,17 +1,11 @@
-import { Environment } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
 import { randomBytes } from "crypto";
 
 import { HashingService } from "../../common/services/hashing/hashing.service";
 import { DatabaseService } from "../../database";
 import { Environments } from "../environment/environment.enums";
-import {
-  ApiKeyWithEnvironment,
-  GeneratedKey,
-  Prefix,
-  RevealKeyParams,
-  RotateKeyParams,
-} from "./apiKey.types";
+import { ApiKeyWithEnvironment, GeneratedKey, Prefix, RotateKeyParams } from "./apiKey.types";
+
 
 @Injectable()
 export class ApiKeyService {
@@ -20,29 +14,11 @@ export class ApiKeyService {
     private hashingService: HashingService,
   ) {}
 
-  async findAllForProject(projectId: string): Promise<ApiKeyWithEnvironment[]> {
-    const envs = await this.db.environment.findMany({
-      where: {
-        projectId,
-      },
-      include: {
-        apiKey: true,
-      },
-    });
-
-    const apiKeyPromises = envs.map((entity) => this.findAllForEnv(entity));
-    const apiKeys = await Promise.all(apiKeyPromises);
-    return apiKeys.flat();
-  }
-
-  async reveal(params: RevealKeyParams): Promise<ApiKeyWithEnvironment> {
+  async reveal(envId: string, apiKeyId: string): Promise<ApiKeyWithEnvironment> {
     const dbApiKey = await this.db.apiKey.findUniqueOrThrow({
       where: {
-        id: params.apiKeyId,
-        envId: params.envId,
-        environment: {
-          projectId: params.projectId,
-        },
+        id: apiKeyId,
+        envId: envId,
       },
     });
 
@@ -50,20 +26,17 @@ export class ApiKeyService {
       throw new Error("Already viewed key.");
     }
 
-    const dbUpdatedApiKey = await this.markKeyAsViewed(params.apiKeyId, dbApiKey.key);
+    const dbUpdatedApiKey = await this.markKeyAsViewed(apiKeyId, dbApiKey.key);
 
     // return the unhashed key
     return { ...dbUpdatedApiKey, key: dbApiKey.key };
   }
 
-  async rotate(params: RotateKeyParams): Promise<ApiKeyWithEnvironment> {
+  async rotate(envId: string, apiKeyId: string): Promise<ApiKeyWithEnvironment> {
     const existingApiKey = await this.db.apiKey.findUniqueOrThrow({
       where: {
-        id: params.apiKeyId,
-        envId: params.envId,
-        environment: {
-          projectId: params.projectId,
-        },
+        id: apiKeyId,
+        envId: envId,
       },
       include: {
         environment: true,
@@ -81,7 +54,7 @@ export class ApiKeyService {
 
     const updatedKey = await this.db.apiKey.update({
       where: {
-        id: params.apiKeyId,
+        id: apiKeyId,
       },
       data: {
         key: newKey,
@@ -116,13 +89,10 @@ export class ApiKeyService {
     return `sk-${prefix}-${cleaned}`;
   }
 
-  private async findAllForEnv(env: Environment): Promise<ApiKeyWithEnvironment[]> {
+  public async findAllForEnv(envId: string): Promise<ApiKeyWithEnvironment[]> {
     const dbApiKeys = await this.db.apiKey.findMany({
       where: {
-        envId: env.id,
-        environment: {
-          projectId: env.projectId,
-        },
+        envId: envId,
       },
       include: {
         environment: true,

@@ -20,6 +20,7 @@
     "@montelo/common": "1.1.30",
     "@montelo/fizz": "1.1.30",
     "@montelo/promptfile": "1.1.30",
+    "openai": "^4.27.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

@@ -1,0 +1,131 @@
+-- CreateEnum
+CREATE TYPE "UserPermissionRole" AS ENUM ('MEMBER', 'ADMIN');
+
+-- CreateTable
+CREATE TABLE "team" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "team_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "project" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "teamId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "project_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "environment" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "environment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "user" (
+    "id" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "membership" (
+    "id" TEXT NOT NULL,
+    "role" "UserPermissionRole" NOT NULL,
+    "userId" TEXT NOT NULL,
+    "teamId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "membership_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "api_key" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "envId" TEXT NOT NULL,
+    "viewed" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "api_key_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "log" (
+    "id" TEXT NOT NULL,
+    "envId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "model" TEXT NOT NULL,
+    "input" JSONB NOT NULL,
+    "output" JSONB NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3) NOT NULL,
+    "duration" DOUBLE PRECISION NOT NULL,
+    "inputTokens" INTEGER NOT NULL,
+    "outputTokens" INTEGER NOT NULL,
+    "totalTokens" INTEGER NOT NULL,
+    "inputCost" DOUBLE PRECISION NOT NULL,
+    "outputCost" DOUBLE PRECISION NOT NULL,
+    "totalCost" DOUBLE PRECISION NOT NULL,
+    "tags" JSONB NOT NULL DEFAULT '[]',
+    "extra" JSONB NOT NULL DEFAULT '{}',
+    "parentId" TEXT,
+    "score" DOUBLE PRECISION,
+    "feedback" TEXT,
+    "sessionId" TEXT,
+    "userId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "log_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "project_name_teamId_key" ON "project"("name", "teamId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "api_key_key_key" ON "api_key"("key");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "api_key_envId_key" ON "api_key"("envId");
+
+-- CreateIndex
+CREATE INDEX "log_envId_startTime_idx" ON "log"("envId", "startTime");
+
+-- AddForeignKey
+ALTER TABLE "project" ADD CONSTRAINT "project_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "environment" ADD CONSTRAINT "environment_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "membership" ADD CONSTRAINT "membership_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "membership" ADD CONSTRAINT "membership_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "api_key" ADD CONSTRAINT "api_key_envId_fkey" FOREIGN KEY ("envId") REFERENCES "environment"("id") ON DELETE CASCADE ON UPDATE CASCADE;

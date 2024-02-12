@@ -12,20 +12,23 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { Button } from "~/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { Checkbox } from "~/components/ui/checkbox";
 import { LogDto } from "@montelo/browser-client";
 import { darkStyles, JsonView } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import dayjs from "dayjs";
-import { Input } from "~/components/ui/input";
+import { Checkbox } from "../../ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../ui/dropdown-menu";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 
 export const columns: ColumnDef<LogDto>[] = [
   {
