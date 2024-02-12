@@ -1,30 +1,47 @@
-import { APIOut, CreatLogParams, MonteloClientOptions } from "./types";
+import cuid from "cuid";
+
+import { Api } from "./api";
+import { Configuration, type LogInput, type TraceInput } from "./client";
+import { MonteloClientOptions } from "./types";
 
 export class MonteloClient {
-  private readonly LOG_SERVER_BASE_URL: string;
-  private readonly apiKey: string;
+  private api: Api;
+  private currentTrace: (TraceInput & { id: string }) | null = null;
 
   constructor(options: MonteloClientOptions) {
     const apiKey = options.apiKey || process.env.MONTELO_API_KEY;
+    const baseUrl = options.baseUrl || process.env.MONTELO_BASE_URL;
     if (!apiKey) {
-      throw new Error("MONTELO_API_KEY not set.");
+      throw new Error("Montelo API key not set.");
     }
-    this.apiKey = apiKey;
+    if (!baseUrl) {
+      throw new Error("Montelo base url not set.");
+    }
+
+    const configuration = new Configuration({
+      basePath: baseUrl,
+      accessToken: apiKey,
+    });
+    this.api = new Api(configuration);
   }
 
-  public async createLog(params: CreatLogParams): Promise<APIOut<{ id: string }>> {
+  public async createLog(params: LogInput): Promise<void> {
     try {
-      const result = await fetch(`${this.LOG_SERVER_BASE_URL}/logs`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${this.apiKey}`,
+      await this.api.log().logsControllerCreateLog({
+        createLogInput: {
+          log: params,
+          trace: this.currentTrace,
         },
-        body: JSON.stringify(params),
       });
-      const data = await result.json();
-      return { data, error: null };
     } catch (e: any) {
-      return { data: null, error: e.toString() };
+      console.error("Montelo Error: ", e);
     }
+  }
+
+  public startTrace(params: TraceInput) {
+    this.currentTrace = {
+      ...params,
+      id: cuid(),
+    };
   }
 }

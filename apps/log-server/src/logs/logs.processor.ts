@@ -12,8 +12,8 @@ export class LogsProcessor {
   @Process()
   async handleLog(job: Job<QLogsInput>) {
     const {
-      data: { apiKey, params },
+      data: { envId, trace, log },
     } = job;
-    await this.logsService.create(apiKey, params);
+    await this.logsService.create(envId, trace, log);
   }
 }

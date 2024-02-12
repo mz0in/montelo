@@ -1,18 +1,30 @@
 import { Log } from "@montelo/db";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
 import { omit } from "lodash";
 
 export class LogDto {
   @ApiProperty()
+  @IsString()
   id: string;
 
   @ApiProperty()
+  @IsString()
+  traceId: string;
+
+  @ApiProperty()
+  @IsString()
   envId: string;
 
   @ApiProperty()
+  parentLogId: string | null;
+
+  @ApiProperty()
+  @IsString()
   name: string;
 
   @ApiProperty()
+  @IsString()
   model: string;
 
   @ApiProperty()
@@ -48,36 +60,17 @@ export class LogDto {
   @ApiProperty()
   totalCost: number;
 
-  @ApiProperty({ type: [String] })
-  tags: string[];
-
   @ApiProperty()
-  parentId: string | null;
-
-  @ApiProperty()
-  score: number | null;
-
-  @ApiProperty()
-  feedback: string | null;
-
-  @ApiProperty()
-  sessionId: string | null;
-
-  @ApiProperty()
-  userId: string | null;
-
-  @ApiProperty({ type: "object" })
-  extra: Record<string, any>;
+  extra: any;
 
   static fromLog(log: Log): LogDto {
-    const baseDto = omit(log, ["createdAt", "updatedAt"]);
+    const baseLog = omit(log, ["startTime", "endTime", "createdAt", "updatedAt"]);
 
     return {
-      ...baseDto,
-      startTime: baseDto.startTime.toISOString(),
-      endTime: baseDto.endTime.toISOString(),
-      tags: baseDto.tags as [],
-      extra: baseDto.extra as Record<string, any>,
+      ...baseLog,
+      startTime: log.startTime?.toISOString(),
+      endTime: log.endTime?.toISOString(),
+      parentLogId: baseLog.parentLogId || null,
     };
   }
 }

@@ -1,5 +1,6 @@
 import { ExtendedOpenAI } from "./ExtendedOpenAI";
 import { MonteloClient } from "./MonteloClient";
+import type { LogInput, TraceInput } from "./client";
 import { MonteloOptions } from "./types";
 
 export class MonteloAI {
@@ -14,11 +15,11 @@ export class MonteloAI {
     }
   }
 
-  public async log() {
-    return this.monteloClient.createLog({});
+  public log(params: LogInput) {
+    void this.monteloClient.createLog(params);
   }
 
-  public async trace() {
-
+  public trace(params: TraceInput) {
+    this.monteloClient.startTrace(params);
   }
 }

@@ -7,18 +7,5 @@ export type MonteloOptions = {
 
 export type MonteloClientOptions = {
   apiKey?: string;
-};
-
-export type APIOut<T> =
-  | {
-      data: T;
-      error: null;
-    }
-  | {
-      data: null;
-      error: string;
-    };
-
-export type CreatLogParams = {
-
+  baseUrl?: string;
 };

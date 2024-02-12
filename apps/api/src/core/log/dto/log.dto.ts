@@ -10,7 +10,14 @@ export class LogDto {
 
   @ApiProperty()
   @IsString()
+  traceId: string;
+
+  @ApiProperty()
+  @IsString()
   envId: string;
+
+  @ApiProperty()
+  parentLogId: string | null;
 
   @ApiProperty()
   @IsString()
@@ -54,25 +61,7 @@ export class LogDto {
   totalCost: number;
 
   @ApiProperty()
-  tags: any;
-
-  @ApiProperty()
   extra: any;
-
-  @ApiProperty()
-  parentId: string | null;
-
-  @ApiProperty()
-  score: number | null;
-
-  @ApiProperty()
-  feedback: string | null;
-
-  @ApiProperty()
-  sessionId: string | null;
-
-  @ApiProperty()
-  userId: string | null;
 
   static fromLog(log: Log): LogDto {
     const baseLog = omit(log, ["startTime", "endTime", "createdAt", "updatedAt"]);
@@ -81,11 +70,7 @@ export class LogDto {
       ...baseLog,
       startTime: log.startTime?.toISOString(),
       endTime: log.endTime?.toISOString(),
-      parentId: baseLog.parentId || null,
-      score: baseLog.score || null,
-      feedback: baseLog.feedback || null,
-      sessionId: baseLog.sessionId || null,
-      userId: baseLog.userId || null,
+      parentLogId: baseLog.parentLogId || null,
     };
   }
 }

@@ -9,14 +9,16 @@ generator client {
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
+// Enums
 enum UserPermissionRole {
-  MEMBER
   ADMIN
+  MEMBER
 }
 
+// Models
 model Team {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
   name String
@@ -26,8 +28,8 @@ model Team {
   members  Membership[]
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // rename
   @@map("team")
@@ -35,11 +37,11 @@ model Team {
 
 model Project {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
   name   String
-  teamId String
+  teamId String @map("team_id")
 
   // relations
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
@@ -47,8 +49,8 @@ model Project {
   environments Environment[]
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // attributes
   @@unique([name, teamId])
@@ -58,20 +60,20 @@ model Project {
 
 model Environment {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
   name      String
-  projectId String
+  projectId String @map("project_id")
 
   // relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-
-  apiKey ApiKey?
+  logs    Log[]
+  apiKey  ApiKey?
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // rename
   @@map("environment")
@@ -79,11 +81,11 @@ model Environment {
 
 model User {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
-  firstName String
-  lastName  String
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
   email     String @unique
   password  String
 
@@ -91,8 +93,8 @@ model User {
   memberships Membership[]
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // rename
   @@map("user")
@@ -100,20 +102,20 @@ model User {
 
 model Membership {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
   role   UserPermissionRole
-  userId String
-  teamId String
+  userId String             @map("user_id")
+  teamId String             @map("team_id")
 
   // relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // rename
   @@map("membership")
@@ -121,19 +123,19 @@ model Membership {
 
 model ApiKey {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   // properties
   key    String  @unique
-  envId  String  @unique
+  envId  String  @unique @map("env_id")
   viewed Boolean @default(false)
 
   // relations
   environment Environment @relation(fields: [envId], references: [id], onDelete: Cascade)
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // rename
   @@map("api_key")
@@ -141,40 +143,69 @@ model ApiKey {
 
 model Log {
   // id
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
-  // properties
-  envId String // not a foreign key
-
-  // required
+  // required properties
+  traceId      String   @map("trace_id")
+  envId        String   @map("env_id")
+  parentLogId  String?  @map("parent_id")
   name         String
   model        String
   input        Json
   output       Json
-  startTime    DateTime
-  endTime      DateTime
+  startTime    DateTime @map("start_time")
+  endTime      DateTime @map("end_time")
   duration     Float
-  inputTokens  Int
-  outputTokens Int
-  totalTokens  Int
-  inputCost    Float
-  outputCost   Float
-  totalCost    Float
-  tags         Json
+  inputTokens  Int      @map("input_tokens")
+  outputTokens Int      @map("output_tokens")
+  totalTokens  Int      @map("total_tokens")
+  inputCost    Float    @map("input_cost")
+  outputCost   Float    @map("output_cost")
+  totalCost    Float    @map("total_cost")
   extra        Json
 
-  // all fields must be optional
-  parentId  String?
-  score     Float?
-  feedback  String?
-  sessionId String?
-  userId    String? // the user can pass in a user ID to a log
+  // relations
+  environment Environment @relation(fields: [envId], references: [id], onDelete: Cascade)
+  trace       Trace       @relation(fields: [traceId], references: [id], onDelete: Cascade)
 
   // dates
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  // rename
   @@index([envId, startTime])
+  // rename
   @@map("log")
+}
+
+model Trace {
+  // id
+  id String @id @default(cuid())
+
+  // properties
+  envId String @map("env_id")
+  name  String
+
+  // sum for each log of the trace
+  inputTokens  Int   @map("input_tokens")
+  outputTokens Int   @map("output_tokens")
+  totalTokens  Int   @map("total_tokens")
+  inputCost    Float @map("input_cost")
+  outputCost   Float @map("output_cost")
+  totalCost    Float @map("total_cost")
+
+  userId String?  @map("user_id")
+  tags   String[] @default([])
+  extra  Json?
+
+  // relations
+  logs Log[]
+
+  // dates
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // indices
+  @@index([envId])
+  // rename
+  @@map("trace")
 }

@@ -48,14 +48,19 @@ export type ApiKey = $Result.DefaultSelection<Prisma.$ApiKeyPayload>
  * 
  */
 export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
+/**
+ * Model Trace
+ * 
+ */
+export type Trace = $Result.DefaultSelection<Prisma.$TracePayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
   export const UserPermissionRole: {
-  MEMBER: 'MEMBER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
 };
 
 export type UserPermissionRole = (typeof UserPermissionRole)[keyof typeof UserPermissionRole]
@@ -257,6 +262,16 @@ export class PrismaClient<
     * ```
     */
   get log(): Prisma.LogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.trace`: Exposes CRUD operations for the **Trace** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Traces
+    * const traces = await prisma.trace.findMany()
+    * ```
+    */
+  get trace(): Prisma.TraceDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -733,7 +748,8 @@ export namespace Prisma {
     User: 'User',
     Membership: 'Membership',
     ApiKey: 'ApiKey',
-    Log: 'Log'
+    Log: 'Log',
+    Trace: 'Trace'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -750,7 +766,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'team' | 'project' | 'environment' | 'user' | 'membership' | 'apiKey' | 'log'
+      modelProps: 'team' | 'project' | 'environment' | 'user' | 'membership' | 'apiKey' | 'log' | 'trace'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -1216,6 +1232,72 @@ export namespace Prisma {
           }
         }
       }
+      Trace: {
+        payload: Prisma.$TracePayload<ExtArgs>
+        fields: Prisma.TraceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TraceFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TraceFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          findFirst: {
+            args: Prisma.TraceFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TraceFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          findMany: {
+            args: Prisma.TraceFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>[]
+          }
+          create: {
+            args: Prisma.TraceCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          createMany: {
+            args: Prisma.TraceCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.TraceDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          update: {
+            args: Prisma.TraceUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          deleteMany: {
+            args: Prisma.TraceDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TraceUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.TraceUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TracePayload>
+          }
+          aggregate: {
+            args: Prisma.TraceAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateTrace>
+          }
+          groupBy: {
+            args: Prisma.TraceGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<TraceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TraceCountArgs<ExtArgs>,
+            result: $Utils.Optional<TraceCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1439,6 +1521,40 @@ export namespace Prisma {
 
 
   /**
+   * Count Type EnvironmentCountOutputType
+   */
+
+  export type EnvironmentCountOutputType = {
+    logs: number
+  }
+
+  export type EnvironmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | EnvironmentCountOutputTypeCountLogsArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * EnvironmentCountOutputType without action
+   */
+  export type EnvironmentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EnvironmentCountOutputType
+     */
+    select?: EnvironmentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * EnvironmentCountOutputType without action
+   */
+  export type EnvironmentCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
+  }
+
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
@@ -1468,6 +1584,40 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MembershipWhereInput
+  }
+
+
+
+  /**
+   * Count Type TraceCountOutputType
+   */
+
+  export type TraceCountOutputType = {
+    logs: number
+  }
+
+  export type TraceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | TraceCountOutputTypeCountLogsArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * TraceCountOutputType without action
+   */
+  export type TraceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TraceCountOutputType
+     */
+    select?: TraceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * TraceCountOutputType without action
+   */
+  export type TraceCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
   }
 
 
@@ -3543,7 +3693,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    logs?: boolean | Environment$logsArgs<ExtArgs>
     apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
+    _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["environment"]>
 
   export type EnvironmentSelectScalar = {
@@ -3556,7 +3708,9 @@ export namespace Prisma {
 
   export type EnvironmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    logs?: boolean | Environment$logsArgs<ExtArgs>
     apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
+    _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
 
@@ -3564,6 +3718,7 @@ export namespace Prisma {
     name: "Environment"
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>
+      logs: Prisma.$LogPayload<ExtArgs>[]
       apiKey: Prisma.$ApiKeyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3939,6 +4094,8 @@ export namespace Prisma {
 
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
+    logs<T extends Environment$logsArgs<ExtArgs> = {}>(args?: Subset<T, Environment$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     apiKey<T extends Environment$apiKeyArgs<ExtArgs> = {}>(args?: Subset<T, Environment$apiKeyArgs<ExtArgs>>): Prisma__ApiKeyClient<$Result.GetResult<Prisma.$ApiKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
@@ -4282,6 +4439,27 @@ export namespace Prisma {
      * Filter which Environments to delete
      */
     where?: EnvironmentWhereInput
+  }
+
+
+  /**
+   * Environment.logs
+   */
+  export type Environment$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    cursor?: LogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
 
@@ -7163,7 +7341,6 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    score: number | null
   }
 
   export type LogSumAggregateOutputType = {
@@ -7174,12 +7351,13 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    score: number | null
   }
 
   export type LogMinAggregateOutputType = {
     id: string | null
+    traceId: string | null
     envId: string | null
+    parentLogId: string | null
     name: string | null
     model: string | null
     startTime: Date | null
@@ -7191,18 +7369,15 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    parentId: string | null
-    score: number | null
-    feedback: string | null
-    sessionId: string | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type LogMaxAggregateOutputType = {
     id: string | null
+    traceId: string | null
     envId: string | null
+    parentLogId: string | null
     name: string | null
     model: string | null
     startTime: Date | null
@@ -7214,18 +7389,15 @@ export namespace Prisma {
     inputCost: number | null
     outputCost: number | null
     totalCost: number | null
-    parentId: string | null
-    score: number | null
-    feedback: string | null
-    sessionId: string | null
-    userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type LogCountAggregateOutputType = {
     id: number
+    traceId: number
     envId: number
+    parentLogId: number
     name: number
     model: number
     input: number
@@ -7239,13 +7411,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    tags: number
     extra: number
-    parentId: number
-    score: number
-    feedback: number
-    sessionId: number
-    userId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7260,7 +7426,6 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    score?: true
   }
 
   export type LogSumAggregateInputType = {
@@ -7271,12 +7436,13 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    score?: true
   }
 
   export type LogMinAggregateInputType = {
     id?: true
+    traceId?: true
     envId?: true
+    parentLogId?: true
     name?: true
     model?: true
     startTime?: true
@@ -7288,18 +7454,15 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    parentId?: true
-    score?: true
-    feedback?: true
-    sessionId?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type LogMaxAggregateInputType = {
     id?: true
+    traceId?: true
     envId?: true
+    parentLogId?: true
     name?: true
     model?: true
     startTime?: true
@@ -7311,18 +7474,15 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    parentId?: true
-    score?: true
-    feedback?: true
-    sessionId?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type LogCountAggregateInputType = {
     id?: true
+    traceId?: true
     envId?: true
+    parentLogId?: true
     name?: true
     model?: true
     input?: true
@@ -7336,13 +7496,7 @@ export namespace Prisma {
     inputCost?: true
     outputCost?: true
     totalCost?: true
-    tags?: true
     extra?: true
-    parentId?: true
-    score?: true
-    feedback?: true
-    sessionId?: true
-    userId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -7436,7 +7590,9 @@ export namespace Prisma {
 
   export type LogGroupByOutputType = {
     id: string
+    traceId: string
     envId: string
+    parentLogId: string | null
     name: string
     model: string
     input: JsonValue
@@ -7450,13 +7606,7 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    tags: JsonValue
     extra: JsonValue
-    parentId: string | null
-    score: number | null
-    feedback: string | null
-    sessionId: string | null
-    userId: string | null
     createdAt: Date
     updatedAt: Date
     _count: LogCountAggregateOutputType | null
@@ -7482,7 +7632,9 @@ export namespace Prisma {
 
   export type LogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    traceId?: boolean
     envId?: boolean
+    parentLogId?: boolean
     name?: boolean
     model?: boolean
     input?: boolean
@@ -7496,20 +7648,18 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
-    tags?: boolean
     extra?: boolean
-    parentId?: boolean
-    score?: boolean
-    feedback?: boolean
-    sessionId?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    environment?: boolean | EnvironmentDefaultArgs<ExtArgs>
+    trace?: boolean | TraceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["log"]>
 
   export type LogSelectScalar = {
     id?: boolean
+    traceId?: boolean
     envId?: boolean
+    parentLogId?: boolean
     name?: boolean
     model?: boolean
     input?: boolean
@@ -7523,24 +7673,28 @@ export namespace Prisma {
     inputCost?: boolean
     outputCost?: boolean
     totalCost?: boolean
-    tags?: boolean
     extra?: boolean
-    parentId?: boolean
-    score?: boolean
-    feedback?: boolean
-    sessionId?: boolean
-    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+  }
+
+  export type LogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    environment?: boolean | EnvironmentDefaultArgs<ExtArgs>
+    trace?: boolean | TraceDefaultArgs<ExtArgs>
   }
 
 
   export type $LogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Log"
-    objects: {}
+    objects: {
+      environment: Prisma.$EnvironmentPayload<ExtArgs>
+      trace: Prisma.$TracePayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      traceId: string
       envId: string
+      parentLogId: string | null
       name: string
       model: string
       input: Prisma.JsonValue
@@ -7554,13 +7708,7 @@ export namespace Prisma {
       inputCost: number
       outputCost: number
       totalCost: number
-      tags: Prisma.JsonValue
       extra: Prisma.JsonValue
-      parentId: string | null
-      score: number | null
-      feedback: string | null
-      sessionId: string | null
-      userId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["log"]>
@@ -7928,6 +8076,9 @@ export namespace Prisma {
   export interface Prisma__LogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    environment<T extends EnvironmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EnvironmentDefaultArgs<ExtArgs>>): Prisma__EnvironmentClient<$Result.GetResult<Prisma.$EnvironmentPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    trace<T extends TraceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TraceDefaultArgs<ExtArgs>>): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7958,7 +8109,9 @@ export namespace Prisma {
    */ 
   interface LogFieldRefs {
     readonly id: FieldRef<"Log", 'String'>
+    readonly traceId: FieldRef<"Log", 'String'>
     readonly envId: FieldRef<"Log", 'String'>
+    readonly parentLogId: FieldRef<"Log", 'String'>
     readonly name: FieldRef<"Log", 'String'>
     readonly model: FieldRef<"Log", 'String'>
     readonly input: FieldRef<"Log", 'Json'>
@@ -7972,13 +8125,7 @@ export namespace Prisma {
     readonly inputCost: FieldRef<"Log", 'Float'>
     readonly outputCost: FieldRef<"Log", 'Float'>
     readonly totalCost: FieldRef<"Log", 'Float'>
-    readonly tags: FieldRef<"Log", 'Json'>
     readonly extra: FieldRef<"Log", 'Json'>
-    readonly parentId: FieldRef<"Log", 'String'>
-    readonly score: FieldRef<"Log", 'Float'>
-    readonly feedback: FieldRef<"Log", 'String'>
-    readonly sessionId: FieldRef<"Log", 'String'>
-    readonly userId: FieldRef<"Log", 'String'>
     readonly createdAt: FieldRef<"Log", 'DateTime'>
     readonly updatedAt: FieldRef<"Log", 'DateTime'>
   }
@@ -7995,6 +8142,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * Filter, which Log to fetch.
      */
     where: LogWhereUniqueInput
@@ -8010,6 +8161,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * Filter, which Log to fetch.
      */
     where: LogWhereUniqueInput
@@ -8024,6 +8179,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Log
      */
     select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
     /**
      * Filter, which Log to fetch.
      */
@@ -8070,6 +8229,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * Filter, which Log to fetch.
      */
     where?: LogWhereInput
@@ -8115,6 +8278,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * Filter, which Logs to fetch.
      */
     where?: LogWhereInput
@@ -8155,6 +8322,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * The data needed to create a Log.
      */
     data: XOR<LogCreateInput, LogUncheckedCreateInput>
@@ -8181,6 +8352,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Log
      */
     select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
     /**
      * The data needed to update a Log.
      */
@@ -8216,6 +8391,10 @@ export namespace Prisma {
      */
     select?: LogSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
      * The filter to search for the Log to update in case it exists.
      */
     where: LogWhereUniqueInput
@@ -8238,6 +8417,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Log
      */
     select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
     /**
      * Filter which Log to delete.
      */
@@ -8264,6 +8447,1096 @@ export namespace Prisma {
      * Select specific fields to fetch from the Log
      */
     select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model Trace
+   */
+
+  export type AggregateTrace = {
+    _count: TraceCountAggregateOutputType | null
+    _avg: TraceAvgAggregateOutputType | null
+    _sum: TraceSumAggregateOutputType | null
+    _min: TraceMinAggregateOutputType | null
+    _max: TraceMaxAggregateOutputType | null
+  }
+
+  export type TraceAvgAggregateOutputType = {
+    inputTokens: number | null
+    outputTokens: number | null
+    totalTokens: number | null
+    inputCost: number | null
+    outputCost: number | null
+    totalCost: number | null
+  }
+
+  export type TraceSumAggregateOutputType = {
+    inputTokens: number | null
+    outputTokens: number | null
+    totalTokens: number | null
+    inputCost: number | null
+    outputCost: number | null
+    totalCost: number | null
+  }
+
+  export type TraceMinAggregateOutputType = {
+    id: string | null
+    envId: string | null
+    name: string | null
+    inputTokens: number | null
+    outputTokens: number | null
+    totalTokens: number | null
+    inputCost: number | null
+    outputCost: number | null
+    totalCost: number | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TraceMaxAggregateOutputType = {
+    id: string | null
+    envId: string | null
+    name: string | null
+    inputTokens: number | null
+    outputTokens: number | null
+    totalTokens: number | null
+    inputCost: number | null
+    outputCost: number | null
+    totalCost: number | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TraceCountAggregateOutputType = {
+    id: number
+    envId: number
+    name: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId: number
+    tags: number
+    extra: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TraceAvgAggregateInputType = {
+    inputTokens?: true
+    outputTokens?: true
+    totalTokens?: true
+    inputCost?: true
+    outputCost?: true
+    totalCost?: true
+  }
+
+  export type TraceSumAggregateInputType = {
+    inputTokens?: true
+    outputTokens?: true
+    totalTokens?: true
+    inputCost?: true
+    outputCost?: true
+    totalCost?: true
+  }
+
+  export type TraceMinAggregateInputType = {
+    id?: true
+    envId?: true
+    name?: true
+    inputTokens?: true
+    outputTokens?: true
+    totalTokens?: true
+    inputCost?: true
+    outputCost?: true
+    totalCost?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TraceMaxAggregateInputType = {
+    id?: true
+    envId?: true
+    name?: true
+    inputTokens?: true
+    outputTokens?: true
+    totalTokens?: true
+    inputCost?: true
+    outputCost?: true
+    totalCost?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TraceCountAggregateInputType = {
+    id?: true
+    envId?: true
+    name?: true
+    inputTokens?: true
+    outputTokens?: true
+    totalTokens?: true
+    inputCost?: true
+    outputCost?: true
+    totalCost?: true
+    userId?: true
+    tags?: true
+    extra?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TraceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Trace to aggregate.
+     */
+    where?: TraceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Traces to fetch.
+     */
+    orderBy?: TraceOrderByWithRelationInput | TraceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TraceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Traces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Traces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Traces
+    **/
+    _count?: true | TraceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TraceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TraceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TraceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TraceMaxAggregateInputType
+  }
+
+  export type GetTraceAggregateType<T extends TraceAggregateArgs> = {
+        [P in keyof T & keyof AggregateTrace]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTrace[P]>
+      : GetScalarType<T[P], AggregateTrace[P]>
+  }
+
+
+
+
+  export type TraceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TraceWhereInput
+    orderBy?: TraceOrderByWithAggregationInput | TraceOrderByWithAggregationInput[]
+    by: TraceScalarFieldEnum[] | TraceScalarFieldEnum
+    having?: TraceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TraceCountAggregateInputType | true
+    _avg?: TraceAvgAggregateInputType
+    _sum?: TraceSumAggregateInputType
+    _min?: TraceMinAggregateInputType
+    _max?: TraceMaxAggregateInputType
+  }
+
+  export type TraceGroupByOutputType = {
+    id: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId: string | null
+    tags: string[]
+    extra: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TraceCountAggregateOutputType | null
+    _avg: TraceAvgAggregateOutputType | null
+    _sum: TraceSumAggregateOutputType | null
+    _min: TraceMinAggregateOutputType | null
+    _max: TraceMaxAggregateOutputType | null
+  }
+
+  type GetTraceGroupByPayload<T extends TraceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TraceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TraceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TraceGroupByOutputType[P]>
+            : GetScalarType<T[P], TraceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TraceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    envId?: boolean
+    name?: boolean
+    inputTokens?: boolean
+    outputTokens?: boolean
+    totalTokens?: boolean
+    inputCost?: boolean
+    outputCost?: boolean
+    totalCost?: boolean
+    userId?: boolean
+    tags?: boolean
+    extra?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    logs?: boolean | Trace$logsArgs<ExtArgs>
+    _count?: boolean | TraceCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["trace"]>
+
+  export type TraceSelectScalar = {
+    id?: boolean
+    envId?: boolean
+    name?: boolean
+    inputTokens?: boolean
+    outputTokens?: boolean
+    totalTokens?: boolean
+    inputCost?: boolean
+    outputCost?: boolean
+    totalCost?: boolean
+    userId?: boolean
+    tags?: boolean
+    extra?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TraceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | Trace$logsArgs<ExtArgs>
+    _count?: boolean | TraceCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $TracePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Trace"
+    objects: {
+      logs: Prisma.$LogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      envId: string
+      name: string
+      inputTokens: number
+      outputTokens: number
+      totalTokens: number
+      inputCost: number
+      outputCost: number
+      totalCost: number
+      userId: string | null
+      tags: string[]
+      extra: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["trace"]>
+    composites: {}
+  }
+
+
+  type TraceGetPayload<S extends boolean | null | undefined | TraceDefaultArgs> = $Result.GetResult<Prisma.$TracePayload, S>
+
+  type TraceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TraceFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TraceCountAggregateInputType | true
+    }
+
+  export interface TraceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Trace'], meta: { name: 'Trace' } }
+    /**
+     * Find zero or one Trace that matches the filter.
+     * @param {TraceFindUniqueArgs} args - Arguments to find a Trace
+     * @example
+     * // Get one Trace
+     * const trace = await prisma.trace.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TraceFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceFindUniqueArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Trace that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TraceFindUniqueOrThrowArgs} args - Arguments to find a Trace
+     * @example
+     * // Get one Trace
+     * const trace = await prisma.trace.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TraceFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Trace that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceFindFirstArgs} args - Arguments to find a Trace
+     * @example
+     * // Get one Trace
+     * const trace = await prisma.trace.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TraceFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceFindFirstArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Trace that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceFindFirstOrThrowArgs} args - Arguments to find a Trace
+     * @example
+     * // Get one Trace
+     * const trace = await prisma.trace.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TraceFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Traces that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Traces
+     * const traces = await prisma.trace.findMany()
+     * 
+     * // Get first 10 Traces
+     * const traces = await prisma.trace.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const traceWithIdOnly = await prisma.trace.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TraceFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Trace.
+     * @param {TraceCreateArgs} args - Arguments to create a Trace.
+     * @example
+     * // Create one Trace
+     * const Trace = await prisma.trace.create({
+     *   data: {
+     *     // ... data to create a Trace
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TraceCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceCreateArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Traces.
+     *     @param {TraceCreateManyArgs} args - Arguments to create many Traces.
+     *     @example
+     *     // Create many Traces
+     *     const trace = await prisma.trace.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TraceCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Trace.
+     * @param {TraceDeleteArgs} args - Arguments to delete one Trace.
+     * @example
+     * // Delete one Trace
+     * const Trace = await prisma.trace.delete({
+     *   where: {
+     *     // ... filter to delete one Trace
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TraceDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceDeleteArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Trace.
+     * @param {TraceUpdateArgs} args - Arguments to update one Trace.
+     * @example
+     * // Update one Trace
+     * const trace = await prisma.trace.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TraceUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceUpdateArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Traces.
+     * @param {TraceDeleteManyArgs} args - Arguments to filter Traces to delete.
+     * @example
+     * // Delete a few Traces
+     * const { count } = await prisma.trace.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TraceDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TraceDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Traces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Traces
+     * const trace = await prisma.trace.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TraceUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Trace.
+     * @param {TraceUpsertArgs} args - Arguments to update or create a Trace.
+     * @example
+     * // Update or create a Trace
+     * const trace = await prisma.trace.upsert({
+     *   create: {
+     *     // ... data to create a Trace
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Trace we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TraceUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, TraceUpsertArgs<ExtArgs>>
+    ): Prisma__TraceClient<$Result.GetResult<Prisma.$TracePayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Traces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceCountArgs} args - Arguments to filter Traces to count.
+     * @example
+     * // Count the number of Traces
+     * const count = await prisma.trace.count({
+     *   where: {
+     *     // ... the filter for the Traces we want to count
+     *   }
+     * })
+    **/
+    count<T extends TraceCountArgs>(
+      args?: Subset<T, TraceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TraceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Trace.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TraceAggregateArgs>(args: Subset<T, TraceAggregateArgs>): Prisma.PrismaPromise<GetTraceAggregateType<T>>
+
+    /**
+     * Group by Trace.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TraceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TraceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TraceGroupByArgs['orderBy'] }
+        : { orderBy?: TraceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TraceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTraceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Trace model
+   */
+  readonly fields: TraceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Trace.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TraceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    logs<T extends Trace$logsArgs<ExtArgs> = {}>(args?: Subset<T, Trace$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Trace model
+   */ 
+  interface TraceFieldRefs {
+    readonly id: FieldRef<"Trace", 'String'>
+    readonly envId: FieldRef<"Trace", 'String'>
+    readonly name: FieldRef<"Trace", 'String'>
+    readonly inputTokens: FieldRef<"Trace", 'Int'>
+    readonly outputTokens: FieldRef<"Trace", 'Int'>
+    readonly totalTokens: FieldRef<"Trace", 'Int'>
+    readonly inputCost: FieldRef<"Trace", 'Float'>
+    readonly outputCost: FieldRef<"Trace", 'Float'>
+    readonly totalCost: FieldRef<"Trace", 'Float'>
+    readonly userId: FieldRef<"Trace", 'String'>
+    readonly tags: FieldRef<"Trace", 'String[]'>
+    readonly extra: FieldRef<"Trace", 'Json'>
+    readonly createdAt: FieldRef<"Trace", 'DateTime'>
+    readonly updatedAt: FieldRef<"Trace", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Trace findUnique
+   */
+  export type TraceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter, which Trace to fetch.
+     */
+    where: TraceWhereUniqueInput
+  }
+
+
+  /**
+   * Trace findUniqueOrThrow
+   */
+  export type TraceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter, which Trace to fetch.
+     */
+    where: TraceWhereUniqueInput
+  }
+
+
+  /**
+   * Trace findFirst
+   */
+  export type TraceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter, which Trace to fetch.
+     */
+    where?: TraceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Traces to fetch.
+     */
+    orderBy?: TraceOrderByWithRelationInput | TraceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Traces.
+     */
+    cursor?: TraceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Traces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Traces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Traces.
+     */
+    distinct?: TraceScalarFieldEnum | TraceScalarFieldEnum[]
+  }
+
+
+  /**
+   * Trace findFirstOrThrow
+   */
+  export type TraceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter, which Trace to fetch.
+     */
+    where?: TraceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Traces to fetch.
+     */
+    orderBy?: TraceOrderByWithRelationInput | TraceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Traces.
+     */
+    cursor?: TraceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Traces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Traces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Traces.
+     */
+    distinct?: TraceScalarFieldEnum | TraceScalarFieldEnum[]
+  }
+
+
+  /**
+   * Trace findMany
+   */
+  export type TraceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter, which Traces to fetch.
+     */
+    where?: TraceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Traces to fetch.
+     */
+    orderBy?: TraceOrderByWithRelationInput | TraceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Traces.
+     */
+    cursor?: TraceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Traces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Traces.
+     */
+    skip?: number
+    distinct?: TraceScalarFieldEnum | TraceScalarFieldEnum[]
+  }
+
+
+  /**
+   * Trace create
+   */
+  export type TraceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Trace.
+     */
+    data: XOR<TraceCreateInput, TraceUncheckedCreateInput>
+  }
+
+
+  /**
+   * Trace createMany
+   */
+  export type TraceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Traces.
+     */
+    data: TraceCreateManyInput | TraceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Trace update
+   */
+  export type TraceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Trace.
+     */
+    data: XOR<TraceUpdateInput, TraceUncheckedUpdateInput>
+    /**
+     * Choose, which Trace to update.
+     */
+    where: TraceWhereUniqueInput
+  }
+
+
+  /**
+   * Trace updateMany
+   */
+  export type TraceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Traces.
+     */
+    data: XOR<TraceUpdateManyMutationInput, TraceUncheckedUpdateManyInput>
+    /**
+     * Filter which Traces to update
+     */
+    where?: TraceWhereInput
+  }
+
+
+  /**
+   * Trace upsert
+   */
+  export type TraceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Trace to update in case it exists.
+     */
+    where: TraceWhereUniqueInput
+    /**
+     * In case the Trace found by the `where` argument doesn't exist, create a new Trace with this data.
+     */
+    create: XOR<TraceCreateInput, TraceUncheckedCreateInput>
+    /**
+     * In case the Trace was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TraceUpdateInput, TraceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Trace delete
+   */
+  export type TraceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
+    /**
+     * Filter which Trace to delete.
+     */
+    where: TraceWhereUniqueInput
+  }
+
+
+  /**
+   * Trace deleteMany
+   */
+  export type TraceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Traces to delete
+     */
+    where?: TraceWhereInput
+  }
+
+
+  /**
+   * Trace.logs
+   */
+  export type Trace$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    cursor?: LogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+  }
+
+
+  /**
+   * Trace without action
+   */
+  export type TraceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Trace
+     */
+    select?: TraceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TraceInclude<ExtArgs> | null
   }
 
 
@@ -8353,7 +9626,9 @@ export namespace Prisma {
 
   export const LogScalarFieldEnum: {
     id: 'id',
+    traceId: 'traceId',
     envId: 'envId',
+    parentLogId: 'parentLogId',
     name: 'name',
     model: 'model',
     input: 'input',
@@ -8367,18 +9642,32 @@ export namespace Prisma {
     inputCost: 'inputCost',
     outputCost: 'outputCost',
     totalCost: 'totalCost',
-    tags: 'tags',
     extra: 'extra',
-    parentId: 'parentId',
-    score: 'score',
-    feedback: 'feedback',
-    sessionId: 'sessionId',
-    userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
+
+
+  export const TraceScalarFieldEnum: {
+    id: 'id',
+    envId: 'envId',
+    name: 'name',
+    inputTokens: 'inputTokens',
+    outputTokens: 'outputTokens',
+    totalTokens: 'totalTokens',
+    inputCost: 'inputCost',
+    outputCost: 'outputCost',
+    totalCost: 'totalCost',
+    userId: 'userId',
+    tags: 'tags',
+    extra: 'extra',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TraceScalarFieldEnum = (typeof TraceScalarFieldEnum)[keyof typeof TraceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8394,6 +9683,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -8635,6 +9932,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
+    logs?: LogListRelationFilter
     apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }
 
@@ -8645,6 +9943,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
+    logs?: LogOrderByRelationAggregateInput
     apiKey?: ApiKeyOrderByWithRelationInput
   }
 
@@ -8658,6 +9957,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
+    logs?: LogListRelationFilter
     apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }, "id">
 
@@ -8876,7 +10176,9 @@ export namespace Prisma {
     OR?: LogWhereInput[]
     NOT?: LogWhereInput | LogWhereInput[]
     id?: StringFilter<"Log"> | string
+    traceId?: StringFilter<"Log"> | string
     envId?: StringFilter<"Log"> | string
+    parentLogId?: StringNullableFilter<"Log"> | string | null
     name?: StringFilter<"Log"> | string
     model?: StringFilter<"Log"> | string
     input?: JsonFilter<"Log">
@@ -8890,20 +10192,18 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
-    tags?: JsonFilter<"Log">
     extra?: JsonFilter<"Log">
-    parentId?: StringNullableFilter<"Log"> | string | null
-    score?: FloatNullableFilter<"Log"> | number | null
-    feedback?: StringNullableFilter<"Log"> | string | null
-    sessionId?: StringNullableFilter<"Log"> | string | null
-    userId?: StringNullableFilter<"Log"> | string | null
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
+    environment?: XOR<EnvironmentRelationFilter, EnvironmentWhereInput>
+    trace?: XOR<TraceRelationFilter, TraceWhereInput>
   }
 
   export type LogOrderByWithRelationInput = {
     id?: SortOrder
+    traceId?: SortOrder
     envId?: SortOrder
+    parentLogId?: SortOrderInput | SortOrder
     name?: SortOrder
     model?: SortOrder
     input?: SortOrder
@@ -8917,15 +10217,11 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    tags?: SortOrder
     extra?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    score?: SortOrderInput | SortOrder
-    feedback?: SortOrderInput | SortOrder
-    sessionId?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    environment?: EnvironmentOrderByWithRelationInput
+    trace?: TraceOrderByWithRelationInput
   }
 
   export type LogWhereUniqueInput = Prisma.AtLeast<{
@@ -8933,7 +10229,9 @@ export namespace Prisma {
     AND?: LogWhereInput | LogWhereInput[]
     OR?: LogWhereInput[]
     NOT?: LogWhereInput | LogWhereInput[]
+    traceId?: StringFilter<"Log"> | string
     envId?: StringFilter<"Log"> | string
+    parentLogId?: StringNullableFilter<"Log"> | string | null
     name?: StringFilter<"Log"> | string
     model?: StringFilter<"Log"> | string
     input?: JsonFilter<"Log">
@@ -8947,20 +10245,18 @@ export namespace Prisma {
     inputCost?: FloatFilter<"Log"> | number
     outputCost?: FloatFilter<"Log"> | number
     totalCost?: FloatFilter<"Log"> | number
-    tags?: JsonFilter<"Log">
     extra?: JsonFilter<"Log">
-    parentId?: StringNullableFilter<"Log"> | string | null
-    score?: FloatNullableFilter<"Log"> | number | null
-    feedback?: StringNullableFilter<"Log"> | string | null
-    sessionId?: StringNullableFilter<"Log"> | string | null
-    userId?: StringNullableFilter<"Log"> | string | null
     createdAt?: DateTimeFilter<"Log"> | Date | string
     updatedAt?: DateTimeFilter<"Log"> | Date | string
+    environment?: XOR<EnvironmentRelationFilter, EnvironmentWhereInput>
+    trace?: XOR<TraceRelationFilter, TraceWhereInput>
   }, "id">
 
   export type LogOrderByWithAggregationInput = {
     id?: SortOrder
+    traceId?: SortOrder
     envId?: SortOrder
+    parentLogId?: SortOrderInput | SortOrder
     name?: SortOrder
     model?: SortOrder
     input?: SortOrder
@@ -8974,13 +10270,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    tags?: SortOrder
     extra?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    score?: SortOrderInput | SortOrder
-    feedback?: SortOrderInput | SortOrder
-    sessionId?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: LogCountOrderByAggregateInput
@@ -8995,7 +10285,9 @@ export namespace Prisma {
     OR?: LogScalarWhereWithAggregatesInput[]
     NOT?: LogScalarWhereWithAggregatesInput | LogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Log"> | string
+    traceId?: StringWithAggregatesFilter<"Log"> | string
     envId?: StringWithAggregatesFilter<"Log"> | string
+    parentLogId?: StringNullableWithAggregatesFilter<"Log"> | string | null
     name?: StringWithAggregatesFilter<"Log"> | string
     model?: StringWithAggregatesFilter<"Log"> | string
     input?: JsonWithAggregatesFilter<"Log">
@@ -9009,15 +10301,111 @@ export namespace Prisma {
     inputCost?: FloatWithAggregatesFilter<"Log"> | number
     outputCost?: FloatWithAggregatesFilter<"Log"> | number
     totalCost?: FloatWithAggregatesFilter<"Log"> | number
-    tags?: JsonWithAggregatesFilter<"Log">
     extra?: JsonWithAggregatesFilter<"Log">
-    parentId?: StringNullableWithAggregatesFilter<"Log"> | string | null
-    score?: FloatNullableWithAggregatesFilter<"Log"> | number | null
-    feedback?: StringNullableWithAggregatesFilter<"Log"> | string | null
-    sessionId?: StringNullableWithAggregatesFilter<"Log"> | string | null
-    userId?: StringNullableWithAggregatesFilter<"Log"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
+  }
+
+  export type TraceWhereInput = {
+    AND?: TraceWhereInput | TraceWhereInput[]
+    OR?: TraceWhereInput[]
+    NOT?: TraceWhereInput | TraceWhereInput[]
+    id?: StringFilter<"Trace"> | string
+    envId?: StringFilter<"Trace"> | string
+    name?: StringFilter<"Trace"> | string
+    inputTokens?: IntFilter<"Trace"> | number
+    outputTokens?: IntFilter<"Trace"> | number
+    totalTokens?: IntFilter<"Trace"> | number
+    inputCost?: FloatFilter<"Trace"> | number
+    outputCost?: FloatFilter<"Trace"> | number
+    totalCost?: FloatFilter<"Trace"> | number
+    userId?: StringNullableFilter<"Trace"> | string | null
+    tags?: StringNullableListFilter<"Trace">
+    extra?: JsonNullableFilter<"Trace">
+    createdAt?: DateTimeFilter<"Trace"> | Date | string
+    updatedAt?: DateTimeFilter<"Trace"> | Date | string
+    logs?: LogListRelationFilter
+  }
+
+  export type TraceOrderByWithRelationInput = {
+    id?: SortOrder
+    envId?: SortOrder
+    name?: SortOrder
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    extra?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    logs?: LogOrderByRelationAggregateInput
+  }
+
+  export type TraceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TraceWhereInput | TraceWhereInput[]
+    OR?: TraceWhereInput[]
+    NOT?: TraceWhereInput | TraceWhereInput[]
+    envId?: StringFilter<"Trace"> | string
+    name?: StringFilter<"Trace"> | string
+    inputTokens?: IntFilter<"Trace"> | number
+    outputTokens?: IntFilter<"Trace"> | number
+    totalTokens?: IntFilter<"Trace"> | number
+    inputCost?: FloatFilter<"Trace"> | number
+    outputCost?: FloatFilter<"Trace"> | number
+    totalCost?: FloatFilter<"Trace"> | number
+    userId?: StringNullableFilter<"Trace"> | string | null
+    tags?: StringNullableListFilter<"Trace">
+    extra?: JsonNullableFilter<"Trace">
+    createdAt?: DateTimeFilter<"Trace"> | Date | string
+    updatedAt?: DateTimeFilter<"Trace"> | Date | string
+    logs?: LogListRelationFilter
+  }, "id">
+
+  export type TraceOrderByWithAggregationInput = {
+    id?: SortOrder
+    envId?: SortOrder
+    name?: SortOrder
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    extra?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TraceCountOrderByAggregateInput
+    _avg?: TraceAvgOrderByAggregateInput
+    _max?: TraceMaxOrderByAggregateInput
+    _min?: TraceMinOrderByAggregateInput
+    _sum?: TraceSumOrderByAggregateInput
+  }
+
+  export type TraceScalarWhereWithAggregatesInput = {
+    AND?: TraceScalarWhereWithAggregatesInput | TraceScalarWhereWithAggregatesInput[]
+    OR?: TraceScalarWhereWithAggregatesInput[]
+    NOT?: TraceScalarWhereWithAggregatesInput | TraceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Trace"> | string
+    envId?: StringWithAggregatesFilter<"Trace"> | string
+    name?: StringWithAggregatesFilter<"Trace"> | string
+    inputTokens?: IntWithAggregatesFilter<"Trace"> | number
+    outputTokens?: IntWithAggregatesFilter<"Trace"> | number
+    totalTokens?: IntWithAggregatesFilter<"Trace"> | number
+    inputCost?: FloatWithAggregatesFilter<"Trace"> | number
+    outputCost?: FloatWithAggregatesFilter<"Trace"> | number
+    totalCost?: FloatWithAggregatesFilter<"Trace"> | number
+    userId?: StringNullableWithAggregatesFilter<"Trace"> | string | null
+    tags?: StringNullableListFilter<"Trace">
+    extra?: JsonNullableWithAggregatesFilter<"Trace">
+    createdAt?: DateTimeWithAggregatesFilter<"Trace"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Trace"> | Date | string
   }
 
   export type TeamCreateInput = {
@@ -9142,6 +10530,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
+    logs?: LogCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -9151,6 +10540,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -9160,6 +10550,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
+    logs?: LogUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -9169,6 +10560,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -9394,7 +10786,7 @@ export namespace Prisma {
 
   export type LogCreateInput = {
     id?: string
-    envId: string
+    parentLogId?: string | null
     name: string
     model: string
     input: JsonNullValueInput | InputJsonValue
@@ -9408,20 +10800,18 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    tags: JsonNullValueInput | InputJsonValue
     extra: JsonNullValueInput | InputJsonValue
-    parentId?: string | null
-    score?: number | null
-    feedback?: string | null
-    sessionId?: string | null
-    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    environment: EnvironmentCreateNestedOneWithoutLogsInput
+    trace: TraceCreateNestedOneWithoutLogsInput
   }
 
   export type LogUncheckedCreateInput = {
     id?: string
+    traceId: string
     envId: string
+    parentLogId?: string | null
     name: string
     model: string
     input: JsonNullValueInput | InputJsonValue
@@ -9435,20 +10825,14 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    tags: JsonNullValueInput | InputJsonValue
     extra: JsonNullValueInput | InputJsonValue
-    parentId?: string | null
-    score?: number | null
-    feedback?: string | null
-    sessionId?: string | null
-    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type LogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     input?: JsonNullValueInput | InputJsonValue
@@ -9462,20 +10846,18 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    tags?: JsonNullValueInput | InputJsonValue
     extra?: JsonNullValueInput | InputJsonValue
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback?: NullableStringFieldUpdateOperationsInput | string | null
-    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    environment?: EnvironmentUpdateOneRequiredWithoutLogsNestedInput
+    trace?: TraceUpdateOneRequiredWithoutLogsNestedInput
   }
 
   export type LogUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    traceId?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     input?: JsonNullValueInput | InputJsonValue
@@ -9489,20 +10871,16 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    tags?: JsonNullValueInput | InputJsonValue
     extra?: JsonNullValueInput | InputJsonValue
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback?: NullableStringFieldUpdateOperationsInput | string | null
-    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LogCreateManyInput = {
     id?: string
+    traceId: string
     envId: string
+    parentLogId?: string | null
     name: string
     model: string
     input: JsonNullValueInput | InputJsonValue
@@ -9516,20 +10894,14 @@ export namespace Prisma {
     inputCost: number
     outputCost: number
     totalCost: number
-    tags: JsonNullValueInput | InputJsonValue
     extra: JsonNullValueInput | InputJsonValue
-    parentId?: string | null
-    score?: number | null
-    feedback?: string | null
-    sessionId?: string | null
-    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type LogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     input?: JsonNullValueInput | InputJsonValue
@@ -9543,20 +10915,16 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    tags?: JsonNullValueInput | InputJsonValue
     extra?: JsonNullValueInput | InputJsonValue
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback?: NullableStringFieldUpdateOperationsInput | string | null
-    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    traceId?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     model?: StringFieldUpdateOperationsInput | string
     input?: JsonNullValueInput | InputJsonValue
@@ -9570,13 +10938,130 @@ export namespace Prisma {
     inputCost?: FloatFieldUpdateOperationsInput | number
     outputCost?: FloatFieldUpdateOperationsInput | number
     totalCost?: FloatFieldUpdateOperationsInput | number
-    tags?: JsonNullValueInput | InputJsonValue
     extra?: JsonNullValueInput | InputJsonValue
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback?: NullableStringFieldUpdateOperationsInput | string | null
-    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TraceCreateInput = {
+    id?: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId?: string | null
+    tags?: TraceCreatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: LogCreateNestedManyWithoutTraceInput
+  }
+
+  export type TraceUncheckedCreateInput = {
+    id?: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId?: string | null
+    tags?: TraceCreatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    logs?: LogUncheckedCreateNestedManyWithoutTraceInput
+  }
+
+  export type TraceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUpdateManyWithoutTraceNestedInput
+  }
+
+  export type TraceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUncheckedUpdateManyWithoutTraceNestedInput
+  }
+
+  export type TraceCreateManyInput = {
+    id?: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId?: string | null
+    tags?: TraceCreatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TraceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TraceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9729,9 +11214,19 @@ export namespace Prisma {
     isNot?: ProjectWhereInput
   }
 
+  export type LogListRelationFilter = {
+    every?: LogWhereInput
+    some?: LogWhereInput
+    none?: LogWhereInput
+  }
+
   export type ApiKeyNullableRelationFilter = {
     is?: ApiKeyWhereInput | null
     isNot?: ApiKeyWhereInput | null
+  }
+
+  export type LogOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type EnvironmentCountOrderByAggregateInput = {
@@ -9881,6 +11376,21 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
   export type JsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -9926,30 +11436,9 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type TraceRelationFilter = {
+    is?: TraceWhereInput
+    isNot?: TraceWhereInput
   }
 
   export type SortOrderInput = {
@@ -9959,7 +11448,9 @@ export namespace Prisma {
 
   export type LogCountOrderByAggregateInput = {
     id?: SortOrder
+    traceId?: SortOrder
     envId?: SortOrder
+    parentLogId?: SortOrder
     name?: SortOrder
     model?: SortOrder
     input?: SortOrder
@@ -9973,13 +11464,7 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    tags?: SortOrder
     extra?: SortOrder
-    parentId?: SortOrder
-    score?: SortOrder
-    feedback?: SortOrder
-    sessionId?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9992,12 +11477,13 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    score?: SortOrder
   }
 
   export type LogMaxOrderByAggregateInput = {
     id?: SortOrder
+    traceId?: SortOrder
     envId?: SortOrder
+    parentLogId?: SortOrder
     name?: SortOrder
     model?: SortOrder
     startTime?: SortOrder
@@ -10009,18 +11495,15 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    parentId?: SortOrder
-    score?: SortOrder
-    feedback?: SortOrder
-    sessionId?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type LogMinOrderByAggregateInput = {
     id?: SortOrder
+    traceId?: SortOrder
     envId?: SortOrder
+    parentLogId?: SortOrder
     name?: SortOrder
     model?: SortOrder
     startTime?: SortOrder
@@ -10032,11 +11515,6 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    parentId?: SortOrder
-    score?: SortOrder
-    feedback?: SortOrder
-    sessionId?: SortOrder
-    userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10049,7 +11527,24 @@ export namespace Prisma {
     inputCost?: SortOrder
     outputCost?: SortOrder
     totalCost?: SortOrder
-    score?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -10109,38 +11604,124 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+  export type JsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+  export type TraceCountOrderByAggregateInput = {
+    id?: SortOrder
+    envId?: SortOrder
+    name?: SortOrder
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+    userId?: SortOrder
+    tags?: SortOrder
+    extra?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TraceAvgOrderByAggregateInput = {
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+  }
+
+  export type TraceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    envId?: SortOrder
+    name?: SortOrder
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TraceMinOrderByAggregateInput = {
+    id?: SortOrder
+    envId?: SortOrder
+    name?: SortOrder
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TraceSumOrderByAggregateInput = {
+    inputTokens?: SortOrder
+    outputTokens?: SortOrder
+    totalTokens?: SortOrder
+    inputCost?: SortOrder
+    outputCost?: SortOrder
+    totalCost?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type ProjectCreateNestedManyWithoutTeamInput = {
@@ -10297,10 +11878,24 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type LogCreateNestedManyWithoutEnvironmentInput = {
+    create?: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput> | LogCreateWithoutEnvironmentInput[] | LogUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutEnvironmentInput | LogCreateOrConnectWithoutEnvironmentInput[]
+    createMany?: LogCreateManyEnvironmentInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
   export type ApiKeyCreateNestedOneWithoutEnvironmentInput = {
     create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
     connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
     connect?: ApiKeyWhereUniqueInput
+  }
+
+  export type LogUncheckedCreateNestedManyWithoutEnvironmentInput = {
+    create?: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput> | LogCreateWithoutEnvironmentInput[] | LogUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutEnvironmentInput | LogCreateOrConnectWithoutEnvironmentInput[]
+    createMany?: LogCreateManyEnvironmentInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
   }
 
   export type ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput = {
@@ -10317,6 +11912,20 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutEnvironmentsInput, ProjectUpdateWithoutEnvironmentsInput>, ProjectUncheckedUpdateWithoutEnvironmentsInput>
   }
 
+  export type LogUpdateManyWithoutEnvironmentNestedInput = {
+    create?: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput> | LogCreateWithoutEnvironmentInput[] | LogUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutEnvironmentInput | LogCreateOrConnectWithoutEnvironmentInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutEnvironmentInput | LogUpsertWithWhereUniqueWithoutEnvironmentInput[]
+    createMany?: LogCreateManyEnvironmentInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutEnvironmentInput | LogUpdateWithWhereUniqueWithoutEnvironmentInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutEnvironmentInput | LogUpdateManyWithWhereWithoutEnvironmentInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
   export type ApiKeyUpdateOneWithoutEnvironmentNestedInput = {
     create?: XOR<ApiKeyCreateWithoutEnvironmentInput, ApiKeyUncheckedCreateWithoutEnvironmentInput>
     connectOrCreate?: ApiKeyCreateOrConnectWithoutEnvironmentInput
@@ -10325,6 +11934,20 @@ export namespace Prisma {
     delete?: ApiKeyWhereInput | boolean
     connect?: ApiKeyWhereUniqueInput
     update?: XOR<XOR<ApiKeyUpdateToOneWithWhereWithoutEnvironmentInput, ApiKeyUpdateWithoutEnvironmentInput>, ApiKeyUncheckedUpdateWithoutEnvironmentInput>
+  }
+
+  export type LogUncheckedUpdateManyWithoutEnvironmentNestedInput = {
+    create?: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput> | LogCreateWithoutEnvironmentInput[] | LogUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutEnvironmentInput | LogCreateOrConnectWithoutEnvironmentInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutEnvironmentInput | LogUpsertWithWhereUniqueWithoutEnvironmentInput[]
+    createMany?: LogCreateManyEnvironmentInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutEnvironmentInput | LogUpdateWithWhereUniqueWithoutEnvironmentInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutEnvironmentInput | LogUpdateManyWithWhereWithoutEnvironmentInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
   export type ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput = {
@@ -10429,6 +12052,22 @@ export namespace Prisma {
     update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutApiKeyInput, EnvironmentUpdateWithoutApiKeyInput>, EnvironmentUncheckedUpdateWithoutApiKeyInput>
   }
 
+  export type EnvironmentCreateNestedOneWithoutLogsInput = {
+    create?: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutLogsInput
+    connect?: EnvironmentWhereUniqueInput
+  }
+
+  export type TraceCreateNestedOneWithoutLogsInput = {
+    create?: XOR<TraceCreateWithoutLogsInput, TraceUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: TraceCreateOrConnectWithoutLogsInput
+    connect?: TraceWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -10445,16 +12084,71 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type EnvironmentUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutLogsInput
+    upsert?: EnvironmentUpsertWithoutLogsInput
+    connect?: EnvironmentWhereUniqueInput
+    update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutLogsInput, EnvironmentUpdateWithoutLogsInput>, EnvironmentUncheckedUpdateWithoutLogsInput>
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type TraceUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<TraceCreateWithoutLogsInput, TraceUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: TraceCreateOrConnectWithoutLogsInput
+    upsert?: TraceUpsertWithoutLogsInput
+    connect?: TraceWhereUniqueInput
+    update?: XOR<XOR<TraceUpdateToOneWithWhereWithoutLogsInput, TraceUpdateWithoutLogsInput>, TraceUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type TraceCreatetagsInput = {
+    set: string[]
+  }
+
+  export type LogCreateNestedManyWithoutTraceInput = {
+    create?: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput> | LogCreateWithoutTraceInput[] | LogUncheckedCreateWithoutTraceInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutTraceInput | LogCreateOrConnectWithoutTraceInput[]
+    createMany?: LogCreateManyTraceInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
+  export type LogUncheckedCreateNestedManyWithoutTraceInput = {
+    create?: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput> | LogCreateWithoutTraceInput[] | LogUncheckedCreateWithoutTraceInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutTraceInput | LogCreateOrConnectWithoutTraceInput[]
+    createMany?: LogCreateManyTraceInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
+  export type TraceUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type LogUpdateManyWithoutTraceNestedInput = {
+    create?: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput> | LogCreateWithoutTraceInput[] | LogUncheckedCreateWithoutTraceInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutTraceInput | LogCreateOrConnectWithoutTraceInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutTraceInput | LogUpsertWithWhereUniqueWithoutTraceInput[]
+    createMany?: LogCreateManyTraceInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutTraceInput | LogUpdateWithWhereUniqueWithoutTraceInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutTraceInput | LogUpdateManyWithWhereWithoutTraceInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
+  export type LogUncheckedUpdateManyWithoutTraceNestedInput = {
+    create?: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput> | LogCreateWithoutTraceInput[] | LogUncheckedCreateWithoutTraceInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutTraceInput | LogCreateOrConnectWithoutTraceInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutTraceInput | LogUpsertWithWhereUniqueWithoutTraceInput[]
+    createMany?: LogCreateManyTraceInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutTraceInput | LogUpdateWithWhereUniqueWithoutTraceInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutTraceInput | LogUpdateManyWithWhereWithoutTraceInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10554,17 +12248,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -10579,15 +12262,43 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -10643,49 +12354,27 @@ export namespace Prisma {
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type ProjectCreateWithoutTeamInput = {
@@ -10821,6 +12510,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    logs?: LogCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -10829,6 +12519,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -10917,6 +12608,60 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutEnvironmentsInput, ProjectUncheckedCreateWithoutEnvironmentsInput>
   }
 
+  export type LogCreateWithoutEnvironmentInput = {
+    id?: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    trace: TraceCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogUncheckedCreateWithoutEnvironmentInput = {
+    id?: string
+    traceId: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogCreateOrConnectWithoutEnvironmentInput = {
+    where: LogWhereUniqueInput
+    create: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput>
+  }
+
+  export type LogCreateManyEnvironmentInputEnvelope = {
+    data: LogCreateManyEnvironmentInput | LogCreateManyEnvironmentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ApiKeyCreateWithoutEnvironmentInput = {
     id?: string
     key: string
@@ -10963,6 +12708,48 @@ export namespace Prisma {
     teamId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUpsertWithWhereUniqueWithoutEnvironmentInput = {
+    where: LogWhereUniqueInput
+    update: XOR<LogUpdateWithoutEnvironmentInput, LogUncheckedUpdateWithoutEnvironmentInput>
+    create: XOR<LogCreateWithoutEnvironmentInput, LogUncheckedCreateWithoutEnvironmentInput>
+  }
+
+  export type LogUpdateWithWhereUniqueWithoutEnvironmentInput = {
+    where: LogWhereUniqueInput
+    data: XOR<LogUpdateWithoutEnvironmentInput, LogUncheckedUpdateWithoutEnvironmentInput>
+  }
+
+  export type LogUpdateManyWithWhereWithoutEnvironmentInput = {
+    where: LogScalarWhereInput
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyWithoutEnvironmentInput>
+  }
+
+  export type LogScalarWhereInput = {
+    AND?: LogScalarWhereInput | LogScalarWhereInput[]
+    OR?: LogScalarWhereInput[]
+    NOT?: LogScalarWhereInput | LogScalarWhereInput[]
+    id?: StringFilter<"Log"> | string
+    traceId?: StringFilter<"Log"> | string
+    envId?: StringFilter<"Log"> | string
+    parentLogId?: StringNullableFilter<"Log"> | string | null
+    name?: StringFilter<"Log"> | string
+    model?: StringFilter<"Log"> | string
+    input?: JsonFilter<"Log">
+    output?: JsonFilter<"Log">
+    startTime?: DateTimeFilter<"Log"> | Date | string
+    endTime?: DateTimeFilter<"Log"> | Date | string
+    duration?: FloatFilter<"Log"> | number
+    inputTokens?: IntFilter<"Log"> | number
+    outputTokens?: IntFilter<"Log"> | number
+    totalTokens?: IntFilter<"Log"> | number
+    inputCost?: FloatFilter<"Log"> | number
+    outputCost?: FloatFilter<"Log"> | number
+    totalCost?: FloatFilter<"Log"> | number
+    extra?: JsonFilter<"Log">
+    createdAt?: DateTimeFilter<"Log"> | Date | string
+    updatedAt?: DateTimeFilter<"Log"> | Date | string
   }
 
   export type ApiKeyUpsertWithoutEnvironmentInput = {
@@ -11144,6 +12931,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
+    logs?: LogCreateNestedManyWithoutEnvironmentInput
   }
 
   export type EnvironmentUncheckedCreateWithoutApiKeyInput = {
@@ -11152,6 +12940,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
   }
 
   export type EnvironmentCreateOrConnectWithoutApiKeyInput = {
@@ -11176,6 +12965,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
+    logs?: LogUpdateManyWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateWithoutApiKeyInput = {
@@ -11184,6 +12974,213 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
+  }
+
+  export type EnvironmentCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    project: ProjectCreateNestedOneWithoutEnvironmentsInput
+    apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
+  }
+
+  export type EnvironmentUncheckedCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    projectId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
+  }
+
+  export type EnvironmentCreateOrConnectWithoutLogsInput = {
+    where: EnvironmentWhereUniqueInput
+    create: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+  }
+
+  export type TraceCreateWithoutLogsInput = {
+    id?: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId?: string | null
+    tags?: TraceCreatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TraceUncheckedCreateWithoutLogsInput = {
+    id?: string
+    envId: string
+    name: string
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    userId?: string | null
+    tags?: TraceCreatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TraceCreateOrConnectWithoutLogsInput = {
+    where: TraceWhereUniqueInput
+    create: XOR<TraceCreateWithoutLogsInput, TraceUncheckedCreateWithoutLogsInput>
+  }
+
+  export type EnvironmentUpsertWithoutLogsInput = {
+    update: XOR<EnvironmentUpdateWithoutLogsInput, EnvironmentUncheckedUpdateWithoutLogsInput>
+    create: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+    where?: EnvironmentWhereInput
+  }
+
+  export type EnvironmentUpdateToOneWithWhereWithoutLogsInput = {
+    where?: EnvironmentWhereInput
+    data: XOR<EnvironmentUpdateWithoutLogsInput, EnvironmentUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type EnvironmentUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
+    apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
+  }
+
+  export type EnvironmentUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
+  }
+
+  export type TraceUpsertWithoutLogsInput = {
+    update: XOR<TraceUpdateWithoutLogsInput, TraceUncheckedUpdateWithoutLogsInput>
+    create: XOR<TraceCreateWithoutLogsInput, TraceUncheckedCreateWithoutLogsInput>
+    where?: TraceWhereInput
+  }
+
+  export type TraceUpdateToOneWithWhereWithoutLogsInput = {
+    where?: TraceWhereInput
+    data: XOR<TraceUpdateWithoutLogsInput, TraceUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type TraceUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TraceUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: TraceUpdatetagsInput | string[]
+    extra?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCreateWithoutTraceInput = {
+    id?: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    environment: EnvironmentCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogUncheckedCreateWithoutTraceInput = {
+    id?: string
+    envId: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogCreateOrConnectWithoutTraceInput = {
+    where: LogWhereUniqueInput
+    create: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput>
+  }
+
+  export type LogCreateManyTraceInputEnvelope = {
+    data: LogCreateManyTraceInput | LogCreateManyTraceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogUpsertWithWhereUniqueWithoutTraceInput = {
+    where: LogWhereUniqueInput
+    update: XOR<LogUpdateWithoutTraceInput, LogUncheckedUpdateWithoutTraceInput>
+    create: XOR<LogCreateWithoutTraceInput, LogUncheckedCreateWithoutTraceInput>
+  }
+
+  export type LogUpdateWithWhereUniqueWithoutTraceInput = {
+    where: LogWhereUniqueInput
+    data: XOR<LogUpdateWithoutTraceInput, LogUncheckedUpdateWithoutTraceInput>
+  }
+
+  export type LogUpdateManyWithWhereWithoutTraceInput = {
+    where: LogScalarWhereInput
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyWithoutTraceInput>
   }
 
   export type ProjectCreateManyTeamInput = {
@@ -11260,6 +13257,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -11268,12 +13266,101 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateManyWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCreateManyEnvironmentInput = {
+    id?: string
+    traceId: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trace?: TraceUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type LogUncheckedUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    traceId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUncheckedUpdateManyWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    traceId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11310,6 +13397,94 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LogCreateManyTraceInput = {
+    id?: string
+    envId: string
+    parentLogId?: string | null
+    name: string
+    model: string
+    input: JsonNullValueInput | InputJsonValue
+    output: JsonNullValueInput | InputJsonValue
+    startTime: Date | string
+    endTime: Date | string
+    duration: number
+    inputTokens: number
+    outputTokens: number
+    totalTokens: number
+    inputCost: number
+    outputCost: number
+    totalCost: number
+    extra: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LogUpdateWithoutTraceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    environment?: EnvironmentUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type LogUncheckedUpdateWithoutTraceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUncheckedUpdateManyWithoutTraceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    envId?: StringFieldUpdateOperationsInput | string
+    parentLogId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    input?: JsonNullValueInput | InputJsonValue
+    output?: JsonNullValueInput | InputJsonValue
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: FloatFieldUpdateOperationsInput | number
+    inputTokens?: IntFieldUpdateOperationsInput | number
+    outputTokens?: IntFieldUpdateOperationsInput | number
+    totalTokens?: IntFieldUpdateOperationsInput | number
+    inputCost?: FloatFieldUpdateOperationsInput | number
+    outputCost?: FloatFieldUpdateOperationsInput | number
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    extra?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -11324,9 +13499,17 @@ export namespace Prisma {
      */
     export type ProjectCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProjectCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use EnvironmentCountOutputTypeDefaultArgs instead
+     */
+    export type EnvironmentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use UserCountOutputTypeDefaultArgs instead
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TraceCountOutputTypeDefaultArgs instead
+     */
+    export type TraceCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TraceCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use TeamDefaultArgs instead
      */
@@ -11355,6 +13538,10 @@ export namespace Prisma {
      * @deprecated Use LogDefaultArgs instead
      */
     export type LogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TraceDefaultArgs instead
+     */
+    export type TraceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TraceDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

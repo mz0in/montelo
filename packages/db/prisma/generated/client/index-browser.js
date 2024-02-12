@@ -160,7 +160,9 @@ exports.Prisma.ApiKeyScalarFieldEnum = {
 
 exports.Prisma.LogScalarFieldEnum = {
   id: 'id',
+  traceId: 'traceId',
   envId: 'envId',
+  parentLogId: 'parentLogId',
   name: 'name',
   model: 'model',
   input: 'input',
@@ -174,13 +176,24 @@ exports.Prisma.LogScalarFieldEnum = {
   inputCost: 'inputCost',
   outputCost: 'outputCost',
   totalCost: 'totalCost',
+  extra: 'extra',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TraceScalarFieldEnum = {
+  id: 'id',
+  envId: 'envId',
+  name: 'name',
+  inputTokens: 'inputTokens',
+  outputTokens: 'outputTokens',
+  totalTokens: 'totalTokens',
+  inputCost: 'inputCost',
+  outputCost: 'outputCost',
+  totalCost: 'totalCost',
+  userId: 'userId',
   tags: 'tags',
   extra: 'extra',
-  parentId: 'parentId',
-  score: 'score',
-  feedback: 'feedback',
-  sessionId: 'sessionId',
-  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -191,6 +204,11 @@ exports.Prisma.SortOrder = {
 };
 
 exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -210,8 +228,8 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.UserPermissionRole = exports.$Enums.UserPermissionRole = {
-  MEMBER: 'MEMBER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
 };
 
 exports.Prisma.ModelName = {
@@ -221,7 +239,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Membership: 'Membership',
   ApiKey: 'ApiKey',
-  Log: 'Log'
+  Log: 'Log',
+  Trace: 'Trace'
 };
 
 /**

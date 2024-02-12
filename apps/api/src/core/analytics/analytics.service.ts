@@ -49,11 +49,11 @@ export class AnalyticsService {
 
     // Construct the query using string concatenation for the interval
     const queryString = `
-        SELECT DATE_TRUNC('${interval}', "startTime") AS "intervalStart",
-               ROUND(SUM("totalCost")::numeric, 2) ::float    AS "totalCost"
+        SELECT DATE_TRUNC('${interval}', start_time) AS "intervalStart",
+               ROUND(SUM(total_cost)::numeric, 2) ::float    AS "totalCost"
         FROM "log"
-        WHERE "envId" = $1
-          AND "startTime" >= $2::timestamp
+        WHERE env_id = $1
+          AND start_time >= $2::timestamp
         GROUP BY "intervalStart"
         ORDER BY "intervalStart";
     `;

@@ -1,4 +1,3 @@
-import { ApiKey } from "@montelo/db";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-http-bearer";
@@ -12,7 +11,8 @@ export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer-toke
     super();
   }
 
-  async validate(token: string): Promise<ApiKey> {
-    return this.authService.validateApiKey(token);
+  async validate(token: string): Promise<string> {
+    const apiKey = await this.authService.validateApiKey(token);
+    return apiKey.envId;
   }
 }

@@ -1,12 +1,11 @@
-import { ApiKey } from "@montelo/db";
-
-import { CreateLogInput } from "./dto/create-log.input";
+import { LogInput, TraceInput } from "./dto/create-log.input";
 
 export enum Queues {
   logs = "logs",
 }
 
 export type QLogsInput = {
-  apiKey: ApiKey;
-  params: CreateLogInput;
+  envId: string;
+  trace: TraceInput | null;
+  log: LogInput;
 };

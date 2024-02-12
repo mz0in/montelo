@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateLogInput {
+export class LogInput {
   @ApiProperty({
     example: "Agent X",
   })
@@ -51,31 +51,46 @@ export class CreateLogInput {
   })
   totalTokens: number;
 
+  @ApiProperty({ type: "object" })
+  extra: Record<string, any>;
+}
+
+export class TraceInput {
   @ApiProperty({
-    example: ["some tag"],
+    example: "clsj9nupk000108jp9pxdcx5c",
   })
-  tags: string[];
+  id: string;
 
   @ApiProperty({
-    example: null,
+    example: "Top-level Trace",
   })
-  score: number | null;
+  name: string;
 
   @ApiProperty({
-    example: null,
-  })
-  feedback: string | null;
-
-  @ApiProperty({
-    example: null,
-  })
-  sessionId: string | null;
-
-  @ApiProperty({
+    nullable: true,
+    type: String,
     example: null,
   })
   userId: string | null;
 
-  @ApiProperty({ type: "object" })
-  extra: Record<string, any>;
+  @ApiProperty({
+    example: null,
+  })
+  extra: Record<string, any> | null;
+}
+
+export class CreateLogInput {
+  @ApiProperty()
+  log: LogInput;
+
+  @ApiProperty({
+    type: TraceInput,
+    example: {
+      id: "clsj9nupk000108jp9pxdcx5c",
+      name: "Top-level Trace",
+      userId: null,
+      extra: null,
+    },
+  })
+  trace: TraceInput | null;
 }

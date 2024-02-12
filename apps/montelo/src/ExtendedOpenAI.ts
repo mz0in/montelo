@@ -4,6 +4,7 @@ import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completion
 import { Stream } from "openai/streaming";
 
 import { MonteloClient } from "./MonteloClient";
+import { LogInput } from "./client";
 
 class ExtendedChatCompletions extends OpenAI.Chat.Completions {
   private monteloClient: MonteloClient;
@@ -27,24 +28,79 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
   ): APIPromise<Stream<OpenAI.ChatCompletionChunk> | OpenAI.ChatCompletion>;
 
   create(
-    body: OpenAI.ChatCompletionCreateParams,
+    body: ChatCompletionCreateParamsBase,
     options?: RequestOptions,
-  ): APIPromise<OpenAI.ChatCompletion> | APIPromise<Stream<OpenAI.ChatCompletionChunk>> {
+  ): APIPromise<OpenAI.ChatCompletion | Stream<OpenAI.ChatCompletionChunk>> {
+    const startTime = new Date();
+
     const originalPromise = super.create(body, options);
 
-    const loggingPromise = originalPromise.then((data) => {
-      this.logToDatabase(data).catch((error) =>
-        console.error("Logging to database failed:", error),
-      );
-      return data;
-    });
+    if ("stream" in body && body.stream) {
+      // Handle streaming response
+      return originalPromise;
+      // return new Promise((resolve, reject) => {
+      //   const chunks: OpenAI.ChatCompletionChunk[] = [];
+      //   originalPromise
+      //     .then((stream) => {
+      //       // @ts-ignore
+      //       stream.on("data", (chunk) => chunks.push(chunk));
+      //       // @ts-ignore
+      //       stream.on("end", () => {
+      //         const endTime = new Date(); // Capture end time as Date object
+      //         const duration = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2); // Duration in seconds, rounded to two decimal places
+      //
+      //         // Convert accumulated chunks into a suitable format if necessary
+      //         const resultData = this.processStreamedData(chunks);
+      //
+      //         this.logToDatabase(
+      //           resultData,
+      //           startTime.toISOString(),
+      //           endTime.toISOString(),
+      //           parseFloat(duration),
+      //         ).catch(console.error);
+      //         resolve(stream); // Resolve with the original stream
+      //       });
+      //       stream.on("error", reject);
+      //     })
+      //     .catch(reject);
+      // }) as APIPromise<Stream<OpenAI.ChatCompletionChunk>>;
+    } else {
+      return originalPromise.then((data) => {
+        const endTime = new Date();
+        const duration = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
 
-    // @ts-ignore
-    return loggingPromise;
+        this.logToDatabase(
+          // @ts-ignore
+          data,
+          startTime.toISOString(),
+          endTime.toISOString(),
+          parseFloat(duration),
+        ).catch(console.error);
+        return data;
+      });
+    }
   }
 
-  private async logToDatabase(data: any): Promise<void> {
-    await this.monteloClient.createLog(data);
+  private async logToDatabase(
+    data: OpenAI.ChatCompletion,
+    startTime: string,
+    endTime: string,
+    duration: number,
+  ): Promise<void> {
+    const payload: LogInput = {
+      name: "",
+      startTime,
+      endTime,
+      duration,
+      model: data.model,
+      inputTokens: data.usage.prompt_tokens,
+      outputTokens: data.usage.completion_tokens,
+      totalTokens: data.usage.total_tokens,
+      extra: {},
+      input: {},
+      output: data.choices[0],
+    };
+    await this.monteloClient.createLog(payload);
   }
 }
 
