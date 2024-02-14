@@ -48,7 +48,7 @@ export class LogsService {
 
     // get the parent id
     const parentLogId = this.getParentId(log.name, dbTrace);
-    const logNameWithoutPath = this.getLogNameWithoutPath(log.name);
+    const logNameWithoutPath = this.getLogNameWithoutPath(log.name, dbTrace);
 
     // define the base TRACE
     const baseCreateTrace: Prisma.TraceCreateWithoutLogsInput = {
@@ -166,7 +166,12 @@ export class LogsService {
     return parentLog.id;
   }
 
-  private getLogNameWithoutPath(name: string): string {
+  private getLogNameWithoutPath(name: string, dbTrace: TraceWithLogs | null): string {
+    // if not part of a trace, just return the name
+    if (!dbTrace) {
+      return name;
+    }
+    
     const splitName = this.splitLogName(name);
     return splitName.at(-1)!;
   }

@@ -7,9 +7,9 @@ const chat = async (): Promise<void> => {
   const message = "Queen sized inflatable mattress";
 
   const montelo = new MonteloAI();
-  // montelo.trace({
-  //   name: "Amazon review writer",
-  // });
+  montelo.trace({
+    name: "Amazon review writer",
+  });
 
   // some vector db work
   const writerCompletion = await montelo.openai.chat.completions.create({

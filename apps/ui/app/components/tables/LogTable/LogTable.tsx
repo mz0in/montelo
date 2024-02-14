@@ -3,7 +3,6 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
-  FilterFnOption,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -14,7 +13,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { LogDto } from "@montelo/browser-client";
-import { darkStyles, JsonView } from "react-json-view-lite";
+import { darkStyles, JsonView, collapseAllNested } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import dayjs from "dayjs";
 import { Checkbox } from "../../ui/checkbox";
@@ -25,7 +24,6 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Badge } from "../../ui/badge";
 import { idShortener } from "./idShortener";
@@ -182,8 +180,8 @@ export const columns: ColumnDef<LogDto>[] = [
       <div>
         <JsonView
           data={row.getValue("input")}
-          style={darkStyles}
-          shouldExpandNode={() => false}
+          style={{ ...darkStyles, container: "backgroundColor: inherit;", stringValue: "color: inherit;" }}
+          shouldExpandNode={(level) => level >= 1}
         />
       </div>
     ),
@@ -195,8 +193,8 @@ export const columns: ColumnDef<LogDto>[] = [
       <div>
         <JsonView
           data={row.getValue("output")}
-          style={darkStyles}
-          shouldExpandNode={() => false}
+          style={{ ...darkStyles, container: "backgroundColor: inherit;", stringValue: "color: inherit;" }}
+          shouldExpandNode={(level) => level >= 1}
         />
       </div>
     ),

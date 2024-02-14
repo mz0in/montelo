@@ -1,14 +1,13 @@
 import { Link, useLoaderData, useLocation, useParams } from "@remix-run/react";
 import {
   BookOpenText,
-  Database,
   FlaskConical,
   GanttChart,
+  Hammer,
   HeartHandshake,
   Home,
   LayoutDashboard,
   Rocket,
-  TerminalSquare,
 } from "lucide-react";
 import { Routes } from "../../../routes";
 import { EnvLayoutLoader } from "../../../types/envLayout.loader.types";
@@ -39,6 +38,11 @@ const SidebarItems: SidebarItem[] = [
     name: "Logs",
     href: Routes.app.project.env.logs,
     icon: <GanttChart size={20} />,
+  },
+  {
+    name: "Prompts & Tools",
+    disabled: true,
+    icon: <Hammer size={20} />,
   },
   {
     name: "Experiments",
