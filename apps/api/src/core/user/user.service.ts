@@ -8,6 +8,7 @@ import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "../environment/environment.enums";
 import { CreateUserInput } from "./user.types";
 
+
 @Injectable()
 export class UserService {
   constructor(
@@ -90,19 +91,27 @@ export class UserService {
     const prodEnvId = envs.find((env) => env.name === Environments.PRODUCTION)!.id;
 
     // create a key for each env
-    const devApiKey = this.apiKey.generateApiKey("dev");
-    const prodApiKey = this.apiKey.generateApiKey("prod");
+    const devGeneration = await this.apiKey.generateApiKey("dev");
+    const prodGeneration = await this.apiKey.generateApiKey("prod");
 
     // create the API keys for both environments
     await this.db.apiKey.createMany({
       data: [
         {
-          key: devApiKey,
           envId: devEnvId,
+          public: devGeneration.publicPart,
+          // initially we store the secret part in the db. Then, once the user views it, we replace it with the hash.
+          private: devGeneration.secretPart,
+          combined: devGeneration.combined,
+          viewed: false,
         },
         {
-          key: prodApiKey,
           envId: prodEnvId,
+          public: prodGeneration.publicPart,
+          // initially we store the secret part in the db. Then, once the user views it, we replace it with the hash.
+          private: prodGeneration.secretPart,
+          combined: prodGeneration.combined,
+          viewed: false,
         },
       ],
     });

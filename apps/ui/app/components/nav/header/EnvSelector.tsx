@@ -38,9 +38,7 @@ export const EnvSelector = ({ environments, pathEnv }: EnvSelectorProps) => {
     navigate(path);
   };
 
-  const prefetchApiKeys = () => {
-    fetcher.load(Routes.actions.project.getAllApiKeys(pathEnv.projectId));
-  };
+  const prefetchApiKeys = () => fetcher.load(Routes.actions.project.getAllApiKeys(pathEnv.projectId));
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

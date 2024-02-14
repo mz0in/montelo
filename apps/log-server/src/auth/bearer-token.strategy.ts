@@ -12,7 +12,6 @@ export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer-toke
   }
 
   async validate(token: string): Promise<string> {
-    const apiKey = await this.authService.validateApiKey(token);
-    return apiKey.envId;
+    return this.authService.validateApiKey(token);
   }
 }

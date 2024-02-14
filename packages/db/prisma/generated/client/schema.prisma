@@ -126,9 +126,11 @@ model ApiKey {
   id String @id @default(cuid())
 
   // properties
-  key    String  @unique
-  envId  String  @unique @map("env_id")
-  viewed Boolean @default(false)
+  envId    String  @unique @map("env_id")
+  public   String  @unique
+  private  String  @unique
+  combined String  @unique
+  viewed   Boolean
 
   // relations
   environment Environment @relation(fields: [envId], references: [id], onDelete: Cascade)

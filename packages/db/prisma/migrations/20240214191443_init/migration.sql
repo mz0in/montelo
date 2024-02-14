@@ -61,7 +61,8 @@ CREATE TABLE "membership" (
 -- CreateTable
 CREATE TABLE "api_key" (
     "id" TEXT NOT NULL,
-    "key" TEXT NOT NULL,
+    "public" TEXT NOT NULL,
+    "private" TEXT NOT NULL,
     "env_id" TEXT NOT NULL,
     "viewed" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -80,7 +81,7 @@ CREATE TABLE "log" (
     "input" JSONB NOT NULL,
     "output" JSONB NOT NULL,
     "model" TEXT,
-    "extra" JSONB NOT NULL,
+    "extra" JSONB,
     "start_time" TIMESTAMP(3),
     "end_time" TIMESTAMP(3),
     "duration" DOUBLE PRECISION,
@@ -123,7 +124,10 @@ CREATE UNIQUE INDEX "project_name_team_id_key" ON "project"("name", "team_id");
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "api_key_key_key" ON "api_key"("key");
+CREATE UNIQUE INDEX "api_key_public_key" ON "api_key"("public");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "api_key_private_key" ON "api_key"("private");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "api_key_env_id_key" ON "api_key"("env_id");

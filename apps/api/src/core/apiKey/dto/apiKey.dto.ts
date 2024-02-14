@@ -19,8 +19,9 @@ export class ApiKeyDto {
   updatedAt: string;
 
   static fromApiKey(apiKey: ApiKey): ApiKeyDto {
-    const baseDto = pick(apiKey, ["id", "envId", "key", "viewed"]);
+    const baseDto = pick(apiKey, ["id", "envId", "viewed"]);
     const stringifiedUpdatedAt = apiKey.updatedAt.toISOString();
-    return { ...baseDto, updatedAt: stringifiedUpdatedAt };
+    const key = apiKey.combined;
+    return { ...baseDto, key, updatedAt: stringifiedUpdatedAt };
   }
 }

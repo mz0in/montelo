@@ -1,6 +1,7 @@
 import { useFetcher } from "@remix-run/react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
+import { Routes } from "../../routes";
 
 type NewProjectDialogProps = {
   isDialogOpen: boolean;

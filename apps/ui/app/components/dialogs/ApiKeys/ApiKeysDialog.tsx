@@ -4,12 +4,15 @@ import { DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
 import { Alert, AlertDescription } from "../../ui/alert";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { ApiKeyRow } from "./ApiKeyRow";
+import { sortApiKeys } from "../../../utils/sortEnvironmentsByName";
 
 type ApiKeysDialogProps = {
   apiKeys: ApiKeyWithEnvDto[] | undefined;
 }
 
 export const ApiKeysDialog = ({ apiKeys }: ApiKeysDialogProps) => {
+  const sortedEnvironments = sortApiKeys(apiKeys || []);
+
   return (
     <DialogContent className="min-w-fit">
       <DialogHeader>
@@ -33,7 +36,7 @@ export const ApiKeysDialog = ({ apiKeys }: ApiKeysDialogProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {apiKeys?.map((apiKey) => <ApiKeyRow key={apiKey.id} apiKey={apiKey} />)}
+            {sortedEnvironments.map((apiKey) => <ApiKeyRow key={apiKey.id} apiKey={apiKey} />)}
           </TableBody>
         </Table>
       </div>

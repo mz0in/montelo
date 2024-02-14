@@ -5,6 +5,7 @@ import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { ApiKeyService } from "./apiKey.service";
 import { ApiKeyWithEnvDto } from "./dto/apiKeyWithEnv.dto";
 
+
 @ApiTags("Api Key")
 @ApiBearerAuth()
 @Controller()
@@ -19,22 +20,16 @@ export class ApiKeyController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get("env/:envId/api-keys/:apiKeyId")
-  async reveal(
-    @Param("envId") envId: string,
-    @Param("apiKeyId") apiKeyId: string,
-  ): Promise<ApiKeyWithEnvDto> {
-    const apiKey = await this.apiKeyService.reveal(envId, apiKeyId);
+  @Get("api-keys/:apiKeyId")
+  async reveal(@Param("apiKeyId") apiKeyId: string): Promise<ApiKeyWithEnvDto> {
+    const apiKey = await this.apiKeyService.reveal(apiKeyId);
     return ApiKeyWithEnvDto.fromApiKeyWithEnv(apiKey);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post("env/:envId/api-keys/:apiKeyId")
-  async rotate(
-    @Param("envId") envId: string,
-    @Param("apiKeyId") apiKeyId: string,
-  ): Promise<ApiKeyWithEnvDto> {
-    const apiKey = await this.apiKeyService.rotate(envId, apiKeyId);
+  @Post("api-keys/:apiKeyId")
+  async rotate(@Param("apiKeyId") apiKeyId: string): Promise<ApiKeyWithEnvDto> {
+    const apiKey = await this.apiKeyService.rotate(apiKeyId);
     return ApiKeyWithEnvDto.fromApiKeyWithEnv(apiKey);
   }
 }

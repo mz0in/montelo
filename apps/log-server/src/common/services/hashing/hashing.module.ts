@@ -1,5 +1,5 @@
 /**
- * Duplicated in logs-server
+ * Duplicated in api
  */
 import { Module } from "@nestjs/common";
 

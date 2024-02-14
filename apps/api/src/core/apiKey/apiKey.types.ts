@@ -20,4 +20,3 @@ const apiKeyWithEnvironment = Prisma.validator<Prisma.ApiKeyDefaultArgs>()({
 export type ApiKeyWithEnvironment = Prisma.ApiKeyGetPayload<typeof apiKeyWithEnvironment>;
 
 export type Prefix = "prod" | "dev" | string;
-export type GeneratedKey = `sk-${Prefix}-${string}`;

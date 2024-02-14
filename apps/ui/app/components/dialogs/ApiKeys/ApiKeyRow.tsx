@@ -6,11 +6,6 @@ import { Revealed } from "./Revealed";
 import { RevealApiKey } from "./RevealApiKey";
 import { RotateApiKey } from "./RotateApiKey";
 
-type InputFetcherParams = {
-  envId: string;
-  apiKeyId: string;
-}
-
 type ApiKeyRowProps = {
   apiKey: ApiKeyWithEnvDto;
 }
@@ -21,23 +16,18 @@ export const ApiKeyRow = ({ apiKey }: ApiKeyRowProps) => {
 
   const apiKeyToShow = rotateFetcher.data?.key ? undefined : revealFetcher.data?.key;
 
-  const params: InputFetcherParams = {
-    envId: apiKey.envId,
-    apiKeyId: apiKey.id,
-  };
-
   const handleReveal = () => {
-    revealFetcher.submit(params, {
+    revealFetcher.submit(null, {
       method: "POST",
-      action: Routes.actions.apiKeys.reveal(params),
+      action: Routes.actions.apiKeys.reveal(apiKey.id),
     });
     rotateFetcher.reset();
   };
 
   const handleRotate = () => {
-    rotateFetcher.submit(params, {
+    rotateFetcher.submit(null, {
       method: "POST",
-      action: Routes.actions.apiKeys.rotate(params),
+      action: Routes.actions.apiKeys.rotate(apiKey.id),
     });
     revealFetcher.reset();
   };

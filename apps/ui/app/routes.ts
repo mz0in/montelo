@@ -41,10 +41,10 @@ const PATH_ACTIONS = {
     getAllApiKeys: (projectId: string) => path(ROOT_ACTION, `/project/${projectId}/api-keys`),
   },
   apiKeys: {
-    reveal: ({ envId, apiKeyId }: ApiKeyParams) =>
-      path(ROOT_ACTION, `/env/${envId}/api-keys/${apiKeyId}/reveal`),
-    rotate: ({ envId, apiKeyId }: ApiKeyParams) =>
-      path(ROOT_ACTION, `/env/${envId}/api-keys/${apiKeyId}/rotate`),
+    reveal: (apiKeyId: string) =>
+      path(ROOT_ACTION, `/api-keys/${apiKeyId}/reveal`),
+    rotate: (apiKeyId: string) =>
+      path(ROOT_ACTION, `/api-keys/${apiKeyId}/rotate`),
   },
 };
 

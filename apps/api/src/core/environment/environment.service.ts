@@ -29,7 +29,7 @@ export class EnvironmentService {
 
     // if changing this also change apiKey service
     const prefix = name.substring(6);
-    const apiKey = this.apiKeyService.generateApiKey(prefix);
+    const { publicPart, secretPart, combined } = await this.apiKeyService.generateApiKey(prefix);
 
     return this.db.environment.create({
       data: {
@@ -37,7 +37,10 @@ export class EnvironmentService {
         projectId,
         apiKey: {
           create: {
-            key: apiKey,
+            public: publicPart,
+            private: secretPart,
+            combined,
+            viewed: false,
           },
         },
       },

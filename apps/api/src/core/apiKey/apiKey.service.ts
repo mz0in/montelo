@@ -3,8 +3,8 @@ import { randomBytes } from "crypto";
 
 import { HashingService } from "../../common/services/hashing/hashing.service";
 import { DatabaseService } from "../../database";
-import { Environments } from "../environment/environment.enums";
-import { ApiKeyWithEnvironment, GeneratedKey, Prefix } from "./apiKey.types";
+import { EnvApiKeyPrefixMap } from "../environment/environment.enums";
+import { ApiKeyWithEnvironment, Prefix } from "./apiKey.types";
 
 
 @Injectable()
@@ -13,81 +13,6 @@ export class ApiKeyService {
     private db: DatabaseService,
     private hashingService: HashingService,
   ) {}
-
-  async reveal(envId: string, apiKeyId: string): Promise<ApiKeyWithEnvironment> {
-    const dbApiKey = await this.db.apiKey.findUniqueOrThrow({
-      where: {
-        id: apiKeyId,
-        envId: envId,
-      },
-    });
-
-    if (dbApiKey.viewed) {
-      throw new Error("Already viewed key.");
-    }
-
-    const dbUpdatedApiKey = await this.markKeyAsViewed(apiKeyId, dbApiKey.key);
-
-    // return the unhashed key
-    return { ...dbUpdatedApiKey, key: dbApiKey.key };
-  }
-
-  async rotate(envId: string, apiKeyId: string): Promise<ApiKeyWithEnvironment> {
-    const existingApiKey = await this.db.apiKey.findUniqueOrThrow({
-      where: {
-        id: apiKeyId,
-        envId: envId,
-      },
-      include: {
-        environment: true,
-      },
-    });
-
-    const prefixMap = {
-      [Environments.DEVELOPMENT]: "dev",
-      [Environments.PRODUCTION]: "prod",
-    };
-
-    const envName = existingApiKey.environment.name;
-    const prefix = prefixMap[envName] ?? envName.substring(6);
-    const newKey = this.generateApiKey(prefix);
-
-    const updatedKey = await this.db.apiKey.update({
-      where: {
-        id: apiKeyId,
-      },
-      data: {
-        key: newKey,
-        viewed: false,
-      },
-      include: {
-        environment: true,
-      },
-    });
-
-    return this.obfuscateApiKey(updatedKey);
-  }
-
-  async verifyApiKey(apiKey: string): Promise<boolean> {
-    const hashedInputKey = await this.hashingService.hash(apiKey);
-
-    const dbApiKey = await this.db.apiKey.findUniqueOrThrow({
-      where: {
-        key: hashedInputKey,
-      },
-      select: {
-        key: true,
-      },
-    });
-
-    return hashedInputKey === dbApiKey.key;
-  }
-
-  public generateApiKey(prefix: Prefix): GeneratedKey {
-    const random = randomBytes(32).toString("base64url");
-    const cleaned = random.replace("-", "").replace("_", "");
-    return `sk-${prefix}-${cleaned}`;
-  }
 
   public async findAllForProject(projectId: string): Promise<ApiKeyWithEnvironment[]> {
     const dbApiKeys = await this.db.apiKey.findMany({
@@ -101,18 +26,100 @@ export class ApiKeyService {
       },
     });
 
-    return dbApiKeys.map(this.obfuscateApiKey);
+    return dbApiKeys.map((key) => this.obfuscatePublicAndPrivateKey(key));
   }
 
-  private async markKeyAsViewed(apiKeyId: string, key: string): Promise<ApiKeyWithEnvironment> {
-    const hashKey = await this.hashingService.hash(key);
+  async reveal(apiKeyId: string): Promise<ApiKeyWithEnvironment> {
+    const originalApiKey = await this.db.apiKey.findUniqueOrThrow({
+      where: {
+        id: apiKeyId,
+      },
+      include: {
+        environment: true,
+      },
+    });
+
+    if (originalApiKey.viewed) {
+      throw new Error("Already viewed key.");
+    }
+
+    const dbUpdatedApiKey = await this.markKeyAsViewed(
+      apiKeyId,
+      originalApiKey.public,
+      originalApiKey.private,
+    );
+
+    const combined = this.combinePublicAndPrivate(originalApiKey.public, originalApiKey.private);
+
+    return {
+      ...dbUpdatedApiKey,
+      // overwrite with the original (unhashed) keys
+      public: originalApiKey.public,
+      private: originalApiKey.private,
+      combined: originalApiKey.combined,
+    };
+  }
+
+  async rotate(apiKeyId: string): Promise<ApiKeyWithEnvironment> {
+    const existingApiKey = await this.db.apiKey.findUniqueOrThrow({
+      where: {
+        id: apiKeyId,
+      },
+      include: {
+        environment: true,
+      },
+    });
+
+    const envName = existingApiKey.environment.name;
+    const prefix = EnvApiKeyPrefixMap[envName] ?? envName.substring(6);
+    const { publicPart, secretPart, combined } = await this.generateApiKey(prefix);
+
+    const updatedKey = await this.db.apiKey.update({
+      where: {
+        id: apiKeyId,
+      },
+      data: {
+        public: publicPart,
+        // save the secret part (not the hash) until it is revealed
+        private: secretPart,
+        combined,
+        viewed: false,
+      },
+      include: {
+        environment: true,
+      },
+    });
+
+    return this.obfuscatePublicAndPrivateKey(updatedKey);
+  }
+
+  public async generateApiKey(
+    prefix: Prefix,
+  ): Promise<{ publicPart: string; secretPart: string; combined: string }> {
+    const publicPart = this.generateRandomCharacters(16);
+    const secretPart = this.generateRandomCharacters(16);
+    const fullPrefix = `sk-${prefix}-`;
+    const idPartWithPrefix = `${fullPrefix}${publicPart}`;
+    const combined = this.combinePublicAndPrivate(publicPart, secretPart);
+    const combinedWithPrefix = `${fullPrefix}${combined}`;
+    return { publicPart: idPartWithPrefix, secretPart, combined: combinedWithPrefix };
+  }
+
+  private async markKeyAsViewed(
+    apiKeyId: string,
+    publicPart: string,
+    secretPart: string,
+  ): Promise<ApiKeyWithEnvironment> {
+    const secretHash = await this.hashingService.hash(secretPart);
+    const combined = this.combinePublicAndPrivate(publicPart, secretHash);
 
     return this.db.apiKey.update({
       where: {
         id: apiKeyId,
       },
       data: {
-        key: hashKey,
+        private: secretHash,
+        combined,
         viewed: true,
       },
       include: {
@@ -121,15 +128,25 @@ export class ApiKeyService {
     });
   }
 
-  private obfuscateApiKey(apiKey: ApiKeyWithEnvironment): ApiKeyWithEnvironment {
-    const obfuscatedPart = Array(16).fill("*").join("");
-    // if it's already been viewed then the has is in the db
-    if (apiKey.viewed) {
-      return { ...apiKey, key: `sk-${obfuscatedPart}` };
-    }
+  private generateRandomCharacters(length: number): string {
+    return randomBytes(length).toString("hex").slice(0, length).replace("-", "").replace("_", "");
+  }
 
-    const splitKey = (apiKey.key as GeneratedKey).split("-");
-    const obfuscatedKey = `${splitKey[0]}-${splitKey[1]}-${obfuscatedPart}`;
-    return { ...apiKey, key: obfuscatedKey };
+  private obfuscatePublicAndPrivateKey(apiKey: ApiKeyWithEnvironment): ApiKeyWithEnvironment {
+    const obfuscatedPart = Array(8).fill("*").join("");
+    const splitPublicKey = apiKey.public.split("-");
+    const prefix = splitPublicKey[1];
+    const obfuscatedPublicKey = `sk-${prefix}-${obfuscatedPart}`;
+    const obfuscatedCombined = `${obfuscatedPublicKey}${obfuscatedPart}`;
+    return {
+      ...apiKey,
+      public: obfuscatedPublicKey,
+      private: obfuscatedPart,
+      combined: obfuscatedCombined,
+    };
+  }
+
+  private combinePublicAndPrivate(publicPart: string, privatePart: string): string {
+    return `${publicPart}_${privatePart}`;
   }
 }

@@ -6404,8 +6404,10 @@ export namespace Prisma {
 
   export type ApiKeyMinAggregateOutputType = {
     id: string | null
-    key: string | null
     envId: string | null
+    public: string | null
+    private: string | null
+    combined: string | null
     viewed: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6413,8 +6415,10 @@ export namespace Prisma {
 
   export type ApiKeyMaxAggregateOutputType = {
     id: string | null
-    key: string | null
     envId: string | null
+    public: string | null
+    private: string | null
+    combined: string | null
     viewed: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6422,8 +6426,10 @@ export namespace Prisma {
 
   export type ApiKeyCountAggregateOutputType = {
     id: number
-    key: number
     envId: number
+    public: number
+    private: number
+    combined: number
     viewed: number
     createdAt: number
     updatedAt: number
@@ -6433,8 +6439,10 @@ export namespace Prisma {
 
   export type ApiKeyMinAggregateInputType = {
     id?: true
-    key?: true
     envId?: true
+    public?: true
+    private?: true
+    combined?: true
     viewed?: true
     createdAt?: true
     updatedAt?: true
@@ -6442,8 +6450,10 @@ export namespace Prisma {
 
   export type ApiKeyMaxAggregateInputType = {
     id?: true
-    key?: true
     envId?: true
+    public?: true
+    private?: true
+    combined?: true
     viewed?: true
     createdAt?: true
     updatedAt?: true
@@ -6451,8 +6461,10 @@ export namespace Prisma {
 
   export type ApiKeyCountAggregateInputType = {
     id?: true
-    key?: true
     envId?: true
+    public?: true
+    private?: true
+    combined?: true
     viewed?: true
     createdAt?: true
     updatedAt?: true
@@ -6533,8 +6545,10 @@ export namespace Prisma {
 
   export type ApiKeyGroupByOutputType = {
     id: string
-    key: string
     envId: string
+    public: string
+    private: string
+    combined: string
     viewed: boolean
     createdAt: Date
     updatedAt: Date
@@ -6559,8 +6573,10 @@ export namespace Prisma {
 
   export type ApiKeySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    key?: boolean
     envId?: boolean
+    public?: boolean
+    private?: boolean
+    combined?: boolean
     viewed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6569,8 +6585,10 @@ export namespace Prisma {
 
   export type ApiKeySelectScalar = {
     id?: boolean
-    key?: boolean
     envId?: boolean
+    public?: boolean
+    private?: boolean
+    combined?: boolean
     viewed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6588,8 +6606,10 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      key: string
       envId: string
+      public: string
+      private: string
+      combined: string
       viewed: boolean
       createdAt: Date
       updatedAt: Date
@@ -6989,8 +7009,10 @@ export namespace Prisma {
    */ 
   interface ApiKeyFieldRefs {
     readonly id: FieldRef<"ApiKey", 'String'>
-    readonly key: FieldRef<"ApiKey", 'String'>
     readonly envId: FieldRef<"ApiKey", 'String'>
+    readonly public: FieldRef<"ApiKey", 'String'>
+    readonly private: FieldRef<"ApiKey", 'String'>
+    readonly combined: FieldRef<"ApiKey", 'String'>
     readonly viewed: FieldRef<"ApiKey", 'Boolean'>
     readonly createdAt: FieldRef<"ApiKey", 'DateTime'>
     readonly updatedAt: FieldRef<"ApiKey", 'DateTime'>
@@ -9614,8 +9636,10 @@ export namespace Prisma {
 
   export const ApiKeyScalarFieldEnum: {
     id: 'id',
-    key: 'key',
     envId: 'envId',
+    public: 'public',
+    private: 'private',
+    combined: 'combined',
     viewed: 'viewed',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -10116,8 +10140,10 @@ export namespace Prisma {
     OR?: ApiKeyWhereInput[]
     NOT?: ApiKeyWhereInput | ApiKeyWhereInput[]
     id?: StringFilter<"ApiKey"> | string
-    key?: StringFilter<"ApiKey"> | string
     envId?: StringFilter<"ApiKey"> | string
+    public?: StringFilter<"ApiKey"> | string
+    private?: StringFilter<"ApiKey"> | string
+    combined?: StringFilter<"ApiKey"> | string
     viewed?: BoolFilter<"ApiKey"> | boolean
     createdAt?: DateTimeFilter<"ApiKey"> | Date | string
     updatedAt?: DateTimeFilter<"ApiKey"> | Date | string
@@ -10126,8 +10152,10 @@ export namespace Prisma {
 
   export type ApiKeyOrderByWithRelationInput = {
     id?: SortOrder
-    key?: SortOrder
     envId?: SortOrder
+    public?: SortOrder
+    private?: SortOrder
+    combined?: SortOrder
     viewed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10136,8 +10164,10 @@ export namespace Prisma {
 
   export type ApiKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    key?: string
     envId?: string
+    public?: string
+    private?: string
+    combined?: string
     AND?: ApiKeyWhereInput | ApiKeyWhereInput[]
     OR?: ApiKeyWhereInput[]
     NOT?: ApiKeyWhereInput | ApiKeyWhereInput[]
@@ -10145,12 +10175,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ApiKey"> | Date | string
     updatedAt?: DateTimeFilter<"ApiKey"> | Date | string
     environment?: XOR<EnvironmentRelationFilter, EnvironmentWhereInput>
-  }, "id" | "key" | "envId">
+  }, "id" | "envId" | "public" | "private" | "combined">
 
   export type ApiKeyOrderByWithAggregationInput = {
     id?: SortOrder
-    key?: SortOrder
     envId?: SortOrder
+    public?: SortOrder
+    private?: SortOrder
+    combined?: SortOrder
     viewed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10164,8 +10196,10 @@ export namespace Prisma {
     OR?: ApiKeyScalarWhereWithAggregatesInput[]
     NOT?: ApiKeyScalarWhereWithAggregatesInput | ApiKeyScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ApiKey"> | string
-    key?: StringWithAggregatesFilter<"ApiKey"> | string
     envId?: StringWithAggregatesFilter<"ApiKey"> | string
+    public?: StringWithAggregatesFilter<"ApiKey"> | string
+    private?: StringWithAggregatesFilter<"ApiKey"> | string
+    combined?: StringWithAggregatesFilter<"ApiKey"> | string
     viewed?: BoolWithAggregatesFilter<"ApiKey"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"ApiKey"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ApiKey"> | Date | string
@@ -10724,8 +10758,10 @@ export namespace Prisma {
 
   export type ApiKeyCreateInput = {
     id?: string
-    key: string
-    viewed?: boolean
+    public: string
+    private: string
+    combined: string
+    viewed: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     environment: EnvironmentCreateNestedOneWithoutApiKeyInput
@@ -10733,16 +10769,20 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedCreateInput = {
     id?: string
-    key: string
     envId: string
-    viewed?: boolean
+    public: string
+    private: string
+    combined: string
+    viewed: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ApiKeyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10751,8 +10791,10 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10760,16 +10802,20 @@ export namespace Prisma {
 
   export type ApiKeyCreateManyInput = {
     id?: string
-    key: string
     envId: string
-    viewed?: boolean
+    public: string
+    private: string
+    combined: string
+    viewed: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ApiKeyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10777,8 +10823,10 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
     envId?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11344,8 +11392,10 @@ export namespace Prisma {
 
   export type ApiKeyCountOrderByAggregateInput = {
     id?: SortOrder
-    key?: SortOrder
     envId?: SortOrder
+    public?: SortOrder
+    private?: SortOrder
+    combined?: SortOrder
     viewed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11353,8 +11403,10 @@ export namespace Prisma {
 
   export type ApiKeyMaxOrderByAggregateInput = {
     id?: SortOrder
-    key?: SortOrder
     envId?: SortOrder
+    public?: SortOrder
+    private?: SortOrder
+    combined?: SortOrder
     viewed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11362,8 +11414,10 @@ export namespace Prisma {
 
   export type ApiKeyMinOrderByAggregateInput = {
     id?: SortOrder
-    key?: SortOrder
     envId?: SortOrder
+    public?: SortOrder
+    private?: SortOrder
+    combined?: SortOrder
     viewed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12831,16 +12885,20 @@ export namespace Prisma {
 
   export type ApiKeyCreateWithoutEnvironmentInput = {
     id?: string
-    key: string
-    viewed?: boolean
+    public: string
+    private: string
+    combined: string
+    viewed: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ApiKeyUncheckedCreateWithoutEnvironmentInput = {
     id?: string
-    key: string
-    viewed?: boolean
+    public: string
+    private: string
+    combined: string
+    viewed: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12932,7 +12990,9 @@ export namespace Prisma {
 
   export type ApiKeyUpdateWithoutEnvironmentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12940,7 +13000,9 @@ export namespace Prisma {
 
   export type ApiKeyUncheckedUpdateWithoutEnvironmentInput = {
     id?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
+    public?: StringFieldUpdateOperationsInput | string
+    private?: StringFieldUpdateOperationsInput | string
+    combined?: StringFieldUpdateOperationsInput | string
     viewed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
