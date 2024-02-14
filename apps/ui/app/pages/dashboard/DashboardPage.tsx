@@ -33,7 +33,7 @@ export const DashboardPage = () => {
             <ArrowUpRightFromSquare size={16} />
           </Link>
         </TableCell>
-        <TableCell>{dayjs(log.startTime).format("D MMM H:mm:ss")}</TableCell>
+        <TableCell>{dayjs(log.startTime).format("H:mm:ss")}</TableCell>
         <TableCell>{log.model}</TableCell>
         <TableCell>{log.duration}s</TableCell>
         {/*TODO once we have totalCost, add that here*/}

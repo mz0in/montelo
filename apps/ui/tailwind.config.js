@@ -70,6 +70,21 @@ module.exports = {
           foreground: "#FFFFFF",
           80: "#F6AD55",
         },
+        green: {
+          DEFAULT: "#48BB78",
+          foreground: "#FFFFFF",
+          80: "#68D391",
+        },
+        red: {
+          DEFAULT: "#F56565",
+          foreground: "#FFFFFF",
+          80: "#FC8181",
+        },
+        yellow: {
+          DEFAULT: "#ECC94B",
+          foreground: "#2D3748",
+          80: "#F6E05E",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 
 import { TraceWithLogs } from "../logs/types";
 import { LLMProvider, LogCostInput, LogCostOutput } from "./llm-provider.interface";
@@ -7,20 +7,26 @@ import { TraceMetrics } from "./types";
 
 @Injectable()
 export class CostulatorService {
-  constructor(@Inject("LLM_PROVIDERS") private providers: LLMProvider[]) {
-    console.log("Providers injected into CostulatorService:", this.providers);
-  }
+  private logger = new Logger(CostulatorService.name);
+
+  constructor(@Inject("LLM_PROVIDERS") private providers: LLMProvider[]) {}
 
   getLogCost(params: LogCostInput): LogCostOutput {
-    console.log("Getting log cost: ", this.providers);
+    this.logger.log(`Getting cost for ${params.model}`);
     const provider = this.providers.find((provider) =>
       provider.supportedModels().includes(params.model),
     );
     if (!provider) {
-      console.error(`No provider found for model ${params.model}`);
       return { inputCost: 0, outputCost: 0, totalCost: 0 };
     }
-    return provider.calculateLogCost(params);
+    this.logger.log(`Found provider ${provider.toString()}`);
+    const result = provider.calculateLogCost(params);
+    this.logger.log(`Result: ${JSON.stringify(result)}`);
+    return {
+      inputCost: this.roundToSmallestDecimal(result.inputCost),
+      outputCost: this.roundToSmallestDecimal(result.outputCost),
+      totalCost: this.roundToSmallestDecimal(result.totalCost),
+    };
   }
 
   getTraceMetrics(trace: TraceWithLogs): TraceMetrics {
@@ -44,5 +50,20 @@ export class CostulatorService {
         totalCost: 0,
       } as TraceMetrics,
     );
+  }
+
+  private roundToSmallestDecimal(num: number): number {
+    if (num === 0) {
+      return 0;
+    }
+
+    // Determine the smallest significant decimal place
+    // Adjust precision based on the decimal place, without overly restricting it for small numbers
+    const precision = Math.ceil(-Math.log10(num % 1)); // Remove the cap to ensure small numbers are handled correctly
+
+    const roundedNum = parseFloat(num.toFixed(precision));
+
+    // Additional check to avoid returning 0 for very small numbers
+    return roundedNum === 0 && num !== 0 ? parseFloat(num.toPrecision(1)) : roundedNum;
   }
 }

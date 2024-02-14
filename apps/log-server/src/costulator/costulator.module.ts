@@ -11,7 +11,6 @@ import { OpenAICostulatorService } from "./openai.costulator.service";
     {
       provide: "LLM_PROVIDERS",
       useFactory: (openaiService: OpenAICostulatorService): LLMProvider[] => {
-        console.log("OpenAICostulatorService instantiated:", openaiService);
         return [openaiService];
       },
       inject: [OpenAICostulatorService],

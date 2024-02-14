@@ -9,19 +9,15 @@ dotenv.config();
 const chat = async (message: string): Promise<void> => {
   const montelo = new MonteloAI();
   montelo.trace({
-    name: "H",
+    name: "Trace for Sami",
   });
 
   // some vector db work
-  montelo.log({
-    name: "Vector DB",
-    input: {
-      message: "",
-    },
-    output: {
-      timeTaken: 1.2,
-      result: "",
-    },
+  await montelo.openai.chat.completions.create({
+    name: "Agent X",
+    model: "gpt-3.5-turbo-0125",
+    messages: prompts.weatherman({ message }),
+    tools: AllFunctions,
   });
 
   // chat

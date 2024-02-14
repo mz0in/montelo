@@ -41,16 +41,6 @@ const SidebarItems: SidebarItem[] = [
     icon: <GanttChart size={20} />,
   },
   {
-    name: "Playground",
-    disabled: true,
-    icon: <TerminalSquare size={20} />,
-  },
-  {
-    name: "Datasets",
-    disabled: true,
-    icon: <Database size={20} />,
-  },
-  {
     name: "Experiments",
     disabled: true,
     icon: <FlaskConical size={20} />,

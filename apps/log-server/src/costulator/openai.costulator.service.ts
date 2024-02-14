@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { LogCostInput, LogCostOutput, LLMProvider } from "./llm-provider.interface";
+import { LLMProvider, LogCostInput, LogCostOutput } from "./llm-provider.interface";
 import { Pricing } from "./types";
 
 
@@ -77,7 +77,7 @@ export class OpenAICostulatorService implements LLMProvider {
     const { input1K, output1K } = this.pricing[params.model];
     const inputCost = this.getCostOfTokens(params.inputTokens, input1K);
     const outputCost = this.getCostOfTokens(params.outputTokens, output1K);
-    const totalCost = this.roundToTwo(inputCost + outputCost);
+    const totalCost = inputCost + outputCost;
     return { inputCost, outputCost, totalCost };
   }
 
@@ -86,11 +86,6 @@ export class OpenAICostulatorService implements LLMProvider {
   }
 
   private getCostOfTokens(tokens: number, pricePer1K: number): number {
-    const cost = (tokens / 1000) * pricePer1K;
-    return this.roundToTwo(cost);
-  }
-
-  private roundToTwo(num: number): number {
-    return Math.round(num * 100) / 100;
+    return (tokens / 1000) * pricePer1K;
   }
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -21,8 +21,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
@@ -30,7 +28,6 @@ import { Input } from "../../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Badge } from "../../ui/badge";
 import { idShortener } from "./idShortener";
-import { Delete } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 export const columns: ColumnDef<LogDto>[] = [
@@ -66,7 +63,7 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "traceId",
-    header: "Trace ID",
+    header: "Trace",
     cell: ({ row }) => {
       const traceId: string = row.getValue("traceId");
       const { short, color } = idShortener(traceId);
@@ -74,7 +71,7 @@ export const columns: ColumnDef<LogDto>[] = [
         <div>
           <TooltipProvider delayDuration={0}>
             <Tooltip>
-              <TooltipTrigger className={"cursor-default"}>
+              <TooltipTrigger>
                 <Badge variant={color}>{short}</Badge>
               </TooltipTrigger>
               <TooltipContent>
@@ -88,16 +85,17 @@ export const columns: ColumnDef<LogDto>[] = [
   },
   {
     accessorKey: "id",
-    header: "Log ID",
+    header: "Log",
     cell: ({ row }) => {
+      const name = row.original.name.substring(0, 15);
       const traceId: string = row.getValue("id");
       const { short } = idShortener(traceId);
       return (
         <div>
           <TooltipProvider delayDuration={0}>
             <Tooltip>
-              <TooltipTrigger className={"cursor-default"}>
-                <Badge>{short}</Badge>
+              <TooltipTrigger>
+                <Badge>{short} — {name}{name.length !== row.original.name.length && "..."}</Badge>
               </TooltipTrigger>
               <TooltipContent>
                 <p>{traceId}</p>
@@ -105,16 +103,6 @@ export const columns: ColumnDef<LogDto>[] = [
             </Tooltip>
           </TooltipProvider>
         </div>
-      );
-    },
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => {
-      const name: string | undefined = row.getValue("name");
-      return (
-        <div>{name?.length ? name : "—"}</div>
       );
     },
   },
@@ -159,23 +147,32 @@ export const columns: ColumnDef<LogDto>[] = [
   {
     accessorKey: "inputCost",
     header: "Input Cost",
-    cell: ({ row }) => (
-      <div>{row.getValue("inputCost") ?? "—"}</div>
-    ),
+    cell: ({ row }) => {
+      const inputCost: number | undefined = row.getValue("inputCost");
+      return (
+        <div>{inputCost ? `$${inputCost}` : "—"}</div>
+      );
+    },
   },
   {
     accessorKey: "outputCost",
     header: "Output Cost",
-    cell: ({ row }) => (
-      <div>{row.getValue("outputCost") ?? "—"}</div>
-    ),
+    cell: ({ row }) => {
+      const outputCost: number | undefined = row.getValue("outputCost");
+      return (
+        <div>{outputCost ? `$${outputCost}` : "—"}</div>
+      );
+    },
   },
   {
     accessorKey: "totalCost",
     header: "Total Cost",
-    cell: ({ row }) => (
-      <div>{row.getValue("totalCost") ?? "—"}</div>
-    ),
+    cell: ({ row }) => {
+      const totalCost: number | undefined = row.getValue("totalCost");
+      return (
+        <div>{totalCost ? `$${totalCost}` : "—"}</div>
+      );
+    },
   },
   {
     accessorKey: "input",
@@ -202,30 +199,6 @@ export const columns: ColumnDef<LogDto>[] = [
         />
       </div>
     ),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className={"text-red-600"}>
-              <Delete size={16} />&nbsp;
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
   },
 ];
 
@@ -269,7 +242,7 @@ export function LogTable({ logs }: LogTableProps) {
     <div className="w-full">
       <div className="flex items-center pb-4 pt-0.5">
         <Input
-          placeholder="Search output..."
+          placeholder="Search input or output"
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)

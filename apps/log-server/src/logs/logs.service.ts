@@ -3,8 +3,8 @@ import { Injectable, Logger } from "@nestjs/common";
 import { pick } from "lodash";
 
 import { CostulatorService } from "../costulator/costulator.service";
-import { LogCostInput, LogCostOutput } from "../costulator/llm-provider.interface";
-import { TraceMetrics } from "../costulator/types";
+import { LogCostInput } from "../costulator/llm-provider.interface";
+import { NullableCost, TraceMetrics } from "../costulator/types";
 import { DatabaseService } from "../database";
 import { LogInput, TraceInput } from "./dto/create-log.input";
 
@@ -64,6 +64,10 @@ export class LogsService {
       },
     };
 
+    console.log("log: ", log);
+    console.log("logCost: ", logCost);
+    console.log("logCreateInput", logCreateInput);
+
     const createdLog = await this.db.log.create({
       data: logCreateInput,
     });
@@ -85,7 +89,7 @@ export class LogsService {
     logTokens,
   }: {
     traceId?: string;
-    logCost: LogCostOutput;
+    logCost: NullableCost;
     logTokens: { inputTokens?: number; outputTokens?: number; totalTokens?: number };
   }): Promise<TraceMetrics> {
     const defaultTraceMetrics: TraceMetrics = {
@@ -118,16 +122,16 @@ export class LogsService {
       inputTokens: traceMetrics.inputTokens + (logTokens.inputTokens || 0),
       outputTokens: traceMetrics.outputTokens + (logTokens.outputTokens || 0),
       totalTokens: traceMetrics.totalTokens + (logTokens.totalTokens || 0),
-      inputCost: traceMetrics.inputCost + logCost.inputCost,
-      outputCost: traceMetrics.outputCost + logCost.outputCost,
-      totalCost: traceMetrics.totalCost + logCost.totalCost,
+      inputCost: traceMetrics.inputCost + (logCost.inputCost || 0),
+      outputCost: traceMetrics.outputCost + (logCost.outputCost || 0),
+      totalCost: traceMetrics.totalCost + (logCost.totalCost || 0),
     };
   }
 
   private calculateLogCostOrDefault(
     log: LogInput,
-    calculateCost: (params: LogCostInput) => LogCostOutput,
-  ): LogCostOutput {
+    calculateCost: (params: LogCostInput) => NullableCost,
+  ): NullableCost {
     if (log.model && log.inputTokens && log.outputTokens) {
       return calculateCost({
         model: log.model,
@@ -135,6 +139,6 @@ export class LogsService {
         outputTokens: log.outputTokens,
       });
     }
-    return { inputCost: 0, outputCost: 0, totalCost: 0 };
+    return { inputCost: null, outputCost: null, totalCost: null };
   }
 }

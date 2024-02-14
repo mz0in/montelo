@@ -9,6 +9,12 @@ export type Pricing = {
   output1K: number;
 };
 
+export type NullableCost = {
+  inputCost: number | null;
+  outputCost: number | null;
+  totalCost: number | null;
+};
+
 export type TraceMetrics = {
   inputTokens: number;
   outputTokens: number;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
-export type BadgeColors = "purple" | "blue" | "orange";
+export type BadgeColors = "purple" | "blue" | "orange" | "green" | "red" | "yellow";
 
 const badgeVariants = cva(
   "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
@@ -19,6 +19,9 @@ const badgeVariants = cva(
         purple: "border-transparent bg-purple text-purple-foreground shadow hover:bg-purple/80",
         blue: "border-transparent bg-blue text-blue-foreground shadow hover:bg-blue/80",
         orange: "border-transparent bg-orange text-orange-foreground shadow hover:bg-orange/80",
+        green: "border-transparent bg-green text-green-foreground shadow hover:bg-green/80",
+        red: "border-transparent bg-red text-red-foreground shadow hover:bg-red/80",
+        yellow: "border-transparent bg-yellow text-yellow-foreground shadow hover:bg-yellow/80",
       },
     },
     defaultVariants: {
