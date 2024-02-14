@@ -5,7 +5,9 @@
     "target": "ES2017",
     "esModuleInterop": true,
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "strict": true,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src"

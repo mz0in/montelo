@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from "@nestjs/swagger";
-import { SwaggerTheme, SwaggerThemeName } from "swagger-themes";
+import { SwaggerTheme, type SwaggerThemeName } from "swagger-themes";
 
 import { AppModule } from "./app.module";
 import { PrismaClientExceptionFilter } from "./common/filters/prisma-client-exception.filter";

@@ -21,8 +21,7 @@ export class LogsProcessor {
     try {
       await this.logsService.create(envId, log, trace);
     } catch (e) {
-      console.error(e);
-      throw new Error(e);
+      throw new Error(`Error handling log: ${e}`);
     }
   }
 }

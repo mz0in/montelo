@@ -13,7 +13,9 @@ export class MonteloAI {
 
   constructor(options?: MonteloOptions) {
     this.monteloClient = new MonteloClient(options?.montelo);
-    this.openai = new ExtendedOpenAI(this.monteloClient, options?.openai);
+    if (options?.openai) {
+      this.openai = new ExtendedOpenAI(this.monteloClient, options?.openai);
+    }
   }
 
   /**

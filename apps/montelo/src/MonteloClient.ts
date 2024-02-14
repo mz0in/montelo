@@ -6,7 +6,7 @@ import { MonteloClientOptions, TraceParams } from "./types";
 
 export class MonteloClient {
   private api: Api;
-  private currentTrace: (TraceInput & { id: string }) | null = null;
+  private currentTrace: (TraceInput & { id: string }) | undefined = undefined;
 
   constructor(options?: MonteloClientOptions) {
     const apiKey = options?.apiKey || process.env.MONTELO_API_KEY;
@@ -39,12 +39,12 @@ export class MonteloClient {
     this.currentTrace = {
       id: cuid(),
       name: params.name,
-      userId: params.userId || null,
-      extra: params.extra || null,
+      userId: params.userId,
+      extra: params.extra,
     };
   }
 
   public clearTrace() {
-    this.currentTrace = null;
+    this.currentTrace = undefined;
   }
 }

@@ -10,7 +10,7 @@ import { MonteloLogExtend } from "./types";
 class ExtendedChatCompletions extends OpenAI.Chat.Completions {
   private monteloClient: MonteloClient;
 
-  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAI) {
+  constructor(monteloClient: MonteloClient, openAIOptions: OpenAI) {
     super(openAIOptions);
 
     this.monteloClient = monteloClient;
@@ -96,9 +96,9 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
       ...time,
       name: input.name,
       model: output.model,
-      inputTokens: output.usage.prompt_tokens,
-      outputTokens: output.usage.completion_tokens,
-      totalTokens: output.usage.total_tokens,
+      inputTokens: output.usage?.prompt_tokens,
+      outputTokens: output.usage?.completion_tokens,
+      totalTokens: output.usage?.total_tokens,
       input: input.messages,
       output: output.choices[0],
       extra: input.extra,
@@ -110,7 +110,7 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
 class ExtendedChat extends OpenAI.Chat {
   completions: ExtendedChatCompletions;
 
-  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAI) {
+  constructor(monteloClient: MonteloClient, openAIOptions: OpenAI) {
     super(openAIOptions);
 
     this.completions = new ExtendedChatCompletions(monteloClient, this._client);
@@ -120,7 +120,7 @@ class ExtendedChat extends OpenAI.Chat {
 export class ExtendedOpenAI extends OpenAI {
   chat: ExtendedChat;
 
-  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAIClientOptions) {
+  constructor(monteloClient: MonteloClient, openAIOptions: OpenAIClientOptions) {
     super(openAIOptions);
 
     this.chat = new ExtendedChat(monteloClient, this);
