@@ -25,7 +25,7 @@ export class LogDto {
 
   @ApiProperty()
   @IsString()
-  model: string;
+  model: string | null;
 
   @ApiProperty()
   input: any;
@@ -34,31 +34,31 @@ export class LogDto {
   output: any;
 
   @ApiProperty()
-  startTime: string;
+  startTime: string | null;
 
   @ApiProperty()
-  endTime: string;
+  endTime: string | null;
 
   @ApiProperty()
-  duration: number;
+  duration: number | null;
 
   @ApiProperty()
-  inputTokens: number;
+  inputTokens: number | null;
 
   @ApiProperty()
-  outputTokens: number;
+  outputTokens: number | null;
 
   @ApiProperty()
-  totalTokens: number;
+  totalTokens: number | null;
 
   @ApiProperty()
-  inputCost: number;
+  inputCost: number | null;
 
   @ApiProperty()
-  outputCost: number;
+  outputCost: number | null;
 
   @ApiProperty()
-  totalCost: number;
+  totalCost: number | null;
 
   @ApiProperty()
   extra: any;
@@ -68,8 +68,9 @@ export class LogDto {
 
     return {
       ...baseLog,
-      startTime: log.startTime?.toISOString(),
-      endTime: log.endTime?.toISOString(),
+      model: log.model || null,
+      startTime: log.startTime?.toISOString() || null,
+      endTime: log.endTime?.toISOString() || null,
       parentLogId: baseLog.parentLogId || null,
     };
   }

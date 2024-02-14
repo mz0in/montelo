@@ -2,21 +2,18 @@ import cuid from "cuid";
 
 import { Api } from "./api";
 import { Configuration, type LogInput, type TraceInput } from "./client";
-import { MonteloClientOptions } from "./types";
+import { MonteloClientOptions, TraceParams } from "./types";
 
 export class MonteloClient {
   private api: Api;
   private currentTrace: (TraceInput & { id: string }) | null = null;
 
-  constructor(options: MonteloClientOptions) {
-    const apiKey = options.apiKey || process.env.MONTELO_API_KEY;
-    const baseUrl = options.baseUrl || process.env.MONTELO_BASE_URL;
+  constructor(options?: MonteloClientOptions) {
+    const apiKey = options?.apiKey || process.env.MONTELO_API_KEY;
     if (!apiKey) {
       throw new Error("Montelo API key not set.");
     }
-    if (!baseUrl) {
-      throw new Error("Montelo base url not set.");
-    }
+    const baseUrl = options?.baseUrl || process.env.MONTELO_BASE_URL || "https://log.montelo.ai";
 
     const configuration = new Configuration({
       basePath: baseUrl,
@@ -34,14 +31,20 @@ export class MonteloClient {
         },
       });
     } catch (e: any) {
-      console.error("Montelo Error: ", e);
+      console.error("Montelo Error when creating log: ", e.toString());
     }
   }
 
-  public startTrace(params: TraceInput) {
+  public startTrace(params: TraceParams) {
     this.currentTrace = {
-      ...params,
       id: cuid(),
+      name: params.name,
+      userId: params.userId || null,
+      extra: params.extra || null,
     };
+  }
+
+  public clearTrace() {
+    this.currentTrace = null;
   }
 }

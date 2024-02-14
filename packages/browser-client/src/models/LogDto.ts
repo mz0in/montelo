@@ -27,64 +27,112 @@ export interface LogDto {
     id: string;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof LogDto
      */
-    messages: object;
+    traceId: string;
     /**
      * 
      * @type {string}
      * @memberof LogDto
      */
-    model: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof LogDto
-     */
-    rawInput: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof LogDto
-     */
-    rawOutput: object;
+    envId: string;
     /**
      * 
      * @type {string}
      * @memberof LogDto
      */
-    startTime: string;
+    parentLogId: string | null;
     /**
      * 
      * @type {string}
      * @memberof LogDto
      */
-    endTime: string;
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogDto
+     */
+    model: string | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof LogDto
+     */
+    input: object;
+    /**
+     * 
+     * @type {object}
+     * @memberof LogDto
+     */
+    output: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogDto
+     */
+    startTime: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogDto
+     */
+    endTime: string | null;
     /**
      * 
      * @type {number}
      * @memberof LogDto
      */
-    duration: number;
+    duration: number | null;
     /**
      * 
      * @type {number}
      * @memberof LogDto
      */
-    inputTokenCount: number;
+    inputTokens: number | null;
     /**
      * 
      * @type {number}
      * @memberof LogDto
      */
-    outputTokenCount: number;
+    outputTokens: number | null;
     /**
      * 
      * @type {number}
      * @memberof LogDto
      */
-    totalTokenCount: number;
+    totalTokens: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof LogDto
+     */
+    inputCost: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof LogDto
+     */
+    outputCost: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof LogDto
+     */
+    totalCost: number | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof LogDto
+     */
+    extra: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogDto
+     */
+    createdAt: string;
 }
 
 /**
@@ -93,16 +141,24 @@ export interface LogDto {
 export function instanceOfLogDto(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "messages" in value;
+    isInstance = isInstance && "traceId" in value;
+    isInstance = isInstance && "envId" in value;
+    isInstance = isInstance && "parentLogId" in value;
+    isInstance = isInstance && "name" in value;
     isInstance = isInstance && "model" in value;
-    isInstance = isInstance && "rawInput" in value;
-    isInstance = isInstance && "rawOutput" in value;
+    isInstance = isInstance && "input" in value;
+    isInstance = isInstance && "output" in value;
     isInstance = isInstance && "startTime" in value;
     isInstance = isInstance && "endTime" in value;
     isInstance = isInstance && "duration" in value;
-    isInstance = isInstance && "inputTokenCount" in value;
-    isInstance = isInstance && "outputTokenCount" in value;
-    isInstance = isInstance && "totalTokenCount" in value;
+    isInstance = isInstance && "inputTokens" in value;
+    isInstance = isInstance && "outputTokens" in value;
+    isInstance = isInstance && "totalTokens" in value;
+    isInstance = isInstance && "inputCost" in value;
+    isInstance = isInstance && "outputCost" in value;
+    isInstance = isInstance && "totalCost" in value;
+    isInstance = isInstance && "extra" in value;
+    isInstance = isInstance && "createdAt" in value;
 
     return isInstance;
 }
@@ -118,16 +174,24 @@ export function LogDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): Lo
     return {
         
         'id': json['id'],
-        'messages': json['messages'],
+        'traceId': json['traceId'],
+        'envId': json['envId'],
+        'parentLogId': json['parentLogId'],
+        'name': json['name'],
         'model': json['model'],
-        'rawInput': json['rawInput'],
-        'rawOutput': json['rawOutput'],
+        'input': json['input'],
+        'output': json['output'],
         'startTime': json['startTime'],
         'endTime': json['endTime'],
         'duration': json['duration'],
-        'inputTokenCount': json['inputTokenCount'],
-        'outputTokenCount': json['outputTokenCount'],
-        'totalTokenCount': json['totalTokenCount'],
+        'inputTokens': json['inputTokens'],
+        'outputTokens': json['outputTokens'],
+        'totalTokens': json['totalTokens'],
+        'inputCost': json['inputCost'],
+        'outputCost': json['outputCost'],
+        'totalCost': json['totalCost'],
+        'extra': json['extra'],
+        'createdAt': json['createdAt'],
     };
 }
 
@@ -141,16 +205,24 @@ export function LogDtoToJSON(value?: LogDto | null): any {
     return {
         
         'id': value.id,
-        'messages': value.messages,
+        'traceId': value.traceId,
+        'envId': value.envId,
+        'parentLogId': value.parentLogId,
+        'name': value.name,
         'model': value.model,
-        'rawInput': value.rawInput,
-        'rawOutput': value.rawOutput,
+        'input': value.input,
+        'output': value.output,
         'startTime': value.startTime,
         'endTime': value.endTime,
         'duration': value.duration,
-        'inputTokenCount': value.inputTokenCount,
-        'outputTokenCount': value.outputTokenCount,
-        'totalTokenCount': value.totalTokenCount,
+        'inputTokens': value.inputTokens,
+        'outputTokens': value.outputTokens,
+        'totalTokens': value.totalTokens,
+        'inputCost': value.inputCost,
+        'outputCost': value.outputCost,
+        'totalCost': value.totalCost,
+        'extra': value.extra,
+        'createdAt': value.createdAt,
     };
 }
 

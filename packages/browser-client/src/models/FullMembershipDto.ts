@@ -57,8 +57,8 @@ export interface FullMembershipDto {
  * @export
  */
 export const FullMembershipDtoRoleEnum = {
-    Member: 'MEMBER',
-    Admin: 'ADMIN'
+    Admin: 'ADMIN',
+    Member: 'MEMBER'
 } as const;
 export type FullMembershipDtoRoleEnum = typeof FullMembershipDtoRoleEnum[keyof typeof FullMembershipDtoRoleEnum];
 

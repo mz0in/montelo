@@ -23,6 +23,7 @@ export class LogController {
   async getAll(@Param("envId") envId: string, @Query("take") take?: string): Promise<LogDto[]> {
     const options = take ? { take: parseInt(take) } : undefined;
     const logs = await this.logService.findAllTopLevel(envId, options);
+    console.log("logs: ", logs);
     return logs.map(LogDto.fromLog);
   }
 }

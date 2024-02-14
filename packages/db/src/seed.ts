@@ -9,17 +9,16 @@ const seedSingleBatch = async () => {
   // const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
   const oneHourAgo: Date = new Date(now.getTime() - 60 * 60 * 1000);
 
-  const createFakeLog = () => {
+  const createFakeLog = (): Prisma.LogCreateManyInput => {
     const randomDate = faker.date.between({ from: oneHourAgo, to: now });
     return {
-      paths: null,
+      traceId: null,
+      parentLogId: null,
+      extra: {},
       name: "some name",
-      isTopLevel: true,
-      messages: null,
       model: "gpt-4",
-      input: null,
-      output: null,
-      outputContent: "Some output",
+      input: "Some input",
+      output: "Some output",
       startTime: randomDate,
       endTime: faker.date.recent(),
       duration: faker.number.float({ fractionDigits: 2, min: 0, max: 30 }),
@@ -29,10 +28,8 @@ const seedSingleBatch = async () => {
       inputCost: 0,
       outputCost: 0,
       totalCost: faker.number.float({ fractionDigits: 2, min: 0, max: 3 }),
-      tags: [],
-      metadata: {},
       envId: envId,
-    } as Prisma.LogCreateManyInput;
+    };
   };
 
   const arraySize = 100;

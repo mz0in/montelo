@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Montelo
- * Documentation for the Montelo API.
+ * Montelo Log Server
+ * This server handles creating traces and logs.
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -44,6 +44,14 @@ export class LogsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
         const response = await this.request({
             path: `/logs`,
             method: 'POST',

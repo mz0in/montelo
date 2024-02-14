@@ -1,7 +1,7 @@
-import { ExtendedOpenAI } from "./ExtendedOpenAI";
 import { MonteloClient } from "./MonteloClient";
-import type { LogInput, TraceInput } from "./client";
-import { MonteloOptions } from "./types";
+import { LogInput } from "./client";
+import { ExtendedOpenAI } from "./extended/ExtendedOpenAI";
+import { MonteloOptions, TraceParams } from "./types";
 
 export class MonteloAI {
   private readonly monteloClient: MonteloClient;
@@ -9,17 +9,18 @@ export class MonteloAI {
 
   constructor(options?: MonteloOptions) {
     this.monteloClient = new MonteloClient(options?.montelo);
-
-    if (options?.openai) {
-      this.openai = new ExtendedOpenAI(options.openai, this.monteloClient);
-    }
+    this.openai = new ExtendedOpenAI(this.monteloClient, options?.openai);
   }
 
   public log(params: LogInput) {
     void this.monteloClient.createLog(params);
   }
 
-  public trace(params: TraceInput) {
+  public trace(params: TraceParams) {
     this.monteloClient.startTrace(params);
+  }
+
+  public clearTrace() {
+    this.monteloClient.clearTrace();
   }
 }

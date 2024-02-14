@@ -1,6 +1,6 @@
 import { InjectQueue } from "@nestjs/bull";
-import { Body, Controller, Post, Res, UseGuards } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Logger, Post, Res, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { Queue } from "bull";
 import { Response } from "express";
 
@@ -11,8 +11,11 @@ import { QLogsInput, Queues } from "./types";
 
 
 @ApiTags("Logs")
+@ApiBearerAuth()
 @Controller()
 export class LogsController {
+  private logger = new Logger(LogsController.name);
+
   constructor(@InjectQueue(Queues.logs) private readonly logsQueue: Queue<QLogsInput>) {}
 
   @UseGuards(BearerGuard)
@@ -22,12 +25,14 @@ export class LogsController {
     @EnvId() envId: string,
     @Body() body: CreateLogInput,
   ): Promise<{}> {
+    this.logger.log(`Received log for ${envId}`);
     const queueInput: QLogsInput = {
       envId,
       trace: body.trace,
       log: body.log,
     };
     await this.logsQueue.add(queueInput);
+    this.logger.log(`Added ${envId} to queue`);
     return res.status(200).json({});
   }
 }

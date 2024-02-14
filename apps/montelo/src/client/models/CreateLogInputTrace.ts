@@ -16,51 +16,53 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TraceInput
+ * @interface CreateLogInputTrace
  */
-export interface TraceInput {
+export interface CreateLogInputTrace {
     /**
      * 
      * @type {string}
-     * @memberof TraceInput
+     * @memberof CreateLogInputTrace
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof TraceInput
+     * @memberof CreateLogInputTrace
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof TraceInput
+     * @memberof CreateLogInputTrace
      */
-    userId?: string;
+    userId: string | null;
     /**
      * 
      * @type {object}
-     * @memberof TraceInput
+     * @memberof CreateLogInputTrace
      */
-    extra?: object;
+    extra: object | null;
 }
 
 /**
- * Check if a given object implements the TraceInput interface.
+ * Check if a given object implements the CreateLogInputTrace interface.
  */
-export function instanceOfTraceInput(value: object): boolean {
+export function instanceOfCreateLogInputTrace(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "userId" in value;
+    isInstance = isInstance && "extra" in value;
 
     return isInstance;
 }
 
-export function TraceInputFromJSON(json: any): TraceInput {
-    return TraceInputFromJSONTyped(json, false);
+export function CreateLogInputTraceFromJSON(json: any): CreateLogInputTrace {
+    return CreateLogInputTraceFromJSONTyped(json, false);
 }
 
-export function TraceInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceInput {
+export function CreateLogInputTraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateLogInputTrace {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -68,12 +70,12 @@ export function TraceInputFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         
         'id': json['id'],
         'name': json['name'],
-        'userId': !exists(json, 'userId') ? undefined : json['userId'],
-        'extra': !exists(json, 'extra') ? undefined : json['extra'],
+        'userId': json['userId'],
+        'extra': json['extra'],
     };
 }
 
-export function TraceInputToJSON(value?: TraceInput | null): any {
+export function CreateLogInputTraceToJSON(value?: CreateLogInputTrace | null): any {
     if (value === undefined) {
         return undefined;
     }

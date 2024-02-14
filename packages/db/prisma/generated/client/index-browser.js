@@ -164,9 +164,10 @@ exports.Prisma.LogScalarFieldEnum = {
   envId: 'envId',
   parentLogId: 'parentLogId',
   name: 'name',
-  model: 'model',
   input: 'input',
   output: 'output',
+  model: 'model',
+  extra: 'extra',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
@@ -176,7 +177,6 @@ exports.Prisma.LogScalarFieldEnum = {
   inputCost: 'inputCost',
   outputCost: 'outputCost',
   totalCost: 'totalCost',
-  extra: 'extra',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

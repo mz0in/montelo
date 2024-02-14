@@ -3,40 +3,42 @@ import { APIPromise, RequestOptions } from "openai/core";
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
 import { Stream } from "openai/streaming";
 
-import { MonteloClient } from "./MonteloClient";
-import { LogInput } from "./client";
+import { MonteloClient } from "../MonteloClient";
+import { LogInput } from "../client";
+import { MonteloLogExtend } from "./types";
 
 class ExtendedChatCompletions extends OpenAI.Chat.Completions {
   private monteloClient: MonteloClient;
 
-  constructor(client: OpenAI, monteloClient: MonteloClient) {
-    super(client);
+  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAI) {
+    super(openAIOptions);
+
     this.monteloClient = monteloClient;
   }
 
   create(
-    body: OpenAI.ChatCompletionCreateParamsNonStreaming,
+    body: OpenAI.ChatCompletionCreateParamsNonStreaming & MonteloLogExtend,
     options?: RequestOptions,
   ): APIPromise<OpenAI.ChatCompletion>;
   create(
-    body: OpenAI.ChatCompletionCreateParamsStreaming,
+    body: OpenAI.ChatCompletionCreateParamsStreaming & MonteloLogExtend,
     options?: RequestOptions,
   ): APIPromise<Stream<OpenAI.ChatCompletionChunk>>;
   create(
-    body: ChatCompletionCreateParamsBase,
+    body: ChatCompletionCreateParamsBase & MonteloLogExtend,
     options?: RequestOptions,
   ): APIPromise<Stream<OpenAI.ChatCompletionChunk> | OpenAI.ChatCompletion>;
 
   create(
-    body: ChatCompletionCreateParamsBase,
+    body: ChatCompletionCreateParamsBase & MonteloLogExtend,
     options?: RequestOptions,
   ): APIPromise<OpenAI.ChatCompletion | Stream<OpenAI.ChatCompletionChunk>> {
     const startTime = new Date();
 
-    const originalPromise = super.create(body, options);
+    const { name, ...bodyWithoutMonteloParams } = body;
+    const originalPromise = super.create(bodyWithoutMonteloParams, options);
 
     if ("stream" in body && body.stream) {
-      // Handle streaming response
       return originalPromise;
       // return new Promise((resolve, reject) => {
       //   const chunks: OpenAI.ChatCompletionChunk[] = [];
@@ -65,40 +67,41 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
       //     .catch(reject);
       // }) as APIPromise<Stream<OpenAI.ChatCompletionChunk>>;
     } else {
+      // @ts-ignore
       return originalPromise.then((data) => {
         const endTime = new Date();
         const duration = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
 
-        this.logToDatabase(
-          // @ts-ignore
-          data,
-          startTime.toISOString(),
-          endTime.toISOString(),
-          parseFloat(duration),
-        ).catch(console.error);
+        // @ts-ignore
+        void this.logToDatabase(body, data, {
+          startTime: startTime.toISOString(),
+          endTime: endTime.toISOString(),
+          duration: parseFloat(duration),
+        });
         return data;
       });
     }
   }
 
   private async logToDatabase(
-    data: OpenAI.ChatCompletion,
-    startTime: string,
-    endTime: string,
-    duration: number,
+    input: ChatCompletionCreateParamsBase & MonteloLogExtend,
+    output: OpenAI.ChatCompletion,
+    time: {
+      startTime: string;
+      endTime: string;
+      duration: number;
+    },
   ): Promise<void> {
     const payload: LogInput = {
-      name: "",
-      startTime,
-      endTime,
-      duration,
-      model: data.model,
-      inputTokens: data.usage.prompt_tokens,
-      outputTokens: data.usage.completion_tokens,
-      totalTokens: data.usage.total_tokens,
-      extra: {},
-      input: {},
-      output: data.choices[0],
+      ...time,
+      name: input.name,
+      model: output.model,
+      inputTokens: output.usage.prompt_tokens,
+      outputTokens: output.usage.completion_tokens,
+      totalTokens: output.usage.total_tokens,
+      input: input.messages,
+      output: output.choices[0],
+      extra: input.extra,
     };
     await this.monteloClient.createLog(payload);
   }
@@ -107,21 +110,19 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
 class ExtendedChat extends OpenAI.Chat {
   completions: ExtendedChatCompletions;
 
-  constructor(client: OpenAI, monteloClient: MonteloClient) {
-    super(client);
+  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAI) {
+    super(openAIOptions);
 
-    // Override the completions with the extended version
-    this.completions = new ExtendedChatCompletions(this._client, monteloClient);
+    this.completions = new ExtendedChatCompletions(monteloClient, this._client);
   }
 }
 
 export class ExtendedOpenAI extends OpenAI {
   chat: ExtendedChat;
 
-  constructor(options: OpenAIClientOptions, monteloClient: MonteloClient) {
-    super(options);
+  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAIClientOptions) {
+    super(openAIOptions);
 
-    // Override the chat with the extended version
-    this.chat = new ExtendedChat(this, monteloClient);
+    this.chat = new ExtendedChat(monteloClient, this);
   }
 }

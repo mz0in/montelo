@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Montelo
- * Documentation for the Montelo API.
+ * Montelo Log Server
+ * This server handles creating traces and logs.
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -30,7 +30,7 @@ export interface LogInput {
      * @type {string}
      * @memberof LogInput
      */
-    model: string;
+    model?: string;
     /**
      * 
      * @type {object}
@@ -48,43 +48,43 @@ export interface LogInput {
      * @type {string}
      * @memberof LogInput
      */
-    startTime: string;
+    startTime?: string;
     /**
      * 
      * @type {string}
      * @memberof LogInput
      */
-    endTime: string;
+    endTime?: string;
     /**
      * 
      * @type {number}
      * @memberof LogInput
      */
-    duration: number;
+    duration?: number;
     /**
      * 
      * @type {number}
      * @memberof LogInput
      */
-    inputTokens: number;
+    inputTokens?: number;
     /**
      * 
      * @type {number}
      * @memberof LogInput
      */
-    outputTokens: number;
+    outputTokens?: number;
     /**
      * 
      * @type {number}
      * @memberof LogInput
      */
-    totalTokens: number;
+    totalTokens?: number;
     /**
      * 
      * @type {object}
      * @memberof LogInput
      */
-    extra: object;
+    extra?: object;
 }
 
 /**
@@ -93,16 +93,8 @@ export interface LogInput {
 export function instanceOfLogInput(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "model" in value;
     isInstance = isInstance && "input" in value;
     isInstance = isInstance && "output" in value;
-    isInstance = isInstance && "startTime" in value;
-    isInstance = isInstance && "endTime" in value;
-    isInstance = isInstance && "duration" in value;
-    isInstance = isInstance && "inputTokens" in value;
-    isInstance = isInstance && "outputTokens" in value;
-    isInstance = isInstance && "totalTokens" in value;
-    isInstance = isInstance && "extra" in value;
 
     return isInstance;
 }
@@ -118,16 +110,16 @@ export function LogInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'name': json['name'],
-        'model': json['model'],
+        'model': !exists(json, 'model') ? undefined : json['model'],
         'input': json['input'],
         'output': json['output'],
-        'startTime': json['startTime'],
-        'endTime': json['endTime'],
-        'duration': json['duration'],
-        'inputTokens': json['inputTokens'],
-        'outputTokens': json['outputTokens'],
-        'totalTokens': json['totalTokens'],
-        'extra': json['extra'],
+        'startTime': !exists(json, 'startTime') ? undefined : json['startTime'],
+        'endTime': !exists(json, 'endTime') ? undefined : json['endTime'],
+        'duration': !exists(json, 'duration') ? undefined : json['duration'],
+        'inputTokens': !exists(json, 'inputTokens') ? undefined : json['inputTokens'],
+        'outputTokens': !exists(json, 'outputTokens') ? undefined : json['outputTokens'],
+        'totalTokens': !exists(json, 'totalTokens') ? undefined : json['totalTokens'],
+        'extra': !exists(json, 'extra') ? undefined : json['extra'],
     };
 }
 

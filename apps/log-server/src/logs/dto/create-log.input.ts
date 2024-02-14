@@ -7,9 +7,11 @@ export class LogInput {
   name: string;
 
   @ApiProperty({
+    type: String,
+    required: false,
     example: "gpt-4",
   })
-  model: string;
+  model?: string;
 
   @ApiProperty({
     example: "What is your name?",
@@ -22,37 +24,52 @@ export class LogInput {
   output: any;
 
   @ApiProperty({
+    type: String,
     example: "2024-02-12T03:55:29.161Z",
+    required: false,
   })
-  startTime: string;
+  startTime?: string;
 
   @ApiProperty({
+    type: String,
     example: "2024-02-12T03:56:29.161Z",
+    required: false,
   })
-  endTime: string;
+  endTime?: string;
 
   @ApiProperty({
+    type: Number,
     example: 1.32,
+    required: false,
   })
-  duration: number;
+  duration?: number;
 
   @ApiProperty({
+    type: Number,
     example: 5,
+    required: false,
   })
-  inputTokens: number;
+  inputTokens?: number;
 
   @ApiProperty({
+    type: Number,
     example: 5,
+    required: false,
   })
-  outputTokens: number;
+  outputTokens?: number;
 
   @ApiProperty({
+    type: Number,
     example: 10,
+    required: false,
   })
-  totalTokens: number;
+  totalTokens?: number;
 
-  @ApiProperty({ type: "object" })
-  extra: Record<string, any>;
+  @ApiProperty({
+    type: "object",
+    required: false,
+  })
+  extra?: Record<string, any>;
 }
 
 export class TraceInput {
@@ -67,16 +84,17 @@ export class TraceInput {
   name: string;
 
   @ApiProperty({
-    nullable: true,
     type: String,
+    required: false,
     example: null,
   })
-  userId: string | null;
+  userId?: string;
 
   @ApiProperty({
     example: null,
+    required: false,
   })
-  extra: Record<string, any> | null;
+  extra?: Record<string, any>;
 }
 
 export class CreateLogInput {
@@ -85,6 +103,7 @@ export class CreateLogInput {
 
   @ApiProperty({
     type: TraceInput,
+    required: false,
     example: {
       id: "clsj9nupk000108jp9pxdcx5c",
       name: "Top-level Trace",
@@ -92,5 +111,5 @@ export class CreateLogInput {
       extra: null,
     },
   })
-  trace: TraceInput | null;
+  trace?: TraceInput;
 }

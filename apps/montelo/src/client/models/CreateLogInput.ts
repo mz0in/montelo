@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Montelo
- * Documentation for the Montelo API.
+ * Montelo Log Server
+ * This server handles creating traces and logs.
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -43,7 +43,7 @@ export interface CreateLogInput {
      * @type {TraceInput}
      * @memberof CreateLogInput
      */
-    trace: TraceInput;
+    trace?: TraceInput;
 }
 
 /**
@@ -52,7 +52,6 @@ export interface CreateLogInput {
 export function instanceOfCreateLogInput(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "log" in value;
-    isInstance = isInstance && "trace" in value;
 
     return isInstance;
 }
@@ -68,7 +67,7 @@ export function CreateLogInputFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'log': LogInputFromJSON(json['log']),
-        'trace': TraceInputFromJSON(json['trace']),
+        'trace': !exists(json, 'trace') ? undefined : TraceInputFromJSON(json['trace']),
     };
 }
 

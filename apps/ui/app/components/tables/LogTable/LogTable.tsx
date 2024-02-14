@@ -23,12 +23,15 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import { Badge } from "../../ui/badge";
+import { idShortener } from "./idShortener";
+import { Delete } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 export const columns: ColumnDef<LogDto>[] = [
   {
@@ -56,59 +59,131 @@ export const columns: ColumnDef<LogDto>[] = [
   {
     accessorKey: "startTime",
     header: "Timestamp",
-    cell: ({ row }) => (
-      <div>{dayjs(row.getValue("startTime")).format("MMM D YYYY HH:mm:ss")}</div>
-    ),
+    cell: ({ row }) => {
+      const date: string | undefined = row.getValue("startTime") || row.original.createdAt;
+      return (<div>{date && dayjs(date).format("D/M HH:mm:ss")}</div>);
+    },
+  },
+  {
+    accessorKey: "traceId",
+    header: "Trace ID",
+    cell: ({ row }) => {
+      const traceId: string = row.getValue("traceId");
+      const { short, color } = idShortener(traceId);
+      return (
+        <div>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger className={"cursor-default"}>
+                <Badge variant={color}>{short}</Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{traceId}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "id",
     header: "Log ID",
-    cell: ({ row }) => (
-      <div>{row.getValue("id")}</div>
-    ),
+    cell: ({ row }) => {
+      const traceId: string = row.getValue("id");
+      const { short } = idShortener(traceId);
+      return (
+        <div>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger className={"cursor-default"}>
+                <Badge>{short}</Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{traceId}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const name: string | undefined = row.getValue("name");
+      return (
+        <div>{name?.length ? name : "—"}</div>
+      );
+    },
   },
   {
     accessorKey: "model",
     header: "Model",
     cell: ({ row }) => (
-      <div>{row.getValue("model")}</div>
+      <div>{row.getValue("model") || "—"}</div>
     ),
   },
   {
     accessorKey: "duration",
     header: "Duration",
-    cell: ({ row }) => (
-      <div>{row.getValue("duration")}s</div>
-    ),
+    cell: ({ row }) => {
+      const duration: string | undefined = row.getValue("duration");
+      return (
+        <div>{duration ? `${duration}s` : "—"}</div>
+      );
+    },
   },
   {
-    accessorKey: "inputTokenCount",
+    accessorKey: "inputTokens",
     header: "Input Tokens",
     cell: ({ row }) => (
-      <div>{row.getValue("inputTokenCount")}</div>
+      <div>{row.getValue("inputTokens") ?? "—"}</div>
     ),
   },
   {
-    accessorKey: "outputTokenCount",
+    accessorKey: "outputTokens",
     header: "Output Tokens",
     cell: ({ row }) => (
-      <div>{row.getValue("outputTokenCount")}</div>
+      <div>{row.getValue("outputTokens") ?? "—"}</div>
     ),
   },
   {
-    accessorKey: "totalTokenCount",
+    accessorKey: "totalTokens",
     header: "Total Tokens",
     cell: ({ row }) => (
-      <div>{row.getValue("totalTokenCount")}</div>
+      <div>{row.getValue("totalTokens") ?? "—"}</div>
     ),
   },
   {
-    accessorKey: "rawInput",
+    accessorKey: "inputCost",
+    header: "Input Cost",
+    cell: ({ row }) => (
+      <div>{row.getValue("inputCost") ?? "—"}</div>
+    ),
+  },
+  {
+    accessorKey: "outputCost",
+    header: "Output Cost",
+    cell: ({ row }) => (
+      <div>{row.getValue("outputCost") ?? "—"}</div>
+    ),
+  },
+  {
+    accessorKey: "totalCost",
+    header: "Total Cost",
+    cell: ({ row }) => (
+      <div>{row.getValue("totalCost") ?? "—"}</div>
+    ),
+  },
+  {
+    accessorKey: "input",
     header: "Input",
     cell: ({ row }) => (
       <div>
         <JsonView
-          data={row.getValue("rawInput")}
+          data={row.getValue("input")}
           style={darkStyles}
           shouldExpandNode={() => false}
         />
@@ -116,12 +191,12 @@ export const columns: ColumnDef<LogDto>[] = [
     ),
   },
   {
-    accessorKey: "rawOutput",
+    accessorKey: "output",
     header: "Output",
     cell: ({ row }) => (
       <div>
         <JsonView
-          data={row.getValue("rawOutput")}
+          data={row.getValue("output")}
           style={darkStyles}
           shouldExpandNode={() => false}
         />
@@ -133,7 +208,6 @@ export const columns: ColumnDef<LogDto>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -144,14 +218,10 @@ export const columns: ColumnDef<LogDto>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
+            <DropdownMenuItem className={"text-red-600"}>
+              <Delete size={16} />&nbsp;
+              Delete
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -169,8 +239,10 @@ export function LogTable({ logs }: LogTableProps) {
     [],
   );
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
-    inputTokenCount: false,
-    outputTokenCount: false,
+    inputTokens: false,
+    outputTokens: false,
+    inputCost: false,
+    outputCost: false,
   });
   const [rowSelection, setRowSelection] = React.useState({});
 

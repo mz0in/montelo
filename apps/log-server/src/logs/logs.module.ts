@@ -1,6 +1,7 @@
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
 
+import { CostulatorModule } from "../costulator/costulator.module";
 import { DatabaseModule } from "../database";
 import { LogsController } from "./logs.controller";
 import { LogsHealthIndicator } from "./logs.health";
@@ -15,6 +16,7 @@ import { Queues } from "./types";
       name: Queues.logs,
     }),
     DatabaseModule,
+    CostulatorModule,
   ],
   controllers: [LogsController],
   providers: [LogsService, LogsProcessor, LogsHealthIndicator],
