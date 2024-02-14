@@ -38,13 +38,13 @@ const PATH_ACTIONS = {
   },
   project: {
     create: path(ROOT_ACTION, "/project/create"),
+    getAllApiKeys: (projectId: string) => path(ROOT_ACTION, `/project/${projectId}/api-keys`),
   },
   apiKeys: {
-    getAll: (envId: string) => path(ROOT_ACTION, `/env/${envId}/api-keys`),
-    reveal: ({ projectId, envId, apiKeyId }: ApiKeyParams) =>
-      path(ROOT_ACTION, `/project/${projectId}/env/${envId}/api-keys/${apiKeyId}/reveal`),
-    rotate: ({ projectId, envId, apiKeyId }: ApiKeyParams) =>
-      path(ROOT_ACTION, `/project/${projectId}/env/${envId}/api-keys/${apiKeyId}/rotate`),
+    reveal: ({ envId, apiKeyId }: ApiKeyParams) =>
+      path(ROOT_ACTION, `/env/${envId}/api-keys/${apiKeyId}/reveal`),
+    rotate: ({ envId, apiKeyId }: ApiKeyParams) =>
+      path(ROOT_ACTION, `/env/${envId}/api-keys/${apiKeyId}/rotate`),
   },
 };
 
@@ -71,7 +71,6 @@ export type EnvParams = {
 };
 
 type ApiKeyParams = {
-  projectId: string;
   envId: string;
   apiKeyId: string;
 };

@@ -7,19 +7,19 @@ import { ApiKeyWithEnvDto } from "./dto/apiKeyWithEnv.dto";
 
 @ApiTags("Api Key")
 @ApiBearerAuth()
-@Controller("env/:envId")
+@Controller()
 export class ApiKeyController {
   constructor(private apiKeyService: ApiKeyService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get("api-keys")
-  async getAllForEnv(@Param("envId") envId: string): Promise<ApiKeyWithEnvDto[]> {
-    const apiKeys = await this.apiKeyService.findAllForEnv(envId);
+  @Get("project/:projectId/api-keys")
+  async getAllForProject(@Param("projectId") projectId: string): Promise<ApiKeyWithEnvDto[]> {
+    const apiKeys = await this.apiKeyService.findAllForProject(projectId);
     return apiKeys.map(ApiKeyWithEnvDto.fromApiKeyWithEnv);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(":envId/api-keys/:apiKeyId")
+  @Get("env/:envId/api-keys/:apiKeyId")
   async reveal(
     @Param("envId") envId: string,
     @Param("apiKeyId") apiKeyId: string,
@@ -29,7 +29,7 @@ export class ApiKeyController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(":envId/api-keys/:apiKeyId")
+  @Post("env/:envId/api-keys/:apiKeyId")
   async rotate(
     @Param("envId") envId: string,
     @Param("apiKeyId") apiKeyId: string,

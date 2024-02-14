@@ -3,6 +3,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
+  FilterFnOption,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -241,14 +242,13 @@ export function LogTable({ logs }: LogTableProps) {
   return (
     <div className="w-full">
       <div className="flex items-center pb-4 pt-0.5">
-        <Input
-          placeholder="Search input or output"
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-xs"
-        />
+        {/*<Input*/}
+        {/*  placeholder="Search input or output"*/}
+        {/*  value={searchInput}*/}
+        {/*  onChange={e => setSearchInput(e.target.value)} // Update the search input state*/}
+        {/*  className="max-w-xs"*/}
+        {/*/>*/}
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

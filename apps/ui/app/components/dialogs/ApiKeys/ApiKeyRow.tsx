@@ -7,7 +7,6 @@ import { RevealApiKey } from "./RevealApiKey";
 import { RotateApiKey } from "./RotateApiKey";
 
 type InputFetcherParams = {
-  projectId: string;
   envId: string;
   apiKeyId: string;
 }
@@ -23,7 +22,6 @@ export const ApiKeyRow = ({ apiKey }: ApiKeyRowProps) => {
   const apiKeyToShow = rotateFetcher.data?.key ? undefined : revealFetcher.data?.key;
 
   const params: InputFetcherParams = {
-    projectId: apiKey.environment.projectId,
     envId: apiKey.envId,
     apiKeyId: apiKey.id,
   };

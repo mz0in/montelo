@@ -4,9 +4,9 @@ import { LoaderFunction, json } from "@remix-run/node";
 import { withAuth } from "../../../../common/auth/withAuth";
 
 export const loader: LoaderFunction = withAuth(async ({ api, params }) => {
-  const envId = params.envId!;
-  const apiKeyDtos = await api.apiKey().apiKeyControllerGetAllForEnv({
-    envId,
+  const projectId = params.projectId!;
+  const apiKeyDtos = await api.apiKey().apiKeyControllerGetAllForProject({
+    projectId,
   });
   return json<ApiKeyWithEnvDto[]>(apiKeyDtos);
 });

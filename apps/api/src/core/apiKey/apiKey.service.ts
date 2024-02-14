@@ -4,7 +4,7 @@ import { randomBytes } from "crypto";
 import { HashingService } from "../../common/services/hashing/hashing.service";
 import { DatabaseService } from "../../database";
 import { Environments } from "../environment/environment.enums";
-import { ApiKeyWithEnvironment, GeneratedKey, Prefix, RotateKeyParams } from "./apiKey.types";
+import { ApiKeyWithEnvironment, GeneratedKey, Prefix } from "./apiKey.types";
 
 
 @Injectable()
@@ -89,10 +89,12 @@ export class ApiKeyService {
     return `sk-${prefix}-${cleaned}`;
   }
 
-  public async findAllForEnv(envId: string): Promise<ApiKeyWithEnvironment[]> {
+  public async findAllForProject(projectId: string): Promise<ApiKeyWithEnvironment[]> {
     const dbApiKeys = await this.db.apiKey.findMany({
       where: {
-        envId: envId,
+        environment: {
+          projectId,
+        },
       },
       include: {
         environment: true,

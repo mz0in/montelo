@@ -39,7 +39,7 @@ export const EnvSelector = ({ environments, pathEnv }: EnvSelectorProps) => {
   };
 
   const prefetchApiKeys = () => {
-    fetcher.load(Routes.actions.apiKeys.getAll(pathEnv.id));
+    fetcher.load(Routes.actions.project.getAllApiKeys(pathEnv.projectId));
   };
 
   return (

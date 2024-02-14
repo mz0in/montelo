@@ -7,6 +7,7 @@ import { LogCostInput } from "../costulator/llm-provider.interface";
 import { NullableCost, TraceMetrics } from "../costulator/types";
 import { DatabaseService } from "../database";
 import { LogInput, TraceInput } from "./dto/create-log.input";
+import { TraceWithLogs } from "./types";
 
 
 @Injectable()
@@ -19,8 +20,20 @@ export class LogsService {
   ) {}
 
   async create(envId: string, log: LogInput, trace?: TraceInput): Promise<void> {
+    // get the existing trace from the db if it exists
+    const dbTrace = trace?.id
+      ? await this.db.trace.findUnique({
+          where: {
+            id: trace.id,
+          },
+          include: {
+            logs: true,
+          },
+        })
+      : null;
+
     // get the cost of the individual log
-    // you need the arrow function to preserve the binding
+    // you need the arrow function to preserve the class binding
     const logCost = this.calculateLogCostOrDefault(log, (params: LogCostInput) =>
       this.costulatorService.getLogCost(params),
     );
@@ -28,18 +41,22 @@ export class LogsService {
     // get the updated cost of the trace + this new log. to do this we check all logs already on
     // the trace, sum the metrics up, then add the current log to it,
     const traceMetrics = await this.calculateTraceMetricsOrDefault({
-      traceId: trace?.id,
+      dbTrace,
       logCost,
       logTokens: pick(log, ["inputTokens", "outputTokens", "totalTokens"]),
     });
 
+    // get the parent id
+    const parentLogId = this.getParentId(log.name, dbTrace);
+    const logNameWithoutPath = this.getLogNameWithoutPath(log.name);
+
+    // define the base TRACE
     const baseCreateTrace: Prisma.TraceCreateWithoutLogsInput = {
       ...traceMetrics,
       envId,
       id: trace?.id,
       name: trace?.name || "",
     };
-
     const traceArg: Prisma.TraceCreateNestedOneWithoutLogsInput = trace
       ? {
           connectOrCreate: {
@@ -53,9 +70,12 @@ export class LogsService {
           create: baseCreateTrace,
         };
 
+    // define the LOG create
     const logCreateInput: Prisma.LogCreateInput = {
       ...log,
       ...logCost,
+      name: logNameWithoutPath,
+      parentLogId,
       trace: traceArg,
       environment: {
         connect: {
@@ -63,10 +83,6 @@ export class LogsService {
         },
       },
     };
-
-    console.log("log: ", log);
-    console.log("logCost: ", logCost);
-    console.log("logCreateInput", logCreateInput);
 
     const createdLog = await this.db.log.create({
       data: logCreateInput,
@@ -84,36 +100,24 @@ export class LogsService {
   }
 
   private async calculateTraceMetricsOrDefault({
-    traceId,
+    dbTrace,
     logCost,
     logTokens,
   }: {
-    traceId?: string;
+    dbTrace: TraceWithLogs | null;
     logCost: NullableCost;
     logTokens: { inputTokens?: number; outputTokens?: number; totalTokens?: number };
   }): Promise<TraceMetrics> {
-    const defaultTraceMetrics: TraceMetrics = {
-      inputTokens: 0,
-      outputTokens: 0,
-      totalTokens: 0,
-      inputCost: 0,
-      outputCost: 0,
-      totalCost: 0,
-    };
-    if (!traceId) {
-      return defaultTraceMetrics;
-    }
-
-    const dbTrace = await this.db.trace.findFirst({
-      where: {
-        id: traceId,
-      },
-      include: {
-        logs: true,
-      },
-    });
+    // default trace metrics
     if (!dbTrace) {
-      return defaultTraceMetrics;
+      return {
+        inputTokens: 0,
+        outputTokens: 0,
+        totalTokens: 0,
+        inputCost: 0,
+        outputCost: 0,
+        totalCost: 0,
+      };
     }
 
     const traceMetrics = this.costulatorService.getTraceMetrics(dbTrace);
@@ -140,5 +144,37 @@ export class LogsService {
       });
     }
     return { inputCost: null, outputCost: null, totalCost: null };
+  }
+
+  private getParentId(logName: string, dbTrace: TraceWithLogs | null): string | null {
+    if (!dbTrace) {
+      return null;
+    }
+
+    const splitName = this.splitLogName(logName);
+    if (splitName.length === 1) {
+      return null;
+    }
+
+    const parentLogName = splitName.at(-2);
+    const parentLog = dbTrace.logs.find((log) => log.name === parentLogName);
+    if (!parentLog) {
+      this.logger.log(`Parent log to ${logName} not found`);
+      return null;
+    }
+
+    return parentLog.id;
+  }
+
+  private getLogNameWithoutPath(name: string): string {
+    const splitName = this.splitLogName(name);
+    return splitName.at(-1)!;
+  }
+
+  private splitLogName(name: string): string[] {
+    return name
+      .split("/")
+      .filter((n) => n.length)
+      .map((n) => n.trim());
   }
 }
