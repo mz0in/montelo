@@ -3,7 +3,6 @@ import { LogInput } from "./client";
 import { ExtendedOpenAI } from "./extended/ExtendedOpenAI";
 import { MonteloOptions, TraceParams } from "./types";
 
-
 /**
  * The API for interfacing with MonteloAI. Wraps OpenAI and other providers.
  */

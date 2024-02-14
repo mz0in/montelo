@@ -8,7 +8,6 @@ import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "../environment/environment.enums";
 import { CreateUserInput } from "./user.types";
 
-
 @Injectable()
 export class UserService {
   constructor(

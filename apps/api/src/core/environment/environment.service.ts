@@ -6,7 +6,6 @@ import { ApiKeyService } from "../apiKey/apiKey.service";
 import { Environments } from "./environment.enums";
 import { CreateEnvironmentParams } from "./environment.types";
 
-
 @Injectable()
 export class EnvironmentService {
   constructor(

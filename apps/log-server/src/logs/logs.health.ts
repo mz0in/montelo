@@ -5,7 +5,6 @@ import { Queue } from "bull";
 
 import { QLogsInput, Queues } from "./types";
 
-
 @Injectable()
 export class LogsHealthIndicator extends HealthIndicator {
   constructor(@InjectQueue(Queues.logs) protected readonly logsQueue: Queue<QLogsInput>) {

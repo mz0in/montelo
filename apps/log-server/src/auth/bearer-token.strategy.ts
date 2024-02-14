@@ -4,7 +4,6 @@ import { Strategy } from "passport-http-bearer";
 
 import { AuthService } from "./auth.service";
 
-
 @Injectable()
 export class BearerTokenStrategy extends PassportStrategy(Strategy, "bearer-token") {
   constructor(private authService: AuthService) {

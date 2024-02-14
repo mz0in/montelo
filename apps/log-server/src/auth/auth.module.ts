@@ -6,7 +6,6 @@ import { DatabaseModule } from "../database";
 import { AuthService } from "./auth.service";
 import { BearerTokenStrategy } from "./bearer-token.strategy";
 
-
 @Module({
   imports: [PassportModule, DatabaseModule, HashingModule],
   providers: [AuthService, BearerTokenStrategy],

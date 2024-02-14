@@ -9,7 +9,6 @@ import { BearerGuard } from "../auth/bearer.guard";
 import { CreateLogInput } from "./dto/create-log.input";
 import { QLogsInput, Queues } from "./types";
 
-
 @ApiTags("Logs")
 @ApiBearerAuth()
 @Controller()

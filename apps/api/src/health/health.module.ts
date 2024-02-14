@@ -5,7 +5,6 @@ import { TerminusModule } from "@nestjs/terminus";
 import { DatabaseModule } from "../database";
 import { HealthController } from "./health.controller";
 
-
 @Module({
   imports: [TerminusModule, HttpModule, DatabaseModule],
   controllers: [HealthController],

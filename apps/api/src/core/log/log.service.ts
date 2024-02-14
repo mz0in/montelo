@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 
 import { DatabaseService } from "../../database";
 
-
 @Injectable()
 export class LogService {
   constructor(private db: DatabaseService) {}

@@ -6,7 +6,6 @@ import { DatabaseService } from "../../database";
 import { EnvApiKeyPrefixMap } from "../environment/environment.enums";
 import { ApiKeyWithEnvironment, Prefix } from "./apiKey.types";
 
-
 @Injectable()
 export class ApiKeyService {
   constructor(

@@ -9,7 +9,6 @@ import { DatabaseService } from "../database";
 import { LogInput, TraceInput } from "./dto/create-log.input";
 import { TraceWithLogs } from "./types";
 
-
 @Injectable()
 export class LogsService {
   private logger = new Logger(LogsService.name);
@@ -171,7 +170,7 @@ export class LogsService {
     if (!dbTrace) {
       return name;
     }
-    
+
     const splitName = this.splitLogName(name);
     return splitName.at(-1)!;
   }

@@ -27,7 +27,7 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     const theme = new SwaggerTheme("v3");
-    const themeName: SwaggerThemeName = "dark";
+    const themeName: SwaggerThemeName = "dark" as const;
     const options: SwaggerCustomOptions = {
       explorer: true,
       customCss: theme.getBuffer(themeName),

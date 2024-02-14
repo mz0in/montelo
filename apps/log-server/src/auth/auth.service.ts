@@ -3,7 +3,6 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { HashingService } from "../common/services/hashing/hashing.service";
 import { DatabaseService } from "../database";
 
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,7 +24,7 @@ export class AuthService {
       },
     });
 
-    console.log("dbApiKey: ", dbApiKey)
+    console.log("dbApiKey: ", dbApiKey);
 
     const isValid = await this.hashingService.verify(privatePart, dbApiKey.private);
     console.log("isValid: ", isValid);

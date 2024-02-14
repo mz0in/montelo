@@ -5,7 +5,6 @@ import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { ApiKeyService } from "./apiKey.service";
 import { ApiKeyWithEnvDto } from "./dto/apiKeyWithEnv.dto";
 
-
 @ApiTags("Api Key")
 @ApiBearerAuth()
 @Controller()

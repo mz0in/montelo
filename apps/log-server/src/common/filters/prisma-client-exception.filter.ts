@@ -4,7 +4,6 @@ import { Prisma } from "@montelo/db";
 import { ArgumentsHost, Catch, HttpException, HttpServer, HttpStatus } from "@nestjs/common";
 import { BaseExceptionFilter } from "@nestjs/core";
 
-
 export type ErrorCodesStatusMapping = {
   [key: string]:
     | number

@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { LLMProvider, LogCostInput, LogCostOutput } from "./llm-provider.interface";
 import { Pricing } from "./types";
 
-
 @Injectable()
 export class OpenAICostulatorService implements LLMProvider {
   private pricing: Record<string, Pricing> = {

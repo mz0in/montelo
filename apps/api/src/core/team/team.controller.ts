@@ -9,7 +9,6 @@ import { CreateTeamInput } from "./dto/create-team.input";
 import { TeamDto } from "./dto/team.dto";
 import { TeamService } from "./team.service";
 
-
 @ApiTags("Team")
 @ApiBearerAuth()
 @Controller("team")

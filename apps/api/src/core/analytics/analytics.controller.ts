@@ -4,9 +4,8 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { DateSelection } from "./analytics.enum";
 import { AnalyticsService } from "./analytics.service";
-import { DashboardAnalyticsDto } from "./dto/dashboard-analytics.dto";
 import { CostHistoryDto } from "./dto/cost-history.dto";
-
+import { DashboardAnalyticsDto } from "./dto/dashboard-analytics.dto";
 
 @ApiTags("Analytics")
 @ApiBearerAuth()

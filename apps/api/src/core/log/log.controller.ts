@@ -5,7 +5,6 @@ import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { LogDto } from "./dto/log.dto";
 import { LogService } from "./log.service";
 
-
 @ApiTags("Log")
 @ApiBearerAuth()
 @Controller("env/:envId/log")

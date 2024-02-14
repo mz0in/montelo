@@ -12,7 +12,6 @@ import { UserModule } from "./core/user/user.module";
 import { EnvModule, envSchema } from "./env";
 import { HealthModule } from "./health/health.module";
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({

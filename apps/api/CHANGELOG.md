@@ -1,5 +1,13 @@
 # actions
 
+## 1.1.34
+
+### Patch Changes
+
+- y
+- Updated dependencies
+  - @montelo/db@1.1.34
+
 ## 1.1.33
 
 ### Patch Changes
