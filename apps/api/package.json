@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "1.1.31",
+  "version": "1.1.32",
   "description": "",
   "author": "",
   "private": true,
@@ -25,9 +25,8 @@
     "generate:client": "openapi-generator-cli generate -i http://localhost:3001/docs-json -g typescript-fetch -o ../../packages/browser-client/src && npm run build -w @montelo/browser-client"
   },
   "dependencies": {
-    "@montelo/db": "1.1.31",
+    "@montelo/db": "1.1.32",
     "@nestjs/axios": "^3.0.1",
-    "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -38,7 +37,6 @@
     "@nestjs/terminus": "^10.2.1",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
-    "bull": "^4.12.2",
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.10",
     "dotenv-cli": "^7.3.0",

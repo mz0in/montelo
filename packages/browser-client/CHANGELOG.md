@@ -1,5 +1,11 @@
 # @montelo/browser-client
 
+## 1.1.32
+
+### Patch Changes
+
+- y
+
 ## 1.1.31
 
 ### Patch Changes

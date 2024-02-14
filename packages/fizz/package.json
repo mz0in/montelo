@@ -1,12 +1,12 @@
 {
   "name": "@montelo/fizz",
-  "version": "1.1.31",
+  "version": "1.1.32",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
-    "@montelo/common": "1.1.31",
+    "@montelo/common": "1.1.32",
     "async": "^3.2.5",
     "fast-glob": "^3.3.2",
     "lodash": "^4.17.21",
