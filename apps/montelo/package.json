@@ -1,6 +1,6 @@
 {
   "name": "montelo",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "main": "dist/bundle.js/index.js",
   "types": "dist/bundle.js/index.d.ts",
   "sideEffects": false,
@@ -16,10 +16,10 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@montelo/cli": "1.1.30",
-    "@montelo/common": "1.1.30",
-    "@montelo/fizz": "1.1.30",
-    "@montelo/promptfile": "1.1.30",
+    "@montelo/cli": "1.1.31",
+    "@montelo/common": "1.1.31",
+    "@montelo/fizz": "1.1.31",
+    "@montelo/promptfile": "1.1.31",
     "openai": "^4.27.0",
     "uuid": "^9.0.1"
   },
