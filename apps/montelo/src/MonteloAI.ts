@@ -3,6 +3,7 @@ import { LogInput } from "./client";
 import { ExtendedOpenAI } from "./extended/ExtendedOpenAI";
 import { MonteloOptions, TraceParams } from "./types";
 
+
 /**
  * The API for interfacing with MonteloAI. Wraps OpenAI and other providers.
  */
@@ -12,9 +13,7 @@ export class MonteloAI {
 
   constructor(options?: MonteloOptions) {
     this.monteloClient = new MonteloClient(options?.montelo);
-    if (options?.openai) {
-      this.openai = new ExtendedOpenAI(this.monteloClient, options?.openai);
-    }
+    this.openai = new ExtendedOpenAI(this.monteloClient, options?.openai);
   }
 
   /**

@@ -120,7 +120,7 @@ class ExtendedChat extends OpenAI.Chat {
 export class ExtendedOpenAI extends OpenAI {
   chat: ExtendedChat;
 
-  constructor(monteloClient: MonteloClient, openAIOptions: OpenAIClientOptions) {
+  constructor(monteloClient: MonteloClient, openAIOptions?: OpenAIClientOptions) {
     super(openAIOptions);
 
     this.chat = new ExtendedChat(monteloClient, this);
