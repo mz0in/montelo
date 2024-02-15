@@ -20,7 +20,7 @@ async function bootstrap() {
   if (process.env.NODE_ENV === "development") {
     const config = new DocumentBuilder()
       .setTitle("Montelo Log Server")
-      .setDescription("This server handles creating traces and logs.")
+      .setDescription("This server handles creating traces and traces.")
       .setVersion("1.0")
       .addServer(`http://localhost:${process.env.PORT!}/`, "🟢 Local")
       .addBearerAuth()

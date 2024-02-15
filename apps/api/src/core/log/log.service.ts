@@ -7,7 +7,7 @@ import { DatabaseService } from "../../database";
 export class LogService {
   constructor(private db: DatabaseService) {}
 
-  async findAllTopLevel(envId: string, options?: { take?: number }): Promise<Log[]> {
+  async findAllForEnv(envId: string, options?: { take?: number }): Promise<Log[]> {
     return this.db.log.findMany({
       where: {
         envId,

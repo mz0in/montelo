@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Montelo Log Server
- * This server handles creating traces and logs.
+ * This server handles creating traces and traces.
  *
  * The version of the OpenAPI document: 1.0
  *

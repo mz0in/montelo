@@ -68,7 +68,7 @@ model Environment {
 
   // relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  logs    Log[]
+  traces  Log[]
   apiKey  ApiKey?
 
   // dates
@@ -196,12 +196,14 @@ model Trace {
   outputCost   Float @map("output_cost")
   totalCost    Float @map("total_cost")
 
+  // TODO add durations
+
   userId String?  @map("user_id")
   tags   String[] @default([])
   extra  Json?
 
   // relations
-  logs Log[]
+  traces Log[]
 
   // dates
   createdAt DateTime @default(now()) @map("created_at")

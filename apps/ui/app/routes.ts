@@ -13,9 +13,11 @@ const PATH_APP = {
   project: {
     env: {
       dashboard: (params: EnvParams) => buildEnvPath(params)("dashboard"),
-      logs: (params: EnvParams) => buildEnvPath(params)("logs"),
-      logId: (params: EnvParams & { logId: string }) =>
-        buildEnvPath(params)(`logs/${params.logId}`),
+      traces: (params: EnvParams) => buildEnvPath(params)("traces"),
+      traceId: (params: EnvParams & { traceId: string; logId?: string }) =>
+        buildEnvPath(params)(
+          `traces/${params.traceId}${params.logId ? `?logId=${params.logId}` : ""}`,
+        ),
     },
   },
 };
@@ -66,9 +68,4 @@ export const Routes = {
 export type EnvParams = {
   projectId: string;
   envId: string;
-};
-
-type ApiKeyParams = {
-  envId: string;
-  apiKeyId: string;
 };

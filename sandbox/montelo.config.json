@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "directory": "./src/functions",
+    "output": "./src/functions/functions.montelo.ts"
+  },
+  "prompts": {
+    "directory": "./src/prompts",
+    "output": "./src/prompts/prompts.montelo.ts"
+  }
+}

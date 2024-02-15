@@ -28,7 +28,8 @@ export const getConfigPath = (): string => {
 export const readMonteloConfig = (): MonteloConfig => {
   const configPath = getConfigPath();
   if (!existsSync(configPath)) {
-    throw new Error(`${configPath} does not exist.`);
+    console.error(`${configPath} does not exist.`);
+    process.exit(1);
   }
 
   const configContent = readFileSync(configPath, "utf8");

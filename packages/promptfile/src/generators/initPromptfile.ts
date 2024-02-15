@@ -1,4 +1,4 @@
-import { getFirstPartOfFilename } from "@montelo/common";
+import { getBaseNameWithoutExtension } from "@montelo/common";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { readFile } from "fs/promises";
 import { join } from "path";
@@ -17,7 +17,7 @@ export const initPromptfile = async (promptsDirectory: string, outputFilePath: s
   writeFileSync(filePath, PROMPT_EXAMPLE);
 
   const fileContent = await readFile(filePath, "utf8");
-  const promptName = getFirstPartOfFilename(PROMPT_EXAMPLE_FILE_NAME);
+  const promptName = getBaseNameWithoutExtension(PROMPT_EXAMPLE_FILE_NAME);
   const lineItemTS = promptfileToTS(promptName, fileContent);
 
   const output = getOutput(lineItemTS);

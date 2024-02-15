@@ -1,4 +1,4 @@
-import { getFirstPartOfFilename, getRelativePath } from "@montelo/common";
+import { getBaseNameWithoutExtension, getRelativePath } from "@montelo/common";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 
@@ -15,8 +15,8 @@ export const initFizz = async (functionsDirectory: string, outputFilePath: strin
   writeFileSync(filePath, FUNCTION_EXAMPLE);
 
   const relativePath = getRelativePath(dirname(outputFilePath), filePath);
-  const relativePathWithoutExtension = getFirstPartOfFilename(relativePath);
-  const functionName = getFirstPartOfFilename(FUNCTION_EXAMPLE_FILE_NAME);
+  const relativePathWithoutExtension = getBaseNameWithoutExtension(relativePath);
+  const functionName = getBaseNameWithoutExtension(FUNCTION_EXAMPLE_FILE_NAME);
 
   const output = getOutput([
     {

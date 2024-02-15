@@ -18,7 +18,7 @@ export const loader: LoaderFunction = withAuth(async ({ api, user, params }) => 
   return json<LoaderType>({ logs });
 });
 
-export default function LogsPage() {
+export default function TracesPage() {
   const { logs } = useLoaderData<LoaderType>();
   return <LogTable logs={logs} />;
 };

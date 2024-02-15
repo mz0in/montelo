@@ -13,7 +13,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { LogDto } from "@montelo/browser-client";
-import { darkStyles, JsonView, collapseAllNested } from "react-json-view-lite";
+import { darkStyles, JsonView } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import dayjs from "dayjs";
 import { Checkbox } from "../../ui/checkbox";
@@ -28,6 +28,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Badge } from "../../ui/badge";
 import { idShortener } from "./idShortener";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
+import { Link, useParams } from "@remix-run/react";
+import { Routes } from "../../../routes";
 
 export const columns: ColumnDef<LogDto>[] = [
   {
@@ -66,12 +68,22 @@ export const columns: ColumnDef<LogDto>[] = [
     cell: ({ row }) => {
       const traceId: string = row.getValue("traceId");
       const { short, color } = idShortener(traceId);
+      const params = useParams();
+
       return (
         <div>
-          <TooltipProvider delayDuration={0}>
+          <TooltipProvider delayDuration={500}>
             <Tooltip>
               <TooltipTrigger>
-                <Badge variant={color}>{short}</Badge>
+                <Link to={Routes.app.project.env.traceId({
+                  projectId: params.projectId!,
+                  envId: params.envId!,
+                  traceId,
+                })}>
+                  <Badge variant={color}>
+                    {short}
+                  </Badge>
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>{traceId}</p>
@@ -87,17 +99,29 @@ export const columns: ColumnDef<LogDto>[] = [
     header: "Log",
     cell: ({ row }) => {
       const name = row.original.name.substring(0, 15);
-      const traceId: string = row.getValue("id");
-      const { short } = idShortener(traceId);
+      const traceId: string = row.getValue("traceId");
+      const logId: string = row.getValue("id");
+      const { short } = idShortener(logId);
+      const params = useParams();
+
       return (
         <div>
-          <TooltipProvider delayDuration={0}>
+          <TooltipProvider delayDuration={500}>
             <Tooltip>
               <TooltipTrigger>
-                <Badge>{short} — {name}{name.length !== row.original.name.length && "..."}</Badge>
+                <Link to={Routes.app.project.env.traceId({
+                  projectId: params.projectId!,
+                  envId: params.envId!,
+                  traceId,
+                  logId,
+                })}>
+                  <Badge>
+                    {short} — {name}{name.length !== row.original.name.length && "..."}
+                  </Badge>
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{traceId}</p>
+                <p>{logId}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

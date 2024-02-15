@@ -8,6 +8,7 @@ import {
   MembershipApi,
   ProjectApi,
   TeamApi,
+  TraceApi,
 } from "@montelo/browser-client";
 
 export class Api {
@@ -47,5 +48,9 @@ export class Api {
 
   public team(): TeamApi {
     return new TeamApi(this.configuration);
+  }
+
+  public trace(): TraceApi {
+    return new TraceApi(this.configuration);
   }
 }

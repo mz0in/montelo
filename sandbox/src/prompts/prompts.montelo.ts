@@ -4,6 +4,20 @@ import { OpenAI } from "openai";
 type ChatCompletionMessageParam = OpenAI.ChatCompletionMessageParam;
 
 export const prompts = {
+  test: ({ message }: { message: string }): Array<ChatCompletionMessageParam> => [
+    {
+      role: "system",
+      content: `You are a weatherman! Assist the user in finding out the weather in their location. Be brief and concise.`,
+    },
+    { role: "user", content: `${message}` },
+  ],
+  user: ({ message }: { message: string }): Array<ChatCompletionMessageParam> => [
+    {
+      role: "system",
+      content: `You are a weatherman! Assist the user in finding out the weather in their location. Be brief and concise.`,
+    },
+    { role: "user", content: `${message}` },
+  ],
   weatherman: ({ message }: { message: string }): Array<ChatCompletionMessageParam> => [
     {
       role: "system",

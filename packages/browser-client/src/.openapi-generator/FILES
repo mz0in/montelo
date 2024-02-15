@@ -7,6 +7,7 @@ apis/LogApi.ts
 apis/MembershipApi.ts
 apis/ProjectApi.ts
 apis/TeamApi.ts
+apis/TraceApi.ts
 apis/index.ts
 index.ts
 models/ApiKeyWithEnvDto.ts
@@ -31,5 +32,6 @@ models/ProjectWithEnvironmentsDto.ts
 models/RegisterUserInput.ts
 models/TeamDto.ts
 models/TeamWithProjectsDto.ts
+models/TraceWithLogsDto.ts
 models/index.ts
 runtime.ts

@@ -15,23 +15,7 @@ export const getRelativePath = (from: string, to: string): string => {
   return relativePath;
 };
 
-export const getFirstPartOfFilename = (filename: string): string => {
-  // Check if the filename starts with './' or '../'
-  const hasDotSlash = filename.startsWith("./");
-  const hasDotDotSlash = filename.startsWith("../");
-
-  // Extract the base filename
+export const getBaseNameWithoutExtension = (filename: string): string => {
   const baseFilename = basename(filename);
-
-  // Split the base filename by dots and get the first part
-  const firstPart = baseFilename.split(".")[0];
-
-  // Prepend './' or '../' if necessary
-  if (hasDotSlash) {
-    return `./${firstPart}`;
-  } else if (hasDotDotSlash) {
-    return `../${firstPart}`;
-  }
-
-  return firstPart;
+  return baseFilename.split('.')[0];
 };

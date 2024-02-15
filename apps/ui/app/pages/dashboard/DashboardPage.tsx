@@ -25,7 +25,7 @@ export const DashboardPage = () => {
     return (
       <TableRow>
         <TableCell className={"cursor-pointer"}>
-          <Link to={Routes.app.project.env.logId({
+          <Link to={Routes.app.project.env.traceId({
             projectId: params.projectId!,
             envId: params.envId!,
             logId: log.id,

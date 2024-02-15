@@ -21,7 +21,7 @@ export class MonteloAI {
    *
    * To nest a log under each other, see {@link https://docs.montelo.ai Log Nesting}.
    *
-   * To add logs as part of a trace, see {@link https://docs.montelo.ai Log Tracing}.
+   * To add traces as part of a trace, see {@link https://docs.montelo.ai Log Tracing}.
    *
    */
   public log(params: LogInput) {
@@ -29,7 +29,7 @@ export class MonteloAI {
   }
 
   /**
-   * Creates a trace, for which all subsequent logs and LLM calls fall under.
+   * Creates a trace, for which all subsequent traces and LLM calls fall under.
    *
    * To learn how tracing works, see {@link https://docs.montelo.ai Log Tracing}.
    */

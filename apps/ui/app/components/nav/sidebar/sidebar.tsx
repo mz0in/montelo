@@ -36,7 +36,7 @@ const SidebarItems: SidebarItem[] = [
   },
   {
     name: "Logs",
-    href: Routes.app.project.env.logs,
+    href: Routes.app.project.env.traces,
     icon: <GanttChart size={20} />,
   },
   {
@@ -102,14 +102,13 @@ export const Sidebar = () => {
       );
     }
 
+    const isActive = pathname.startsWith(item.href(params));
     return (
       <li key={item.name}>
         <Link
           to={item.href(params)}
           prefetch={"intent"}
-          className={`flex items-center py-2 px-4 rounded-lg hover:underline underline-offset-2 ${
-            pathname === item.href(params) ? "underline" : ""
-          }`}
+          className={`flex items-center py-2 px-4 rounded-lg hover:underline underline-offset-2 ${isActive ? "underline" : ""}`}
         >
           <div className="flex justify-center w-8">
             {item.icon}

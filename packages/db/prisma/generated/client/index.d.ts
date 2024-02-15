@@ -258,7 +258,7 @@ export class PrismaClient<
     * Example usage:
     * ```ts
     * // Fetch zero or more Logs
-    * const logs = await prisma.log.findMany()
+    * const traces = await prisma.log.findMany()
     * ```
     */
   get log(): Prisma.LogDelegate<ExtArgs>;
@@ -4443,7 +4443,7 @@ export namespace Prisma {
 
 
   /**
-   * Environment.logs
+   * Environment.traces
    */
   export type Environment$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
@@ -7820,10 +7820,10 @@ export namespace Prisma {
      * @param {LogFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Logs
-     * const logs = await prisma.log.findMany()
+     * const traces = await prisma.log.findMany()
      * 
      * // Get first 10 Logs
-     * const logs = await prisma.log.findMany({ take: 10 })
+     * const traces = await prisma.log.findMany({ take: 10 })
      * 
      * // Only select the `id`
      * const logWithIdOnly = await prisma.log.findMany({ select: { id: true } })
@@ -9527,7 +9527,7 @@ export namespace Prisma {
 
 
   /**
-   * Trace.logs
+   * Trace.traces
    */
   export type Trace$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**

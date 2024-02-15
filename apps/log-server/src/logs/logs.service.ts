@@ -37,7 +37,7 @@ export class LogsService {
       this.costulatorService.getLogCost(params),
     );
 
-    // get the updated cost of the trace + this new log. to do this we check all logs already on
+    // get the updated cost of the trace + this new log. to do this we check all traces already on
     // the trace, sum the metrics up, then add the current log to it,
     const traceMetrics = await this.calculateTraceMetricsOrDefault({
       dbTrace,
