@@ -1,5 +1,13 @@
 # @montelo/fizz
 
+## 1.1.35
+
+### Patch Changes
+
+- y
+- Updated dependencies
+  - @montelo/common@1.1.35
+
 ## 1.1.34
 
 ### Patch Changes

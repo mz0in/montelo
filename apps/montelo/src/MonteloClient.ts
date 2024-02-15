@@ -13,7 +13,7 @@ export class MonteloClient {
     if (!apiKey) {
       throw new Error("Montelo API key not set.");
     }
-    const baseUrl = options?.baseUrl || process.env.MONTELO_BASE_URL || "https://log.montelo.ai";
+    const baseUrl = options?.baseUrl || process.env.MONTELO_BASE_URL || "https://logs.montelo.ai";
 
     const configuration = new Configuration({
       basePath: baseUrl,
