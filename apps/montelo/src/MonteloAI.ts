@@ -5,6 +5,8 @@ import { LogInput } from "./client";
 import { ExtendedOpenAI } from "./extended/ExtendedOpenAI";
 import { MonteloOptions, TraceParams } from "./types";
 
+export type Trace = Omit<MonteloAI, 'startTrace'>;
+
 export class MonteloAI {
   private readonly constructorOptions: MonteloOptions | undefined;
   private readonly monteloClient: MonteloClient;
@@ -20,7 +22,7 @@ export class MonteloAI {
     void this.monteloClient.createLog(log);
   }
 
-  public startTrace(trace: TraceParams): MonteloAI {
+  public startTrace(trace: TraceParams): Trace {
     const newMonteloInstance = new MonteloAI(this.constructorOptions);
     newMonteloInstance.monteloClient.setTrace({ ...trace, id: cuid() });
     return newMonteloInstance;
