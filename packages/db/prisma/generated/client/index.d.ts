@@ -258,7 +258,7 @@ export class PrismaClient<
     * Example usage:
     * ```ts
     * // Fetch zero or more Logs
-    * const traces = await prisma.log.findMany()
+    * const logs = await prisma.log.findMany()
     * ```
     */
   get log(): Prisma.LogDelegate<ExtArgs>;
@@ -1525,11 +1525,11 @@ export namespace Prisma {
    */
 
   export type EnvironmentCountOutputType = {
-    logs: number
+    traces: number
   }
 
   export type EnvironmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    logs?: boolean | EnvironmentCountOutputTypeCountLogsArgs
+    traces?: boolean | EnvironmentCountOutputTypeCountTracesArgs
   }
 
   // Custom InputTypes
@@ -1548,7 +1548,7 @@ export namespace Prisma {
   /**
    * EnvironmentCountOutputType without action
    */
-  export type EnvironmentCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EnvironmentCountOutputTypeCountTracesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LogWhereInput
   }
 
@@ -3693,7 +3693,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    logs?: boolean | Environment$logsArgs<ExtArgs>
+    traces?: boolean | Environment$tracesArgs<ExtArgs>
     apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
     _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["environment"]>
@@ -3708,7 +3708,7 @@ export namespace Prisma {
 
   export type EnvironmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    logs?: boolean | Environment$logsArgs<ExtArgs>
+    traces?: boolean | Environment$tracesArgs<ExtArgs>
     apiKey?: boolean | Environment$apiKeyArgs<ExtArgs>
     _count?: boolean | EnvironmentCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3718,7 +3718,7 @@ export namespace Prisma {
     name: "Environment"
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>
-      logs: Prisma.$LogPayload<ExtArgs>[]
+      traces: Prisma.$LogPayload<ExtArgs>[]
       apiKey: Prisma.$ApiKeyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4094,7 +4094,7 @@ export namespace Prisma {
 
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
-    logs<T extends Environment$logsArgs<ExtArgs> = {}>(args?: Subset<T, Environment$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
+    traces<T extends Environment$tracesArgs<ExtArgs> = {}>(args?: Subset<T, Environment$tracesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     apiKey<T extends Environment$apiKeyArgs<ExtArgs> = {}>(args?: Subset<T, Environment$apiKeyArgs<ExtArgs>>): Prisma__ApiKeyClient<$Result.GetResult<Prisma.$ApiKeyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
@@ -4445,7 +4445,7 @@ export namespace Prisma {
   /**
    * Environment.traces
    */
-  export type Environment$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Environment$tracesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Log
      */
@@ -7820,10 +7820,10 @@ export namespace Prisma {
      * @param {LogFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Logs
-     * const traces = await prisma.log.findMany()
+     * const logs = await prisma.log.findMany()
      * 
      * // Get first 10 Logs
-     * const traces = await prisma.log.findMany({ take: 10 })
+     * const logs = await prisma.log.findMany({ take: 10 })
      * 
      * // Only select the `id`
      * const logWithIdOnly = await prisma.log.findMany({ select: { id: true } })
@@ -9527,7 +9527,7 @@ export namespace Prisma {
 
 
   /**
-   * Trace.traces
+   * Trace.logs
    */
   export type Trace$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
@@ -9956,7 +9956,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
-    logs?: LogListRelationFilter
+    traces?: LogListRelationFilter
     apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }
 
@@ -9967,7 +9967,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
-    logs?: LogOrderByRelationAggregateInput
+    traces?: LogOrderByRelationAggregateInput
     apiKey?: ApiKeyOrderByWithRelationInput
   }
 
@@ -9981,7 +9981,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Environment"> | Date | string
     updatedAt?: DateTimeFilter<"Environment"> | Date | string
     project?: XOR<ProjectRelationFilter, ProjectWhereInput>
-    logs?: LogListRelationFilter
+    traces?: LogListRelationFilter
     apiKey?: XOR<ApiKeyNullableRelationFilter, ApiKeyWhereInput> | null
   }, "id">
 
@@ -10564,7 +10564,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
-    logs?: LogCreateNestedManyWithoutEnvironmentInput
+    traces?: LogCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -10574,7 +10574,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
+    traces?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -10584,7 +10584,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
-    logs?: LogUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -10594,7 +10594,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -10851,7 +10851,7 @@ export namespace Prisma {
     totalCost?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    environment: EnvironmentCreateNestedOneWithoutLogsInput
+    environment: EnvironmentCreateNestedOneWithoutTracesInput
     trace: TraceCreateNestedOneWithoutLogsInput
   }
 
@@ -10897,7 +10897,7 @@ export namespace Prisma {
     totalCost?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    environment?: EnvironmentUpdateOneRequiredWithoutLogsNestedInput
+    environment?: EnvironmentUpdateOneRequiredWithoutTracesNestedInput
     trace?: TraceUpdateOneRequiredWithoutLogsNestedInput
   }
 
@@ -12185,9 +12185,9 @@ export namespace Prisma {
     update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutApiKeyInput, EnvironmentUpdateWithoutApiKeyInput>, EnvironmentUncheckedUpdateWithoutApiKeyInput>
   }
 
-  export type EnvironmentCreateNestedOneWithoutLogsInput = {
-    create?: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: EnvironmentCreateOrConnectWithoutLogsInput
+  export type EnvironmentCreateNestedOneWithoutTracesInput = {
+    create?: XOR<EnvironmentCreateWithoutTracesInput, EnvironmentUncheckedCreateWithoutTracesInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutTracesInput
     connect?: EnvironmentWhereUniqueInput
   }
 
@@ -12221,12 +12221,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type EnvironmentUpdateOneRequiredWithoutLogsNestedInput = {
-    create?: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
-    connectOrCreate?: EnvironmentCreateOrConnectWithoutLogsInput
-    upsert?: EnvironmentUpsertWithoutLogsInput
+  export type EnvironmentUpdateOneRequiredWithoutTracesNestedInput = {
+    create?: XOR<EnvironmentCreateWithoutTracesInput, EnvironmentUncheckedCreateWithoutTracesInput>
+    connectOrCreate?: EnvironmentCreateOrConnectWithoutTracesInput
+    upsert?: EnvironmentUpsertWithoutTracesInput
     connect?: EnvironmentWhereUniqueInput
-    update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutLogsInput, EnvironmentUpdateWithoutLogsInput>, EnvironmentUncheckedUpdateWithoutLogsInput>
+    update?: XOR<XOR<EnvironmentUpdateToOneWithWhereWithoutTracesInput, EnvironmentUpdateWithoutTracesInput>, EnvironmentUncheckedUpdateWithoutTracesInput>
   }
 
   export type TraceUpdateOneRequiredWithoutLogsNestedInput = {
@@ -12731,7 +12731,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogCreateNestedManyWithoutEnvironmentInput
+    traces?: LogCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -12740,7 +12740,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
+    traces?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
     apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
@@ -13160,7 +13160,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutEnvironmentsInput
-    logs?: LogCreateNestedManyWithoutEnvironmentInput
+    traces?: LogCreateNestedManyWithoutEnvironmentInput
   }
 
   export type EnvironmentUncheckedCreateWithoutApiKeyInput = {
@@ -13169,7 +13169,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    logs?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
+    traces?: LogUncheckedCreateNestedManyWithoutEnvironmentInput
   }
 
   export type EnvironmentCreateOrConnectWithoutApiKeyInput = {
@@ -13194,7 +13194,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutEnvironmentsNestedInput
-    logs?: LogUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUpdateManyWithoutEnvironmentNestedInput
   }
 
   export type EnvironmentUncheckedUpdateWithoutApiKeyInput = {
@@ -13203,10 +13203,10 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
   }
 
-  export type EnvironmentCreateWithoutLogsInput = {
+  export type EnvironmentCreateWithoutTracesInput = {
     id?: string
     name: string
     createdAt?: Date | string
@@ -13215,7 +13215,7 @@ export namespace Prisma {
     apiKey?: ApiKeyCreateNestedOneWithoutEnvironmentInput
   }
 
-  export type EnvironmentUncheckedCreateWithoutLogsInput = {
+  export type EnvironmentUncheckedCreateWithoutTracesInput = {
     id?: string
     name: string
     projectId: string
@@ -13224,9 +13224,9 @@ export namespace Prisma {
     apiKey?: ApiKeyUncheckedCreateNestedOneWithoutEnvironmentInput
   }
 
-  export type EnvironmentCreateOrConnectWithoutLogsInput = {
+  export type EnvironmentCreateOrConnectWithoutTracesInput = {
     where: EnvironmentWhereUniqueInput
-    create: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+    create: XOR<EnvironmentCreateWithoutTracesInput, EnvironmentUncheckedCreateWithoutTracesInput>
   }
 
   export type TraceCreateWithoutLogsInput = {
@@ -13268,18 +13268,18 @@ export namespace Prisma {
     create: XOR<TraceCreateWithoutLogsInput, TraceUncheckedCreateWithoutLogsInput>
   }
 
-  export type EnvironmentUpsertWithoutLogsInput = {
-    update: XOR<EnvironmentUpdateWithoutLogsInput, EnvironmentUncheckedUpdateWithoutLogsInput>
-    create: XOR<EnvironmentCreateWithoutLogsInput, EnvironmentUncheckedCreateWithoutLogsInput>
+  export type EnvironmentUpsertWithoutTracesInput = {
+    update: XOR<EnvironmentUpdateWithoutTracesInput, EnvironmentUncheckedUpdateWithoutTracesInput>
+    create: XOR<EnvironmentCreateWithoutTracesInput, EnvironmentUncheckedCreateWithoutTracesInput>
     where?: EnvironmentWhereInput
   }
 
-  export type EnvironmentUpdateToOneWithWhereWithoutLogsInput = {
+  export type EnvironmentUpdateToOneWithWhereWithoutTracesInput = {
     where?: EnvironmentWhereInput
-    data: XOR<EnvironmentUpdateWithoutLogsInput, EnvironmentUncheckedUpdateWithoutLogsInput>
+    data: XOR<EnvironmentUpdateWithoutTracesInput, EnvironmentUncheckedUpdateWithoutTracesInput>
   }
 
-  export type EnvironmentUpdateWithoutLogsInput = {
+  export type EnvironmentUpdateWithoutTracesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13288,7 +13288,7 @@ export namespace Prisma {
     apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
-  export type EnvironmentUncheckedUpdateWithoutLogsInput = {
+  export type EnvironmentUncheckedUpdateWithoutTracesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
@@ -13361,7 +13361,7 @@ export namespace Prisma {
     totalCost?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    environment: EnvironmentCreateNestedOneWithoutLogsInput
+    environment: EnvironmentCreateNestedOneWithoutTracesInput
   }
 
   export type LogUncheckedCreateWithoutTraceInput = {
@@ -13486,7 +13486,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -13495,7 +13495,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    logs?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
+    traces?: LogUncheckedUpdateManyWithoutEnvironmentNestedInput
     apiKey?: ApiKeyUncheckedUpdateOneWithoutEnvironmentNestedInput
   }
 
@@ -13667,7 +13667,7 @@ export namespace Prisma {
     totalCost?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    environment?: EnvironmentUpdateOneRequiredWithoutLogsNestedInput
+    environment?: EnvironmentUpdateOneRequiredWithoutTracesNestedInput
   }
 
   export type LogUncheckedUpdateWithoutTraceInput = {

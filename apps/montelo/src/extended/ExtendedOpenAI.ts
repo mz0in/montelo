@@ -92,7 +92,7 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
       duration: number;
     },
   ): Promise<void> {
-    const payload: LogInput = {
+    const log: LogInput = {
       ...time,
       name: input.name,
       model: output.model,
@@ -103,7 +103,7 @@ class ExtendedChatCompletions extends OpenAI.Chat.Completions {
       output: output.choices[0],
       extra: input.extra,
     };
-    await this.monteloClient.createLog(payload);
+    await this.monteloClient.createLog(log);
   }
 }
 

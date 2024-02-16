@@ -203,7 +203,7 @@ model Trace {
   extra  Json?
 
   // relations
-  traces Log[]
+  logs Log[]
 
   // dates
   createdAt DateTime @default(now()) @map("created_at")

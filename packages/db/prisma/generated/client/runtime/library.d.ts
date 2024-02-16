@@ -2436,7 +2436,7 @@ declare class RequestHandler {
     request(params: RequestParams): Promise<any>;
     mapQueryEngineResult({ dataPath, unpacker }: RequestParams, response: QueryEngineResult<any>): any;
     /**
-     * Handles the error and traces it, logging the error is done synchronously waiting for the event
+     * Handles the error and logs it, logging the error is done synchronously waiting for the event
      * handlers to finish.
      */
     handleAndLogRequestError(params: HandleErrorParams): never;

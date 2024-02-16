@@ -1,12 +1,10 @@
-import cuid from "cuid";
-
 import { Api } from "./api";
 import { Configuration, type LogInput, type TraceInput } from "./client";
-import { MonteloClientOptions, TraceParams } from "./types";
+import { MonteloClientOptions } from "./types";
 
 export class MonteloClient {
   private api: Api;
-  private currentTrace: (TraceInput & { id: string }) | undefined = undefined;
+  private trace: TraceInput | undefined;
 
   constructor(options?: MonteloClientOptions) {
     const apiKey = options?.apiKey || process.env.MONTELO_API_KEY;
@@ -22,12 +20,12 @@ export class MonteloClient {
     this.api = new Api(configuration);
   }
 
-  public async createLog(params: LogInput): Promise<void> {
+  public async createLog(log: LogInput): Promise<void> {
     try {
       await this.api.log().logsControllerCreateLog({
         createLogInput: {
-          log: params,
-          trace: this.currentTrace,
+          log,
+          trace: this.trace,
         },
       });
     } catch (e: any) {
@@ -35,16 +33,7 @@ export class MonteloClient {
     }
   }
 
-  public startTrace(params: TraceParams) {
-    this.currentTrace = {
-      id: cuid(),
-      name: params.name,
-      userId: params.userId,
-      extra: params.extra,
-    };
-  }
-
-  public clearTrace() {
-    this.currentTrace = undefined;
+  public setTrace(trace: TraceInput) {
+    this.trace = trace;
   }
 }

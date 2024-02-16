@@ -196,12 +196,14 @@ model Trace {
   outputCost   Float @map("output_cost")
   totalCost    Float @map("total_cost")
 
+  // TODO add durations
+
   userId String?  @map("user_id")
   tags   String[] @default([])
   extra  Json?
 
   // relations
-  traces Log[]
+  logs Log[]
 
   // dates
   createdAt DateTime @default(now()) @map("created_at")

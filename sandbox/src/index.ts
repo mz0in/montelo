@@ -7,12 +7,10 @@ const chat = async (): Promise<void> => {
   const message = "Queen sized inflatable mattress";
 
   const montelo = new MonteloAI();
-  montelo.trace({
-    name: "Amazon review writer",
-  });
+  const trace = montelo.startTrace({ name: "MyTrace" });
 
   // some vector db work
-  const writerCompletion = await montelo.openai.chat.completions.create({
+  const writerCompletion = await trace.openai.chat.completions.create({
     name: "Writer",
     model: "gpt-3.5-turbo-0125",
     messages: [
@@ -30,7 +28,7 @@ const chat = async (): Promise<void> => {
   const writerContent = writerCompletion.choices[0].message.content;
 
   // chat
-  await montelo.openai.chat.completions.create({
+  await trace.openai.chat.completions.create({
     name: "Writer / Reviewer",
     model: "gpt-3.5-turbo-0125",
     messages: [
