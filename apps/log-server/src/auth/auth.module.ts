@@ -11,3 +11,4 @@ import { BearerTokenStrategy } from "./bearer-token.strategy";
   providers: [AuthService, BearerTokenStrategy],
 })
 export class AuthModule {}
+// random
