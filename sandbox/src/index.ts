@@ -3,10 +3,11 @@ import { MonteloAI } from "montelo";
 
 dotenv.config();
 
+const montelo = new MonteloAI();
+
 const chat = async (): Promise<void> => {
   const message = "Queen sized inflatable mattress";
 
-  const montelo = new MonteloAI();
   const trace = montelo.startTrace({ name: "MyTrace" });
 
   // some vector db work
